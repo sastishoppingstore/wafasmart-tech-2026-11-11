@@ -1,0 +1,18 @@
+{
+  "lastUpdated": "2026-10-28",
+  "note": "approximate, may differ by 1 day",
+  "months": [
+    {"name": "Chet", "startDay": 14, "startMonth": 3},
+    {"name": "Vaisakh", "startDay": 14, "startMonth": 4},
+    {"name": "Jeth", "startDay": 15, "startMonth": 5},
+    {"name": "Harh", "startDay": 16, "startMonth": 6},
+    {"name": "Sawan", "startDay": 16, "startMonth": 7},
+    {"name": "Bhadon", "startDay": 17, "startMonth": 8},
+    {"name": "Assu", "startDay": 17, "startMonth": 9},
+    {"name": "Katak", "startDay": 17, "startMonth": 10},
+    {"name": "Maghar", "startDay": 17, "startMonth": 11},
+    {"name": "Poh", "startDay": 15, "startMonth": 12},
+    {"name": "Magh", "startDay": 14, "startMonth": 1},
+    {"name": "Phagan", "startDay": 13, "startMonth": 2}
+  ]
+}

@@ -64,11 +64,14 @@
 
   function toggle() { lang = lang === "en" ? "ur" : "en"; W.localStorage.setItem("wst.lang", lang); swap(); }
 
-  D.addEventListener("DOMContentLoaded", () => {
+  function init() {
     const btn = D.querySelector("#lang-toggle");
     if (btn) { btn.addEventListener("click", toggle); btn.setAttribute("aria-label", "Switch language / زبان بدلیں"); }
     if (lang === "ur") swap();
     else { D.documentElement.lang = "en"; D.body.setAttribute("dir", "ltr"); const b = D.querySelector("#lang-toggle"); if (b) b.textContent = "اردو"; }
-  });
+  }
+  // Safe whether the script is deferred on initial load or injected later.
+  if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init);
+  else init();
   W.WST_LANG = { toggle, swap, UR };
 })();

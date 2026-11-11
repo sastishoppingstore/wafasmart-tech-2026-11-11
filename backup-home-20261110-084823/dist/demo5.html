@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shuhda Travel & Tours – Flights, Umrah, Hajj</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--g:#0b5d3b;--g2:#12905c;--gold:#d4af37;--bg:#07120d;--card:#0f2219;--t:#eef6f1;--m:#9bb5a8}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:Poppins,sans-serif;background:var(--bg);color:var(--t);overflow-x:hidden}
+header.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:14px 5%;background:rgba(7,18,13,.82);backdrop-filter:blur(14px);border-bottom:1px solid #ffffff14}
+.logo{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold)}
+.nav nav a{color:var(--t);text-decoration:none;margin-left:16px;font-size:13px}.nav nav a:hover{color:var(--gold)}
+.nav .cta{background:var(--gold);color:#111;padding:8px 16px;border-radius:20px;font-weight:600}
+@media(max-width:900px){.nav nav a:not(.cta){display:none}}
+.hero{min-height:100vh;padding:110px 5% 60px;display:flex;align-items:center;justify-content:center;
+background:linear-gradient(180deg,#07120d99,#07120d),url("https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=2400&q=90&fm=webp") center/cover,#07120d;background-attachment:fixed}
+.hero-in{width:100%;max-width:1000px;text-align:center}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,58px);line-height:1.15}.hero h1 span{color:var(--gold)}
+.hero p{color:#cfe3d8;margin:12px 0 28px}
+.fbox{background:rgba(255,255,255,.08);border:1px solid #ffffff2a;border-radius:22px;padding:24px;backdrop-filter:blur(18px);box-shadow:0 30px 80px #000a;text-align:left}
+.tabs{display:flex;gap:10px;margin-bottom:16px}.tabs button{padding:8px 18px;border-radius:30px;border:1px solid #ffffff33;background:none;color:var(--t);cursor:pointer;font-family:inherit}
+.tabs button.on{background:var(--gold);color:#111;border-color:var(--gold);font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+label{font-size:12px;color:var(--m);display:block;margin-bottom:4px}
+input,select,textarea{width:100%;padding:12px;border-radius:12px;border:1px solid #ffffff22;background:#0a1a12;color:var(--t);font-family:inherit;font-size:14px}
+.btn{display:inline-block;margin-top:16px;padding:14px 30px;border:0;border-radius:14px;background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;font-weight:600;cursor:pointer;font-family:inherit;box-shadow:0 10px 30px #25d36655;transition:.3s}.btn:hover{transform:translateY(-3px)}
+.stats{display:flex;justify-content:center;gap:40px;flex-wrap:wrap;margin-top:34px}.stats div b{display:block;font-size:30px;color:var(--gold)}.stats div span{font-size:12px;color:var(--m)}
+section{padding:80px 5%;max-width:1300px;margin:auto}
+.alt{background:linear-gradient(180deg,transparent,#0b5d3b26,transparent);max-width:none}.alt>*{max-width:1300px;margin-left:auto;margin-right:auto}
+.h{text-align:center;margin-bottom:44px}.h small{color:var(--gold);letter-spacing:3px;font-size:12px}.h h2{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,42px);margin-top:6px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:34px;perspective:1400px}
+.card{background:linear-gradient(160deg,#143427,#0b1a13);border-radius:24px;border:1px solid #ffffff14;transform-style:preserve-3d;transition:transform .15s ease-out,box-shadow .3s;box-shadow:0 25px 60px #000a,inset 0 1px 0 #ffffff18;position:relative;animation:fl 6s ease-in-out infinite}
+.card:nth-child(2n){animation-delay:-2s}.card:nth-child(3n){animation-delay:-4s}
+@keyframes fl{50%{translate:0 -10px}}
+.card:hover{box-shadow:0 45px 90px #12905c77,0 0 0 1px var(--gold);animation-play-state:paused}
+.card:after{content:"";position:absolute;inset:0;border-radius:24px;background:radial-gradient(circle at var(--mx,50%) var(--my,0%),#ffffff2e,transparent 45%);pointer-events:none;opacity:0;transition:.3s}.card:hover:after{opacity:1}
+.img{height:210px;margin:12px;border-radius:18px;background:linear-gradient(135deg,var(--g),#0a2a1c);position:relative;overflow:hidden;transform:translateZ(45px);box-shadow:0 18px 30px #0009}
+.img img{width:100%;height:100%;object-fit:cover;transition:transform .7s}.card:hover .img img{transform:scale(1.14)}
+.tag{position:absolute;top:12px;left:12px;background:var(--gold);color:#111;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px}
+.price{position:absolute;right:-6px;bottom:-14px;transform:translateZ(80px);background:linear-gradient(135deg,#f3d36b,#b8901f);color:#111;font-weight:700;padding:10px 16px;border-radius:14px;box-shadow:0 14px 26px #000a;font-size:16px}
+.body{padding:10px 20px 22px;transform:translateZ(40px)}.body h3{font-size:19px;margin:6px 0 2px}.body small{color:var(--m)}
+.body ul{list-style:none;color:var(--m);font-size:13px;margin:12px 0}.body li{padding:3px 0}.body li:before{content:"✓ ";color:var(--g2)}
+.body button{width:100%;padding:12px;border:0;border-radius:12px;background:var(--g2);color:#fff;cursor:pointer;font-family:inherit;font-weight:600;transition:.3s}.body button:hover{background:var(--gold);color:#111}
+.about{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;align-items:center}
+.about img{width:100%;border-radius:24px;aspect-ratio:4/3;object-fit:cover;box-shadow:0 30px 70px #000a;transform:perspective(1000px) rotateY(-8deg);transition:.5s;background:var(--g)}.about img:hover{transform:perspective(1000px) rotateY(0)}
+.about p{color:var(--m);line-height:1.8;margin:14px 0}
+.why{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:24px;perspective:1000px}
+.why .card{padding:28px;text-align:center;animation:none}.why .ic{font-size:42px;transform:translateZ(50px);display:block;margin-bottom:10px}.why p{color:var(--m);font-size:13px;margin-top:8px;line-height:1.6}
+.tm{text-align:center;padding:26px}.tm img{width:84px;height:84px;border-radius:50%;object-fit:cover;border:3px solid var(--gold);transform:translateZ(50px);background:var(--g)}.tm p{color:var(--m);font-size:14px;margin:12px 0;font-style:italic}
+footer{background:#050d09;border-top:1px solid #ffffff14;padding:60px 5% 20px}
+.fg{max-width:1300px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:34px}
+footer h4{color:var(--gold);margin-bottom:14px}footer a,footer p{display:block;color:var(--m);text-decoration:none;font-size:14px;margin:8px 0}footer a:hover{color:var(--gold)}
+.cp{text-align:center;color:var(--m);font-size:13px;margin-top:40px;padding-top:20px;border-top:1px solid #ffffff12}
+.wa{position:fixed;right:20px;bottom:20px;z-index:60;width:58px;height:58px;border-radius:50%;background:#25d366;display:grid;place-items:center;font-size:28px;text-decoration:none;box-shadow:0 10px 30px #25d36688;animation:pu 2s infinite}@keyframes pu{50%{transform:scale(1.1)}}
+.rv{opacity:0;transform:translateY(50px);transition:1s}.rv.in{opacity:1;transform:none}
+</style></head><body>
+<header class="nav"><div class="logo">🕋 Shuhda Travel & Tours</div>
+<nav><a href="#flight">Flights</a><a href="#umrah">Umrah</a><a href="#group">Group Umrah</a><a href="#hotel">Hotels</a><a href="#hajj">Hajj</a><a href="#about">About</a><a href="#why">Why Us</a><a href="#contact">Contact</a><a class="cta" href="#flight">Book Now</a></nav></header>
+<a class="wa" id="wafloat" href="#" target="_blank">💬</a>
+
+<div class="hero" id="flight"><div class="hero-in">
+<h1>Safar Aasaan, <span>Barkat Bhara</span></h1>
+<p>Flight, Umrah, Hotel aur Hajj – sab ek jagah. Form bharein, booking seedha WhatsApp par.</p>
+<form class="fbox" id="ff">
+<div class="tabs"><button type="button" class="on" data-t="One Way">One Way</button><button type="button" data-t="Return">Return</button></div>
+<div class="grid">
+<div><label>Name</label><input name="name" required placeholder="Aap ka naam"></div>
+<div><label>WhatsApp No.</label><input name="phone" required placeholder="03xx xxxxxxx"></div>
+<div><label>From</label><input name="from" required placeholder="Lahore"></div>
+<div><label>To</label><input name="to" required placeholder="Jeddah"></div>
+<div><label>Departure</label><input type="date" name="dep" required></div>
+<div id="rt" style="display:none"><label>Return</label><input type="date" name="ret"></div>
+<div><label>Passengers</label><select name="pax"><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
+<div><label>Class</label><select name="cls"><option>Economy</option><option>Business</option></select></div>
+</div><button class="btn" type="submit">✈ Book via WhatsApp</button></form>
+<div class="stats"><div><b data-c="15000">0</b><span>Happy Pilgrims</span></div><div><b data-c="12">0</b><span>Years Experience</span></div><div><b data-c="500">0</b><span>Groups Served</span></div><div><b data-c="24">0</b><span>/7 Support</span></div></div>
+</div></div>
+
+<section id="umrah"><div class="h rv"><small>UMRAH PACKAGES</small><h2>Individual Umrah Packages</h2></div><div class="cards" data-k="umrah"></div></section>
+<section id="group" class="alt"><div class="h rv"><small>GROUP UMRAH</small><h2>Group Umrah Packages</h2></div><div class="cards" data-k="group"></div></section>
+<section id="hotel"><div class="h rv"><small>HOTEL BOOKING</small><h2>Makkah & Madinah Hotels</h2></div><div class="cards" data-k="hotel"></div></section>
+<section id="hajj" class="alt"><div class="h rv"><small>HAJJ BOOKING</small><h2>Hajj Packages</h2></div><div class="cards" data-k="hajj"></div></section>
+
+<section id="about"><div class="about rv">
+<img src="" data-img="photo-1591604129939-f1efa4d9f7fa" alt="Pilgrims at Makkah">
+<div><div class="h" style="text-align:left;margin:0"><small>ABOUT US</small><h2>Shuhda Travel & Tours</h2></div>
+<p>Hum 12 saal se Umrah, Hajj, flights aur hotel booking mein aap ki khidmat kar rahe hain. Hamari koshish hai ke har zaireen ka safar aasaan, saaf aur ruhani sukoon se bharpoor ho.</p>
+<p>Visa se le kar wapsi tak, har qadam par hamari experienced team aap ke saath hoti hai.</p></div></div></section>
+
+<section id="why" class="alt"><div class="h rv"><small>WHY CHOOSE US</small><h2>Humein Kyun Chunein</h2></div><div class="why" id="whyg"></div></section>
+
+<section><div class="h rv"><small>TESTIMONIALS</small><h2>Hamare Mehmanon Ki Raaye</h2></div><div class="cards" id="tmg"></div></section>
+
+<section id="contact" class="alt"><div class="h rv"><small>CONTACT</small><h2>Humse Rabta Karein</h2></div>
+<form class="fbox" id="cf" style="max-width:700px"><div class="grid"><div><label>Name</label><input name="n" required></div><div><label>Phone</label><input name="p" required></div></div><br><label>Message</label><textarea name="m" rows="3" required></textarea><button class="btn" type="submit">💬 Send on WhatsApp</button></form></section>
+
+<footer><div class="fg">
+<div><div class="logo">🕋 Shuhda Travel</div><p>Aap ka bharosemand safar saathi – Umrah, Hajj, Flights aur Hotels.</p></div>
+<div><h4>Services</h4><a href="#flight">Flight Booking</a><a href="#umrah">Umrah</a><a href="#group">Group Umrah</a><a href="#hotel">Hotels</a><a href="#hajj">Hajj</a></div>
+<div><h4>Company</h4><a href="#about">About Us</a><a href="#why">Why Choose Us</a><a href="#contact">Contact</a></div>
+<div><h4>Contact</h4><p>📞 <span id="ph"></span></p><p>✉ info@shuhdatravel.com</p><p>📍 Aap ka address yahan likhein</p></div></div>
+<div class="cp">© 2026 Shuhda Travel & Tours · All rights reserved</div></footer>
+
+<script>
+const ADMIN_WA="923001234567",ADMIN2_WA="",ADMIN_EMAIL="";
+const U=id=>`https://images.unsplash.com/${id}?w=2400&q=90&fm=webp&fit=crop`;
+const IM={kaaba:"photo-1591604129939-f1efa4d9f7fa",mosque:"photo-1564769625905-50e93615e769",madina:"photo-1580418827493-f2b22c0a76cb",hotel:"photo-1566073771259-6a8506099945",hotel2:"photo-1542314831-068cd1dbfeeb",room:"photo-1631049307264-da0ec9d70304",group:"photo-1544620347-c4fd4a3d5957",fam:"photo-1511895426328-dc8714191300"};
+const D={
+umrah:[["Economy Umrah","14 Days",IM.kaaba,"Rs 249,000","Best Value",["Visa + Tickets","3★ Hotel Makkah","Madinah Stay","Ziyarat"]],["Standard Umrah","15 Days",IM.madina,"Rs 349,000","Popular",["4★ Near Haram","Transport","Meals","Guide"]],["VIP Umrah","10 Days",IM.mosque,"Rs 599,000","Luxury",["5★ Haram View","Private Car","Full Board","Priority Visa"]]],
+group:[["Family Group","15 Days",IM.fam,"Rs 289,000","Group",["Group of 20+","Scholar Guide","Visa + Flight","Hotel"]],["Ramadan Group","20 Days",IM.group,"Rs 459,000","Ramadan",["Iftar Meals","Near Haram","Flights","Ziyarat"]],["Shuhda Special","12 Days",IM.madina,"Rs 319,000","Special",["Small Group","Madinah Tour","Hotel","Visa"]]],
+hotel:[["Makkah Haram View","per night",IM.hotel,"SAR 450","5★",["Kaaba View","Breakfast","WiFi","Walk to Haram"]],["Madinah Premium","per night",IM.hotel2,"SAR 320","4★",["Near Nabawi","Buffet","AC Rooms","Shuttle"]],["Economy Stay","per night",IM.room,"SAR 120","3★",["Clean Rooms","Shared Bus","WiFi","24/7 Desk"]]],
+hajj:[["Economy Hajj","40 Days",IM.mosque,"Rs 1,150,000","Hajj",["Govt Compliant","Mina Tent","Flights","Guide"]],["Premium Hajj","30 Days",IM.kaaba,"Rs 1,850,000","Premium",["AC Tents","Near Jamarat","Meals","Scholars"]],["VIP Hajj","25 Days",IM.madina,"Rs 3,200,000","VIP",["5★ Hotels","Private Transport","Full Board","Concierge"]]]};
+const WHY=[["🛡️","Trusted & Licensed","Registered agency, saaf aur shaffaf pricing."],["💰","Best Price","Koi hidden charges nahi, behtareen rates."],["🧭","Expert Guides","Tajurbakar scholars aur guides saath."],["🕐","24/7 Support","Safar ke dauran har waqt rabta."],["🏨","Near Haram Hotels","Haram ke qareeb comfortable rehaish."],["✅","Easy Visa","Visa aur documents ka mukammal intezam."]];
+const TM=[["Ahmed Raza","photo-1560250097-0b93528c311a","Alhamdulillah behtareen Umrah. Hotel Haram ke bilkul qareeb tha."],["Ayesha Khan","photo-1580489944761-15a19d654956","Family ke saath safar bohat aasaan raha. Team bohat cooperative."],["Imran Ali","photo-1507003211169-0a1dd7228f2d","Flight booking WhatsApp par minutes mein confirm ho gayi."]];
+const I=(id,a)=>`<img src="${U(id)}" alt="${a}" loading="lazy" onerror="this.remove()">`;
+document.querySelectorAll(".cards[data-k]").forEach(c=>{const k=c.dataset.k;c.innerHTML=D[k].map(x=>`<div class="card"><div class="img">${I(x[2],x[0])}<span class="tag">${x[4]}</span><div class="price">${x[3]}</div></div><div class="body"><h3>${x[0]}</h3><small>${x[1]}</small><ul>${x[5].map(f=>`<li>${f}</li>`).join("")}</ul><button data-n="${x[0]}" data-k="${k}">Book Now</button></div></div>`).join("")});
+document.getElementById("whyg").innerHTML=WHY.map(w=>`<div class="card rv"><span class="ic">${w[0]}</span><h3>${w[1]}</h3><p>${w[2]}</p></div>`).join("");
+document.getElementById("tmg").innerHTML=TM.map(t=>`<div class="card tm rv"><img src="${U(t[1]).replace("w=2400","w=400")}" alt="${t[0]}" onerror="this.remove()"><p>“${t[2]}”</p><b>${t[0]}</b></div>`).join("");
+document.querySelectorAll("[data-img]").forEach(i=>{i.src=U(i.dataset.img);i.onerror=()=>i.remove()});
+const wa=t=>{const u=n=>`https://wa.me/${n}?text=${encodeURIComponent(t)}`;window.open(u(ADMIN_WA),"_blank");if(ADMIN2_WA)setTimeout(()=>window.open(u(ADMIN2_WA),"_blank"),600);if(ADMIN_EMAIL)fetch("https://formsubmit.co/ajax/"+ADMIN_EMAIL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:t,_subject:"New Booking – Shuhda Travel"})}).catch(()=>{})};
+document.addEventListener("click",e=>{const b=e.target.closest(".body button");if(b)wa(`Assalam o Alaikum, Shuhda Travel & Tours.\nMujhe ${b.dataset.k.toUpperCase()} booking karni hai:\n*${b.dataset.n}*\nTafseel bhej dein.`)});
+document.querySelectorAll(".card").forEach(c=>{c.addEventListener("mousemove",e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;c.style.transform=`rotateY(${(x-.5)*20}deg) rotateX(${-(y-.5)*20}deg) scale(1.04)`;c.style.setProperty("--mx",x*100+"%");c.style.setProperty("--my",y*100+"%")});c.addEventListener("mouseleave",()=>c.style.transform="")});
+const f=document.getElementById("ff");let trip="One Way";
+f.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{f.querySelectorAll(".tabs button").forEach(x=>x.classList.remove("on"));b.classList.add("on");trip=b.dataset.t;document.getElementById("rt").style.display=trip=="Return"?"block":"none"});
+f.onsubmit=e=>{e.preventDefault();const d=Object.fromEntries(new FormData(f));wa(`✈ *FLIGHT BOOKING REQUEST*\nTrip: ${trip}\nName: ${d.name}\nPhone: ${d.phone}\nFrom: ${d.from}\nTo: ${d.to}\nDeparture: ${d.dep}${trip=="Return"?"\nReturn: "+d.ret:""}\nPassengers: ${d.pax}\nClass: ${d.cls}`)};
+document.getElementById("cf").onsubmit=e=>{e.preventDefault();const d=Object.fromEntries(new FormData(e.target));wa(`📩 *CONTACT*\nName: ${d.n}\nPhone: ${d.p}\nMessage: ${d.m}`)};
+document.getElementById("wafloat").href="https://wa.me/"+ADMIN_WA;document.getElementById("ph").textContent="+"+ADMIN_WA;
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.15});
+document.querySelectorAll(".rv").forEach(x=>io.observe(x));
+document.querySelectorAll(".cards[data-k] .card").forEach(x=>{x.classList.add("rv");io.observe(x)});
+const cio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const el=e.target,n=+el.dataset.c;let v=0;const s=setInterval(()=>{v+=Math.ceil(n/60);if(v>=n){v=n;clearInterval(s)}el.textContent=v.toLocaleString()+(n>=500?"+":"")},25);cio.unobserve(el)}}));
+document.querySelectorAll("[data-c]").forEach(x=>cio.observe(x));
+</script></body></html>

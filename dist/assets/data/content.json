@@ -1,5 +1,5 @@
 {
-  "exportedAt": "2026-10-28T04:57:05.694Z",
+  "exportedAt": "2026-11-02T12:20:24.097Z",
   "price": 14000,
   "tiers": {
     "website": 14000,
@@ -100,8 +100,8 @@
       {
         "slug": "property-portal",
         "name": "Property Dealer Portal",
-        "price": 20000,
-        "priceNote": "Website + management"
+        "price": 14000,
+        "priceNote": "Website"
       },
       {
         "slug": "management-system",
@@ -112,8 +112,8 @@
       {
         "slug": "job-portal",
         "name": "Job & Earning Portals",
-        "price": 20000,
-        "priceNote": "Website + management"
+        "price": 14000,
+        "priceNote": "Website"
       },
       {
         "slug": "website-management",
@@ -154,26 +154,92 @@
       {
         "slug": "food-restaurant",
         "name": "Restaurant & Food Delivery Site",
-        "price": 20000,
-        "priceNote": "Website + management"
+        "price": 14000,
+        "priceNote": "Website"
       },
       {
         "slug": "ecommerce-store",
         "name": "E-commerce Online Store",
-        "price": 20000,
-        "priceNote": "Website + management"
+        "price": 14000,
+        "priceNote": "Website"
       },
       {
         "slug": "lms-platform",
         "name": "Online Courses Platform (LMS)",
-        "price": 20000,
-        "priceNote": "Website + management"
+        "price": 14000,
+        "priceNote": "Website"
       },
       {
         "slug": "donation-platform",
         "name": "Donation & Zakat Platform",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "salon-booking",
+        "name": "Salon, Spa & Clinic Booking",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "gym-fitness",
+        "name": "Gym & Fitness Studio Site",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "car-dealer",
+        "name": "Car Dealer & Rental Website",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "event-wedding",
+        "name": "Event & Wedding Website",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "courier-logistics",
+        "name": "Courier & Logistics Tracking",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "pharmacy-store",
+        "name": "Pharmacy & Medical Store Site",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "mosque-website",
+        "name": "Masjid & Islamic Centre Site",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "import-export",
+        "name": "Import–Export & Trading Site",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "pos-billing",
+        "name": "POS & Billing Software",
         "price": 20000,
         "priceNote": "Website + management"
+      },
+      {
+        "slug": "law-firm",
+        "name": "Law Firm & Consulting Profile",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "banquet-hall",
+        "name": "Shaadi Hall & Banquet Booking",
+        "price": 14000,
+        "priceNote": "Website"
       }
     ],
     "recovery": [

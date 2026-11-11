@@ -1,0 +1,35 @@
+{
+  "name": "Wafa Smart Tech — fixed rates from PKR 14,000 · AI, sites & apps (Lahore)",
+  "short_name": "Wafa Smart",
+  "description": "Wafa Smart Tech, Lahore — AWS & Google certified team · Engr. Jamshaid, Software Engineer (IT Ministry, Govt. of Pakistan) · Saudi Arabia ZATCA-registered and KSA govt-affiliated ZATCA-compliant software company. Clear fixed rates: websites PKR 14,000, website + management 20,000, AI agents & voice 23,500, Android/Windows apps 30,000, iOS 35,000. FREE domain with site services, 3 demo designs before we build. Emergency recovery: hacked website/PHP PKR 7,000, hacked WhatsApp PKR 5,000.",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#060f23",
+  "theme_color": "#060f23",
+  "orientation": "portrait-primary",
+  "lang": "en",
+  "dir": "auto",
+  "categories": [
+    "business",
+    "productivity"
+  ],
+  "icons": [
+    {
+      "src": "/assets/img/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/img/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

@@ -6,7 +6,7 @@
   const out = $("#out"), copyBtn = $("#copy");
   const GROUPS = {
     lower: "abcdefghijklmnopqrstuvwxyz",
-    upper: "ABCDEFGHIJKLM…",
+    upper: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
     digit: "0123456789",
     sym: "!@#$%^&*()-_=+[]{};:,.<>?/~"
   };

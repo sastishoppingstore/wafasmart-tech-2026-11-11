@@ -7,6 +7,8 @@ module.exports = {
   desc: "Free BMI calculator in kg/cm or lb/in. See your WHO weight category on a colour scale and your healthy weight range. Runs in your browser, no upload.",
   h1: "BMI Calculator — check your body mass index free",
   kw: ["bmi calculator", "bmi calculator metric", "bmi kg cm", "bmi calculator imperial lb in", "body mass index formula", "healthy weight range"],
+  guide: "/blog/pakistan-bmi-calculator-guide.html",
+  guideTitle: "BMI calculator guide for Pakistan",
   intro: [
     "Body Mass Index is a single number that relates your weight to your height, giving a quick screen for whether you sit in a underweight, normal, overweight or obese band. It is not a diagnosis and it does not know about muscle, pregnancy or body shape, but it is the number clinics, insurance forms and health apps ask for, so this calculator produces it instantly from the two measurements you already have. Everything runs in the page — nothing you type is sent to a server.",
     "The obvious first hurdle is units. Most of the world measures weight in kilograms and height in centimetres, while the United States and a few other places use pounds and inches. The formula is different for each (kg/m² versus 703×lb/in²), which is why people misread tables found online. Here you just tap Metric or Imperial and the two matching fields appear, so you never convert anything by hand.",

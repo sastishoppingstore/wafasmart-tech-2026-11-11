@@ -99,7 +99,6 @@
     const canvas = await draw(q, margin, px);
     svgBlob = new Blob([svgOf(q, margin)], { type: "image/svg+xml;charset=utf-8" });
     pngBlob = await T.toBlob(canvas, "image/png");
-    canvas.width = canvas.height = 0;
     T.progress(100);
 
     out.replaceChildren();

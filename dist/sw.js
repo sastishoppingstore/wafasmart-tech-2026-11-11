@@ -1,6 +1,6 @@
-/* Wafa Smart Tech service worker — fast shell v10 */
-const C="wafa-v10";
-const K=["/index.html","/recovery.html","/offline.html","/assets/css/styles.css","/assets/css/3d.css","/assets/js/main.js","/assets/js/3d.js","/assets/js/i18n.js","/assets/fonts/manrope-latin-var.woff2","/assets/fonts/sora-latin-var.woff2","/assets/img/logo.webp","/manifest.webmanifest"];
+/* Wafa Smart Tech service worker — fast shell v11 */
+const C="wafa-v11";
+const K=["/index.html","/recovery.html","/offline.html","/assets/css/styles.css","/assets/css/3d.css","/assets/css/home.css","/assets/js/main.js","/assets/js/3d.js","/assets/js/home.js","/assets/js/i18n.js","/assets/fonts/manrope-latin-var.woff2","/assets/fonts/sora-latin-var.woff2","/assets/img/logo-mark.webp","/manifest.webmanifest"];
 self.addEventListener("install",e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(K)).catch(()=>{}));self.skipWaiting();});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==C).map(k=>caches.delete(k)))));self.clients.claim();});
 self.addEventListener("fetch",e=>{

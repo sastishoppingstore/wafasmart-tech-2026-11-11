@@ -2,7 +2,7 @@
 (function () {
   "use strict";
   const T = window.WST_T; if (!T) return;
-  const $ = T.$;
+  const $ = T.$, $$ = T.$$;
   const MODE = location.pathname.indexOf("extract") > -1 ? "extract" : "delete";
   let file = null, doc = null, count = 0, picked = new Set(), outUrl = null;
   const chips = $("#chips"), goBtn = $("#go"), dl = $("#dl"), finfo = $("#finfo"), sel = $("#selinfo"), allBtn = $("#all"), noneBtn = $("#none");
@@ -28,7 +28,6 @@
     finfo.hidden = false; finfo.textContent = f.name + " — " + T.bytes(f.size) + " · " + count + " pages";
     buildChips(); sync();
     allBtn.disabled = noneBtn.disabled = false;
-    if (MODE === "delete") { const hint = $$("#chips + p .sw-del")[0]; }
   });
 
   function buildChips() {

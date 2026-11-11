@@ -17,6 +17,9 @@ const BAR = `<div class="prog" hidden><div id="bar" class="prog-i"></div></div>
 module.exports = {
   name: "Merge PDF",
   short: "Stitch two or more PDFs into one document in the order you drag them — bookmarks-free, size-free, browser-only.",
+  kw: ["merge pdf", "combine pdf files", "join pdf online", "merge pdf free", "pdf merger no upload"],
+  guide: "/blog/pdf-tools-for-pakistani-students.html",
+  guideTitle: "Free PDF tools for Pakistani students",
   title: "Merge PDF Files Online — Combine in Order | Wafa Smart",
   desc: "Combine two or more PDFs into one file, in the order you choose. Drag to reorder, merge up to 200 MB of pages locally. Free and private.",
   h1: "Merge PDF — join several files into one document",

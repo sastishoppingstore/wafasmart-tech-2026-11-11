@@ -1,6 +1,6 @@
 // ============================================================
 // WAFA SMART TECH — static site generator (zero-dependency) v2
-// 21 services · fixed rates 14K/20K/23.5K/30K/35K · 3 demo designs
+// one page per service · fixed rates 14K/20K/23.5K/30K/35K · 3 demo designs
 // node build/build.js  → renders everything into dist/
 // ============================================================
 "use strict";
@@ -16,6 +16,8 @@ const NOW = "2026-10-22";
 
 /* ---------------- utils ---------------- */
 const esc = s => String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const urNum = n => String(n).replace(/\d/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]);
+const NSVC = S.services.length;
 const escA = s => esc(s).replace(/"/g, "&quot;");
 const pkr = n => "PKR " + Number(n).toLocaleString("en-US");
 const NO_DOMAIN = ["android-app", "ios-app", "windows-app", "ai-agents", "voice-agents", "ai-receptionist", "design-studio"];
@@ -113,7 +115,7 @@ function nav(active) {
   const L = [["home", "Home", "ہوم", "/index.html"], ["services", "Services", "سروسز", "/services.html"], ["pricing", "Pricing", "قیمتیں", "/pricing.html"], ["portfolio", "Portfolio", "نمونے", "/portfolio.html"], ["about", "About", "ہمارے بارے میں", "/about.html"], ["blog", "Blog", "بلاگ", "/blog.html"], ["tools", "Free Tools", "فری ٹولز", "/tools/index.html"], ["contact", "Contact", "رابطہ", "/contact.html"]];
   return `<div class="progress" aria-hidden="true"></div>
 <header class="hdr"><nav class="nav" aria-label="Main">
-<a class="logo" href="/index.html" aria-label="${escA(S.brand.name)} home"><img src="/assets/img/logo.webp" alt="${escA(S.brand.name)} logo" width="42" height="42" fetchpriority="high"><span>WAFA<i class="dot">.</i><span class="grad-txt logo-more">SMART</span><span class="logo-more">TECH</span></span></a>
+<a class="logo" href="/index.html" aria-label="${escA(S.brand.name)} home"><img src="/assets/img/logo-mark.webp" alt="${escA(S.brand.name)} logo" width="42" height="42" fetchpriority="high"><span>WAFA<i class="dot">.</i><span class="grad-txt logo-more">SMART</span><span class="logo-more">TECH</span></span></a>
 <ul class="nav-links" id="nav-links">${L.map(([k, t, u, href]) => `<li><a href="${href}" ${active === k ? 'class="active" aria-current="page"' : ""} data-i18n="nav.${k}">${t}</a></li>`).join("")}</ul>
 <div class="nav-cta">
 <button class="lang-btn" id="lang-toggle" type="button">اردو</button>
@@ -124,12 +126,12 @@ function nav(active) {
 function footer() {
   return `<footer><div class="wrap">
 <div class="foot-grid">
-  <div><a class="logo" href="/index.html"><img src="/assets/img/logo.webp" alt="${escA(S.brand.name)}" width="38" height="38"><span>WAFA<i class="dot">.</i>SMART<span class="grad-txt">TECH</span></span></a>
+  <div><a class="logo" href="/index.html"><img src="/assets/img/logo-mark.webp" alt="${escA(S.brand.name)}" width="38" height="38"><span>WAFA<i class="dot">.</i>SMART<span class="grad-txt">TECH</span></span></a>
   <p class="muted panel3d" style="margin-top:14px;max-width:34ch" data-ur="${escA(S.brand.descUr)}">${esc(S.brand.desc)}</p>
   <div class="pill-row"><span class="pill pill-free">${svg("check",12)} <span data-i18n="badge.domain">Domain FREE on sites</span></span><span class="pill pill-demo">${svg("spark",12)} <span data-i18n="badge.demos">3 Demo Designs</span></span></div></div>
   <div><h4 data-i18n="nav.services">Services</h4><ul>${S.services.slice(0, 8).map(s => `<li><a href="/${s.slug}.html" data-ur="${escA(s.nameUr)}">${esc(s.name)}</a></li>`).join("")}<li><a class="rec-link" href="/recovery.html">Hacked? Emergency recovery</a></li><li><a href="/services.html">+ ${S.services.length - 8} more build services →</a></li></ul></div>
   <div><h4>Company</h4><ul>
-    <li><a href="/about.html" data-i18n="nav.about">About</a></li><li><a href="/pricing.html" data-i18n="nav.pricing">Pricing</a></li><li><a href="/portfolio.html" data-i18n="nav.portfolio">Portfolio</a></li><li><a href="/blog.html" data-i18n="nav.blog">Blog</a></li><li><a href="/tools/index.html">Free Tools</a></li><li><a href="/contact.html" data-i18n="nav.contact">Contact</a></li><li><a href="/admin.html">Admin panel</a></li></ul></div>
+    <li><a href="/about.html" data-i18n="nav.about">About</a></li><li><a href="/pricing.html" data-i18n="nav.pricing">Pricing</a></li><li><a href="/portfolio.html" data-i18n="nav.portfolio">Portfolio</a></li><li><a href="/demos.html">Live demos</a></li><li><a href="/blog.html" data-i18n="nav.blog">Blog</a></li><li><a href="/tools/index.html">Free Tools</a></li><li><a href="/contact.html" data-i18n="nav.contact">Contact</a></li><li><a href="/admin.html">Admin panel</a></li></ul></div>
   <div><h4 data-i18n="nav.contact">Contact</h4><ul>
     <li><a href="${wa("Assalam o Alaikum!")}"><b>${svg("wa", 15)}</b> <span class="ltr" data-wk="contact.whatsappDisplay">${esc(S.contact.whatsappDisplay)}</span> <span class="tiny muted" data-wk="contact.hours">${esc(S.contact.hours)}</span></a></li>
     <li><a href="tel:+${escA(S.contact.whatsapp)}">${svg("phone", 15)} <span class="ltr" data-wk="contact.phoneRaw">${esc(S.contact.phoneRaw)}</span></a></li>
@@ -586,6 +588,12 @@ copyDir(path.join(SRC, "css"), "assets/css");
 copyDir(path.join(SRC, "js"), "assets/js");
 copyDir(path.join(SRC, "fonts"), "assets/fonts");
 
+/* the homepage redesign borrowed a storefront template; none of its media, scripts or
+   stylesheets may ship on wafasmart.tech — remove them from dist on every build */
+["assets/images", "assets/sfiva", "assets/videos", "sfiva.min.css", "sfiva.min.js"].forEach(p => {
+  try { fs.rmSync(path.join(DIST, p), { recursive: true, force: true }); } catch (e) { }
+});
+
 /* ---- HOME ---- */
 (function home() {
   const t = `${S.brand.name} — AWS & Google Certified · ZATCA-Ready · PKR 14,000+`;
@@ -621,7 +629,7 @@ copyDir(path.join(SRC, "fonts"), "assets/fonts");
 <section class="sec sec-cream" id="services">
   <div class="wrap">
     <div class="sec-head"><span class="eyebrow" data-i18n="sec.services">Our Services</span>
-      <h2 data-ur="۲۱ سروسز۔ مقررہ قیمت۔ ۳ مفت ڈیمو۔">21 services. Fixed prices. 3 free&nbsp;demos.</h2>
+      <h2 data-ur="${urNum(NSVC)} سروسز۔ مقررہ قیمت۔ ۳ مفت ڈیمو۔">${NSVC} services. Fixed prices. 3 free&nbsp;demos.</h2>
       <p class="muted" data-ur="ویب سائٹ ۱۴,۰۰۰ · ویب سائٹ + مینجمنٹ ۲۰,۰۰۰ · اے آئی/وائس ۲۳,۵۰۰ · اینڈرائیڈ/ونڈوز ۳۰,۰۰۰ · آئی او ایس ۳۵,۰۰۰۔ اپنی سروس چنیں، فکسڈ ریٹ دیکھیں اور ۳ مفت ڈیمو حاصل کریں — کوئی چھپا چارج نہیں، سائٹ سروسز پر ڈومین فری۔">Website PKR 14,000 · website + management 20,000 · AI/voice 23,500 · Android/Windows 30,000 · iOS 35,000. Pick your service, see the exact price and get 3 free demo designs — no hidden charges, free domain on website services.</p></div>
     <div class="grid c3">${S.services.map(svcCard).join("")}</div>
     <div class="center" style="margin-top:34px"><a class="btn btn-ghost" href="/services.html"><span data-i18n="cta.viewall">Compare all services + delivery times</span> →</a></div>
@@ -660,7 +668,7 @@ ${recoverySection()}
 <section class="sec sec-gold"><div class="wrap">
   <div class="sec-head"><span class="eyebrow" data-i18n="sec.testi">Clients</span><h2 data-ur="کلائنٹس کیا کہتے ہیں">Lahore says it best</h2></div>
   <div class="t-slider"><div class="t-track">${S.testimonials.map(tSlide).join("")}</div></div>
-  <div class="t-nav" role="tablist">${S.testimonials.map((_, i) => `<button class="${i === 0 ? "on" : ""}" aria-label="Slide ${i + 1}" type="button"></button>`).join("")}</div>
+  <div class="t-nav" role="group" aria-label="Testimonials">${S.testimonials.map((_, i) => `<button class="${i === 0 ? "on" : ""}" aria-label="Slide ${i + 1}" type="button"></button>`).join("")}</div>
 </div></section>
 <section class="sec sec-cream" id="faq"><div class="wrap">
   <div class="sec-head"><span class="eyebrow" data-i18n="sec.faq">FAQ</span><h2 data-ur="قیمت، ڈومین اور ڈیموز — سب واضح">Price, domain & demos — answered</h2></div>
@@ -678,12 +686,12 @@ ${ctaBand("Build ya recovery — ek WhatsApp message. Fixed rates from PKR 14,00
 
 /* ---- SERVICES overview ---- */
 (function servicesPage() {
-  const t = `All 21 Services + Emergency Recovery — Fixed Rates from PKR 5,000 | ${S.brand.name}`;
-  const d = "21 build services at fixed rates 14,000–35,000, plus hacked website/PHP recovery 7,000 and WhatsApp recovery 5,000. Free domain, 3 demos, source code.";
+  const t = `All ${NSVC} Services + Emergency Recovery — Fixed Rates from PKR 5,000 | ${S.brand.name}`;
+  const d = NSVC + " build services at fixed rates 14,000–35,000, plus hacked website/PHP recovery 7,000 and WhatsApp recovery 5,000. Free domain, 3 demos, source code.";
   const html = head({ file: "services.html", title: t, desc: d, jsonld: [...ldBase(), ldFaq(), ldBreadcrumb([["Home", "/index.html"], ["Services", "/services.html"]]), { "@context": "https://schema.org", "@type": "ItemList", itemListElement: [...S.services, ...S.recovery].map((s, i) => ({ "@type": "ListItem", position: i + 1, name: s.name, url: S.brand.url + (s.id ? "/recovery.html#" + s.id : "/" + s.slug + ".html") })) }] }) +
     bgfx + nav("services") + `<main id="main">
 ${bcrumbs([["Home", "/index.html"], ["Services", "/services.html"]])}
-<div class="wrap page-head"><span class="eyebrow">21 build services + emergency recovery · fixed rates</span><h1 data-ur="تمام سروسز — مکمل تفصیل اور مقررہ ریٹ">Every service in detail — clear fixed rate</h1>
+<div class="wrap page-head"><span class="eyebrow">${NSVC} build services + emergency recovery · fixed rates</span><h1 data-ur="تمام سروسز — مکمل تفصیل اور مقررہ ریٹ">Every service in detail — clear fixed rate</h1>
 <p class="muted">Website 14K · management 20K · AI 23.5K · apps 30K/35K. FREE domain on site services · 3 demo designs before build · source code handover. Hacked website/PHP <b>PKR 7,000</b> · WhatsApp <b>PKR 5,000</b>.</p></div>
 ${cert3dBand({ title: "Certified. Registered. Answerable.", sub: "Five credentials behind every project — not borrowed badges." })}
 <section class="sec-tight"><div class="wrap">
@@ -691,11 +699,11 @@ ${cert3dBand({ title: "Certified. Registered. Answerable.", sub: "Five credentia
 </div></section>
 ${recoverySection()}
 <section class="sec-tight"><div class="wrap">
-<div class="tbl-wrap" style="margin-top:6px"><table class="tbl"><caption class="tiny muted" style="padding:10px">21 build services — compare at a glance · تلخانی موازنہ</caption>
+<div class="tbl-wrap" style="margin-top:6px"><table class="tbl"><caption class="tiny muted" style="padding:10px">${NSVC} build services — compare at a glance · تلخانی موازنہ</caption>
 <thead><tr><th>Service</th><th>Price</th><th>Domain</th><th>Demos</th><th>Delivery</th></tr></thead>
 <tbody>${S.services.map(s => `<tr><td><b><a href="/${s.slug}.html">${esc(s.name)}</a></b><br><span class="tiny muted">${esc(s.short)}</span></td><td><b data-pkr="${s.price}">${pkr(s.price)}</b></td><td>${hasDomain(s) ? "FREE" : "—"}</td><td>3</td><td>${esc(s.days)} days</td></tr>`).join("")}</tbody></table></div>
 <p class="hint center" style="margin-top:16px">Emergency recovery is priced separately: <a href="/recovery.html#website-php">website/PHP PKR 7,000</a> · <a href="/recovery.html#whatsapp">WhatsApp PKR 5,000</a>. No demos or source-code promises apply.</p>
-</div></section>${ctaBand("21 build services + emergency recovery. Fixed rates from PKR 5,000 — WhatsApp par poochhein.")}</main>` + footer() + quoteModal() + scripts + "</body></html>";
+</div></section>${ctaBand(`${NSVC} build services + emergency recovery. Fixed rates from PKR 5,000 — WhatsApp par poochhein.`)}</main>` + footer() + quoteModal() + scripts + "</body></html>";
   PAGES.push({ file: "services.html", title: t, desc: d });
   write("services.html", html);
 })();
@@ -888,7 +896,8 @@ ${ctaBand("Abhi quote lein — WhatsApp par 15 minute me written fixed rate + de
     bgfx + nav("portfolio") + `<main id="main">
 ${bcrumbs([["Home", "/index.html"], ["Portfolio", "/portfolio.html"]])}
 <div class="wrap page-head"><span class="eyebrow">Selected work</span><h1 data-ur="ہمارے کام — اصل نمبروں کے ساتھ">Real work — fixed rates from 14K</h1>
-<p class="muted">Budgets as delivered (2023–2026) — website 14K, management 20K, AI 23.5K, apps 30K/35K. Filter below; client names used with permission.</p></div>
+<p class="muted">Budgets as delivered (2023–2026) — website 14K, management 20K, AI 23.5K, apps 30K/35K. Filter below; client names used with permission.</p>
+<p class="hint" style="margin-top:10px"><a class="kb" href="/demos.html">Want to click around a working build? ${S.LIVEDEMOS.length} live demos are here →</a></p></div>
 ${cert3dBand({ title: "Verified credentials behind the work", sub: "AWS, Google, IT Ministry experience and ZATCA-compliant delivery — checked before every handover." })}
 <section class="sec-tight"><div class="wrap">
 <div class="chips" data-target="pf-grid">${tags.map((x, i) => `<button class="chip ${i === 0 ? "on" : ""}" data-filter="${escA(x.toLowerCase())}" type="button">${esc(x)}</button>`).join("")}</div>
@@ -896,6 +905,49 @@ ${cert3dBand({ title: "Verified credentials behind the work", sub: "AWS, Google,
 </div></section>${ctaBand()}</main>` + footer() + quoteModal() + scripts + "</body></html>";
   PAGES.push({ file: "portfolio.html", title: t, desc: d });
   write("portfolio.html", html);
+})();
+
+/* ---- LIVE DEMOS ---- */
+(function demos() {
+  const t = "Live Demos — Open Real Websites & ERP Builds | " + S.brand.name;
+  const d = "Nine live demo builds: travel and Umrah booking, an Urdu petrol-pump ERP, three designs for one export brand, real estate and builder sites.";
+  const shot = x => `<img src="/assets/img/${x.img}-960.webp" srcset="/assets/img/${x.img}-320.webp 320w, /assets/img/${x.img}-640.webp 640w, /assets/img/${x.img}-960.webp 960w, /assets/img/${x.img}-1280.webp 1280w" sizes="(max-width:620px) 92vw,(max-width:1100px) 46vw,380px" alt="${escA(x.name + " — live demo built by " + S.brand.name)}" loading="lazy" decoding="async" width="1280" height="800">`;
+  const card = (x, i) => `<article class="pf-card demo-live">
+<a class="pf-shot" href="/${x.folder}/" target="_blank" rel="noopener" aria-label="${escA("Open the " + x.name + " live demo")}">${shot(x)}</a>
+<div class="pf-in"><span class="demo-open">${svg("spark", 12)} ${esc(x.group === "styles" ? x.style : "Live build")}</span>
+<h3 data-ur="${escA(x.nameUr)}">${esc(x.name)}</h3>
+<p class="muted tiny">${esc(x.note)}</p>
+<div class="pf-tags"><span>${esc(x.kind)}</span><span>${pkr(x.rate)}</span><span>${esc(x.days)}</span></div>
+<p class="demo-try">${svg("pin", 12)} ${esc(x.try)}</p>
+<a class="btn btn-sm btn-block" href="/${x.folder}/" target="_blank" rel="noopener">${svg("layers", 14)} Open the demo</a></div></article>`;
+  const trio = S.LIVEDEMOS.filter(x => x.group === "styles");
+  const rest = S.LIVEDEMOS.filter(x => x.group !== "styles");
+  const html = head({ file: "demos.html", title: t, desc: d, jsonld: [...ldBase(), ldBreadcrumb([["Home", "/index.html"], ["Live demos", "/demos.html"]])] }) +
+    bgfx + nav("portfolio") + `<main id="main">
+${bcrumbs([["Home", "/index.html"], ["Live demos", "/demos.html"]])}
+<div class="wrap page-head"><span class="eyebrow">Open them, don't take our word</span>
+<h1 data-ur="ہر ڈیمو کھلا ہے — خود دیکھیں">Nine live demos you can open right now</h1>
+<p class="muted">Every card below is a working build we made — not a mockup. They run on sample data, so press the buttons. Fixed rates, ${S.LIVEDEMOS.length} demos, one team in Lahore.</p></div>
+<section class="sec-tight"><div class="wrap"><div class="sec-head"><span class="eyebrow">Three designs, one brief</span>
+<h2 data-ur="ایک بریف، تین مکمل ڈیزائن">The same company, pitched three ways</h2>
+<p class="muted">This is the "3 free demo designs" promise, shown instead of described. One surgical-instruments brand, three complete directions — pick one and the live project is built in that style.</p></div>
+<div class="grid c3">${trio.map(card).join("")}</div>
+<p class="hint center" style="margin-top:14px">Hate all three? Unlimited free reworks until you smile — that is in the written quote.</p>
+</div></section>
+<section class="sec"><div class="wrap"><div class="sec-head"><span class="eyebrow">Systems &amp; sector sites</span>
+<h2 data-ur="اصل سسٹم اور سیکٹر کی سائٹس">Booking sites and a working ERP</h2>
+<p class="muted">A travel site that sends enquiries straight to WhatsApp, a petrol-pump ERP with an Urdu interface, and three corporate builds. The ERP logins are printed on its own screen.</p></div>
+<div class="grid c3">${rest.map(card).join("")}</div>
+</div></section>
+<section class="sec"><div class="wrap"><div class="grid c3">
+${whyEl({ icon: "shield", t: "Yours to inspect", u: "دیکھ کر فیصلہ", d: "Open any demo, click every button, read the source in your browser. No sales call required to see the work." }, 0)}
+${whyEl({ icon: "spark", t: "Built on the same rate card", u: "وہی مقررہ ریٹ", d: "Websites on this page are PKR 14,000 builds, the ERP is a PKR 20,000 management system — the price you see is the price we quote." }, 1)}
+${whyEl({ icon: "infinity", t: "Want your own?", u: "اپنا ڈیمو چاہیے؟", d: "Send your business name and we build three demos of it before you pay the second half." }, 2)}
+</div></div></section>
+${ctaBand("Apna project bataiye — pehle 3 demo designs, phir fee.")}
+</main>` + footer() + quoteModal() + scripts + "</body></html>";
+  PAGES.push({ file: "demos.html", title: t, desc: d });
+  write("demos.html", html);
 })();
 
 /* ---- ABOUT ---- */
@@ -1063,9 +1115,9 @@ fs.writeFileSync(path.join(DIST, "manifest.webmanifest"), JSON.stringify({
     { src: "/assets/img/icon-maskable-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" }
   ]
 }, null, 2));
-fs.writeFileSync(path.join(DIST, "sw.js"), `/* ${S.brand.name} service worker — fast shell v10 */
-const C="wafa-v10";
-const K=["/index.html","/recovery.html","/offline.html","/assets/css/styles.css","/assets/css/3d.css","/assets/js/main.js","/assets/js/3d.js","/assets/js/i18n.js","/assets/fonts/manrope-latin-var.woff2","/assets/fonts/sora-latin-var.woff2","/assets/img/logo.webp","/manifest.webmanifest"];
+fs.writeFileSync(path.join(DIST, "sw.js"), `/* ${S.brand.name} service worker — fast shell v11 */
+const C="wafa-v11";
+const K=["/index.html","/recovery.html","/offline.html","/assets/css/styles.css","/assets/css/3d.css","/assets/css/home.css","/assets/js/main.js","/assets/js/3d.js","/assets/js/home.js","/assets/js/i18n.js","/assets/fonts/manrope-latin-var.woff2","/assets/fonts/sora-latin-var.woff2","/assets/img/logo-mark.webp","/manifest.webmanifest"];
 self.addEventListener("install",e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(K)).catch(()=>{}));self.skipWaiting();});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==C).map(k=>caches.delete(k)))));self.clients.claim();});
 self.addEventListener("fetch",e=>{

@@ -1,0 +1,110 @@
+<!DOCTYPE html><html lang="ur"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Sarwar Khan Filling Station</title>
+<style>
+:root{--bg:#e9eff6;--fg:#13202e;--card:#fff;--mut:#5d6b7a;--bd:#cfd9e4;--ac:#0b6e4f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0c131b;--fg:#e8eef5;--card:#17212d;--mut:#8fa0b2;--bd:#2a3846}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0c131b;--fg:#e8eef5;--card:#17212d;--mut:#8fa0b2;--bd:#2a3846}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:15px system-ui,"Noto Nastaliq Urdu",sans-serif}
+.w{max-width:760px;margin:auto;padding:12px}
+.hd{display:flex;align-items:center;gap:12px;perspective:300px;margin-bottom:12px}
+.logo{font-size:38px;animation:sp 5s linear infinite;transform-style:preserve-3d}@keyframes sp{to{transform:rotateY(360deg)}}
+.hd h1{font-size:19px;margin:0}.hd small{color:var(--mut)}
+.g{display:grid;gap:12px;perspective:900px}.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr);margin-top:14px}
+.st,.t{background:linear-gradient(145deg,var(--c1,#0b8f6a),var(--c2,#066048));color:#fff;border:0;border-radius:16px;padding:12px;text-align:left;font:inherit;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .12s,box-shadow .12s;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 6px 0 rgba(0,0,0,.28),0 14px 16px rgba(0,0,0,.25);transform-style:preserve-3d}
+.st small{opacity:.85;display:block}.st b{font-size:18px;display:block;transform:translateZ(20px)}
+.t{text-align:center;padding:14px 4px;cursor:pointer}.t i{font-style:normal;font-size:30px;display:block;transform:translateZ(30px)}.t span{font-size:12.5px;font-weight:600}
+.t:active{box-shadow:0 1px 0 rgba(0,0,0,.3);margin-top:5px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px;margin-bottom:12px}
+.bar{display:flex;align-items:center;gap:10px;margin-bottom:12px;font-size:17px}.bar button{font-size:18px}
+button{font:inherit;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--fg);padding:8px 12px}
+.pr{background:var(--ac);color:#fff;border:0;width:100%;margin-top:8px;padding:11px}
+label{display:block;font-size:13px;color:var(--mut);margin-bottom:8px}
+input,select,textarea{width:100%;padding:9px;margin-top:3px;border:1px solid var(--bd);border-radius:9px;background:var(--bg);color:var(--fg);font:inherit}
+.rw{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-top:1px solid var(--bd);font-size:13.5px}.rw div:last-child{text-align:right;white-space:nowrap}
+.rw button{padding:2px 8px;margin-left:6px}
+#er{color:#d33;margin-top:6px}table{width:100%;border-collapse:collapse;font-size:13.5px}td,th{padding:6px 4px;border-bottom:1px solid var(--bd);text-align:left}
+.sc{overflow-x:auto}
+#rc{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:9}#rc.on{display:flex}
+#rc .card{width:min(92vw,340px);font-family:monospace;margin:0}
+body[data-r=operator] .mg,body[data-r=operator] .ow,body[data-r=manager] .ow{display:none}
+@media print{body:has(#rc.on)>*:not(#rc){display:none!important}#rc{position:static;background:none}button,a,.bar{display:none!important}}
+</style></head><body><div class="w" id="app"></div><div id="rc"></div>
+<script>
+const $=s=>document.querySelector(s),T=()=>new Date().toISOString().slice(0,10),N=x=>+x||0,R=x=>"Rs "+Math.round(x).toLocaleString("en-IN"),sm=(a,f)=>a.reduce((s,x)=>s+N(f(x)),0);
+const F=(n,l,t="text",o)=>({n,l,t,o}),DT=F("date","Tareekh","date");
+const noz=()=>S.set.noz.split("\n").map(l=>l.split(",").map(x=>x.trim())).filter(a=>a[1]).map(a=>({id:a[0],fuel:a[1]}));
+const tks=()=>S.set.tank.split("\n").map(l=>l.split(",").map(x=>x.trim())).filter(a=>a[1]).map(a=>({id:a[0],fuel:a[1],cap:N(a[2])}));
+const FU=()=>Object.keys(S.set.rate),CU=()=>S.cust.map(c=>c.name),CUL=()=>CU().length?CU():["-"];
+const bal=c=>N(c.open)+sm(S.inv.filter(i=>i.mode=="Udhaar"&&i.cust==c.name),i=>i.amt)-sm(S.rec.filter(r=>r.cust==c.name),r=>r.amt);
+const M={
+sale:{t:"Nozzle Sale / Shift",i:"⛽",c:["#0b8f6a","#066048"],f:[DT,F("shift","Shift","select",["Subah","Shaam","Raat"]),F("op","Operator"),F("noz","Nozzle","select",()=>noz().map(n=>n.id)),F("open","Opening meter","number"),F("close","Closing meter","number"),F("test","Test litres","number"),F("ph","Meter ki photo","file")],
+ calc(r){const n=noz().find(x=>x.id==r.noz)||{};r.fuel=n.fuel;r.lit=N(r.close)-N(r.open)-N(r.test);r.rate=N(S.set.rate[r.fuel]);r.amt=r.lit*r.rate;if(r.lit<0)return"Closing meter opening se kam hai"},
+ line:r=>`${r.noz} ${r.fuel} - ${r.shift} ${r.op||""}<br>${r.ph?`<img src="${r.ph}" width="36"> `:""}${r.lit} L x ${r.rate}`,v:r=>r.amt},
+inv:{t:"Invoice / Sale",i:"🧾",c:["#2563eb","#1a3f9c"],f:[DT,F("cust","Customer","select",()=>["Walk-in",...CU()]),F("veh","Gaari number"),F("fuel","Fuel","select",FU),F("lit","Litres","number"),F("mode","Payment","select",["Cash","Udhaar","Card","JazzCash","Easypaisa"])],
+ calc(r){r.rate=N(S.set.rate[r.fuel]);r.amt=N(r.lit)*r.rate;r.no="INV-"+(1001+S.inv.length);if(r.mode=="Udhaar"){const c=S.cust.find(x=>x.name==r.cust);if(!c)return"Udhaar ke liye customer chunein";if(N(c.limit)&&bal(c)+r.amt>N(c.limit))return"Credit limit poori ho gayi"}},
+ line:r=>`${r.no} ${r.cust} - ${r.fuel} ${r.lit}L - ${r.mode}`,v:r=>r.amt,after:r=>rcpt(r)},
+cust:{t:"Udhaar Customers",i:"👥",c:["#d97706","#9a4b00"],f:[F("name","Customer naam"),F("phone","Phone"),F("veh","Gaari number"),F("limit","Credit limit","number"),F("open","Purana baqaya","number")],
+ calc(r){if(!r.name)return"Naam likhein"},line:r=>`${r.name} ${r.phone||""}<br>Limit ${R(N(r.limit))} <button onclick="led('${r.name}')">Ledger</button>`,v:r=>bal(r)},
+rec:{t:"Udhaar Recovery",i:"💰",c:["#16a34a","#0c6a2e"],f:[DT,F("cust","Customer","select",CUL),F("amt","Raqam","number"),F("mode","Tareeqa","select",["Cash","Bank","JazzCash","Easypaisa"])],
+ calc(r){r.amt=N(r.amt);if(r.amt<=0)return"Raqam likhein"},line:r=>`${r.cust} - ${r.mode}`,v:r=>r.amt},
+bank:{t:"Bank Deposit/Withdraw",i:"🏦",c:["#7c3aed","#4c1d95"],f:[DT,F("type","Qism","select",["Deposit","Withdraw"]),F("bank","Bank"),F("amt","Raqam","number"),F("note","Note")],
+ calc(r){r.amt=N(r.amt);if(r.amt<=0)return"Raqam likhein"},line:r=>`${r.type} - ${r.bank||""} ${r.note||""}`,v:r=>r.amt},
+tank:{t:"Tank Dip Reading",i:"🛢️",c:["#0891b2","#075985"],f:[DT,F("time","Waqt","select",["Subah","Shaam"]),F("tank","Tank","select",()=>tks().map(t=>t.id)),F("dip","Dip (cm)","number"),F("lit","Litres (dip chart se)","number")],
+ calc(r){r.fuel=(tks().find(t=>t.id==r.tank)||{}).fuel;r.lit=N(r.lit)},line:r=>`${r.tank} ${r.fuel} - ${r.time} - ${r.dip||0} cm`,v:r=>r.lit,u:" L"},
+pur:{t:"Tanker Receive / Purchase",i:"🚚",c:["#dc2626","#8f1111"],f:[DT,F("sup","Company/Supplier"),F("fuel","Fuel","select",FU),F("lit","Litres","number"),F("rate","Purchase rate","number"),F("bowser","Bowser no"),F("driver","Driver"),F("paid","Ada kiya","number")],
+ calc(r){r.lit=N(r.lit);r.amt=r.lit*N(r.rate)},line:r=>`${r.sup||""} ${r.fuel} ${r.lit}L - ${r.bowser||""}<br>Baqaya ${R(r.amt-N(r.paid))}`,v:r=>r.amt},
+exp:{t:"Rozana Kharcha",i:"📒",c:["#e11d48","#9f1239"],f:[DT,F("cat","Qism","select",["Bijli","Maintenance","Chai/Khana","Kiraya","Transport","Dusra"]),F("amt","Raqam","number"),F("note","Tafseel")],
+ calc(r){r.amt=N(r.amt)},line:r=>`${r.cat} ${r.note||""}`,v:r=>r.amt},
+staff:{t:"Staff / Tankhwah",i:"👷",c:["#0d9488","#115e59"],f:[DT,F("name","Staff naam"),F("type","Qism","select",["Salary","Advance","Hazri","Ghair hazri"]),F("amt","Raqam","number")],
+ calc(r){r.amt=N(r.amt)},line:r=>`${r.name} - ${r.type}`,v:r=>r.amt},
+oil:{t:"Lubricant / Shop",i:"🛍️",c:["#ca8a04","#854d0e"],f:[DT,F("item","Item (oil, filter...)"),F("qty","Miqdar","number"),F("amt","Kul raqam","number")],
+ calc(r){r.amt=N(r.amt)},line:r=>`${r.item} x ${r.qty||1}`,v:r=>r.amt}
+};
+let S={};try{S=JSON.parse(localStorage.getItem("skfs")||"{}")}catch(e){}
+S.set=S.set||{name:"Sarwar Khan Filling Station",rate:{Petrol:260,Diesel:265,"Hi-Octane":300},ostk:{Petrol:0,Diesel:0,"Hi-Octane":0},noz:"N1,Petrol\nN2,Petrol\nN3,Diesel\nN4,Diesel",tank:"T1,Petrol,20000\nT2,Diesel,20000"};
+Object.keys(M).forEach(k=>S[k]=S[k]||[]);S.set.users=S.set.users||"Owner,1111,owner\nManager,2222,manager\nOperator,3333,operator";S.log=S.log||[];let U=null;
+const save=()=>{try{localStorage.setItem("skfs",JSON.stringify(S))}catch(e){}};
+const A=$("#app");const OK=k=>U.r=="owner"||U.r=="manager"||["sale","inv","rec","tank","oil"].includes(k);
+const lg=a=>{S.log.push({t:new Date().toLocaleString("en-GB"),u:U?U.n:"-",a});S.log=S.log.slice(-300);save()};
+function login(){document.body.dataset.r="";A.innerHTML=`<div class="card" style="margin-top:15vh"><h1 style="font-size:18px;margin:0 0 10px">⛽ ${S.set.name}</h1><label>PIN likhein<input id="pn" type="password" inputmode="numeric"></label><button class="pr" onclick="go()">Login</button><div id="er"></div><small>Shuru ke PIN: Owner 1111, Manager 2222, Operator 3333 (Settings mein badlein)</small></div>`}
+function go(){const u=S.set.users.split("\n").map(l=>l.split(",").map(x=>x.trim())).find(a=>a[1]==$("#pn").value);if(!u){$("#er").textContent="Ghalat PIN";return}U={n:u[0],r:u[2]};document.body.dataset.r=U.r;lg("Login");home()}
+const shot=f=>new Promise(ok=>{if(!f||!f.size)return ok("");const i=new Image();i.onload=()=>{const c=document.createElement("canvas"),k=Math.min(1,320/i.width);c.width=i.width*k;c.height=i.height*k;c.getContext("2d").drawImage(i,0,0,c.width,c.height);ok(c.toDataURL("image/jpeg",.5))};i.onerror=()=>ok("");i.src=URL.createObjectURL(f)});
+function led(n){const c=S.cust.find(x=>x.name==n);let b=N(c.open);const rows=[...S.inv.filter(i=>i.mode=="Udhaar"&&i.cust==n).map(i=>({d:i.date,t:i.no+" "+i.fuel+" "+i.lit+"L",a:i.amt})),...S.rec.filter(r=>r.cust==n).map(r=>({d:r.date,t:"Wasooli "+r.mode,a:-r.amt}))].sort((x,y)=>x.d>y.d?1:-1);
+const msg=`${S.set.name}: ${n} ka baqaya ${R(bal(c))} hai. Barae meherbani ada karein.`;
+A.innerHTML=`<div class="bar"><button onclick="page('cust')">←</button><b>${n} Ledger</b></div><div class="card"><table><tr><td>Purana baqaya</td><td></td><td>${R(b)}</td></tr>${rows.map(x=>{b+=x.a;return`<tr><td>${x.d}</td><td>${x.t}</td><td>${R(b)}</td></tr>`}).join("")}</table><a href="https://wa.me/${(c.phone||"").replace(/\D/g,"")}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener"><button class="pr">WhatsApp reminder</button></a><button class="pr" style="background:#64748b" onclick="print()">Print</button></div>`}
+function stats(d){const x=a=>S[a].filter(r=>r.date==d);const sl=x("sale"),iv=x("inv");
+ const cash=sm(sl,r=>r.amt)+sm(x("oil"),r=>r.amt)+sm(x("rec").filter(r=>r.mode=="Cash"),r=>r.amt)-sm(iv.filter(i=>i.mode!="Cash"),i=>i.amt)-sm(x("exp"),r=>r.amt)-sm(x("staff").filter(r=>r.type=="Salary"||r.type=="Advance"),r=>r.amt)-sm(x("bank").filter(b=>b.type=="Deposit"),r=>r.amt)+sm(x("bank").filter(b=>b.type=="Withdraw"),r=>r.amt);
+ return{sale:sm(sl,r=>r.amt),lit:sm(sl,r=>r.lit),cash,ud:sm(S.cust,bal),bank:sm(S.bank.filter(b=>b.type=="Deposit"),b=>b.amt)-sm(S.bank.filter(b=>b.type=="Withdraw"),b=>b.amt)+sm(S.rec.filter(r=>r.mode=="Bank"),r=>r.amt)}}
+function dip(f){return sm(tks().filter(t=>t.fuel==f),t=>{const l=S.tank.filter(r=>r.tank==t.id).pop();return l?l.lit:0})}
+function home(){const s=stats(T()),cl=["#0b8f6a,#066048","#2563eb,#1a3f9c","#16a34a,#0c6a2e","#d97706,#9a4b00","#7c3aed,#4c1d95","#0891b2,#075985"];
+ const st=[["Aaj ki sale",R(s.sale)],["Aaj ke litres",Math.round(s.lit)+" L"],["Cash in hand",R(s.cash)],["Kul udhaar",R(s.ud)],["Bank balance",R(s.bank)],["Tank stock",FU().slice(0,2).map(f=>f[0]+":"+Math.round(dip(f))).join(" ")]];
+ A.innerHTML=`<div class="hd"><div class="logo">⛽</div><div><h1>${S.set.name}</h1><small>مقصود چوک، ضلع لیہ، تحصیل کروڑ - ${T()}</small></div><button style="margin-left:auto" onclick="lg('Logout');U=null;login()">${U.n} ⎋</button></div>
+ <div class="g g2">${st.map((x,i)=>{const[a,b]=cl[i].split(",");return`<div class="st" style="--c1:${a};--c2:${b}"><small>${x[0]}</small><b>${x[1]}</b></div>`}).join("")}</div>
+ <div class="g g3">${Object.keys(M).filter(OK).map(k=>`<button class="t" style="--c1:${M[k].c[0]};--c2:${M[k].c[1]}" onclick="page('${k}')"><i>${M[k].i}</i><span>${M[k].t}</span></button>`).join("")}
+ <button class="t mg" style="--c1:#475569;--c2:#1e293b" onclick="rep()"><i>📊</i><span>Reports</span></button>
+ <button class="t ow" style="--c1:#64748b;--c2:#334155" onclick="setg()"><i>⚙️</i><span>Settings</span></button></div>`}
+function page(k){const m=M[k];let h=`<div class="bar"><button onclick="home()">←</button><b>${m.i} ${m.t}</b></div><form id="fm" class="card">`;
+ m.f.forEach(f=>{const o=typeof f.o=="function"?f.o():f.o;h+=`<label>${f.l}`+(f.t=="select"?`<select name="${f.n}">${o.map(x=>`<option>${x}</option>`).join("")}</select>`:`<input name="${f.n}" type="${f.t}" ${f.t=="number"?'step="any" inputmode="decimal"':f.t=="file"?'accept="image/*" capture="environment"':""} ${f.t=="date"?`value="${T()}"`:""}>`)+"</label>"});
+ const L=S[k].slice().reverse().slice(0,60);
+ h+=`<button class="pr">Save karein</button><div id="er"></div></form><div class="card"><b>Records (${S[k].length})</b> - Total ${m.u?Math.round(sm(S[k],m.v))+m.u:R(sm(S[k],m.v))}${L.map(r=>`<div class="rw"><div>${r.date||""} ${m.line(r)}</div><div>${m.v?(m.u?r.lit+m.u:R(m.v(r))):""}<button class="ow" onclick="del('${k}',${r.id},this)">✕</button></div></div>`).join("")}</div>`;
+ A.innerHTML=h;const fm=$("#fm");
+ if(k=="sale"){fm.noz.onchange=()=>{const l=S.sale.filter(x=>x.noz==fm.noz.value).pop();fm.open.value=l?l.close:""};fm.noz.onchange()}
+ fm.onsubmit=async e=>{e.preventDefault();const r=Object.fromEntries(new FormData(fm));if("ph"in r)r.ph=await shot(fm.ph.files[0]);r.id=Date.now();r.by=U.n;const er=("ph"in r&&!r.ph)?"Meter ki photo lazmi hai":m.calc(r);if(er){$("#er").textContent=er;return}S[k].push(r);lg("Add "+m.t+" "+(r.no||r.amt||r.lit||""));save();page(k);if(m.after)m.after(r)}}
+function del(k,id,b){if(b.textContent!="Pakka?"){b.textContent="Pakka?";return}S[k]=S[k].filter(r=>r.id!=id);lg("Delete "+k+" "+id);save();page(k)}
+function rcpt(r){const t=`${S.set.name}\nInvoice ${r.no}  ${r.date}\nCustomer: ${r.cust}\nGaari: ${r.veh||"-"}\n${r.fuel} ${r.lit} L x ${r.rate}\nKul: ${R(r.amt)} (${r.mode})`;
+ $("#rc").innerHTML=`<div class="card"><pre style="white-space:pre-wrap;margin:0">${t}</pre><button class="pr" onclick="print()">Print</button><a href="https://wa.me/?text=${encodeURIComponent(t)}" target="_blank" rel="noopener"><button class="pr" style="background:#16a34a">WhatsApp</button></a><button class="pr" style="background:#64748b" onclick="$('#rc').className=''">Band</button></div>`;$("#rc").className="on"}
+function rep(){const mo=T().slice(0,7);A.innerHTML=`<div class="bar"><button onclick="home()">←</button><b>📊 Reports</b></div><div class="card"><label>Mahina<input type="month" id="mo" value="${mo}" onchange="rep2(this.value)"></label><div id="r2"></div></div>`;rep2(mo)}
+function rep2(mo){const d=T(),sl=S.sale.filter(r=>r.date==d),ops={};sl.forEach(r=>{const k=(r.op||"-")+" / "+r.shift;ops[k]=ops[k]||[0,0];ops[k][0]+=r.lit;ops[k][1]+=r.amt});
+ const mm=a=>S[a].filter(r=>(r.date||"").startsWith(mo)),sale=sm(mm("sale"),r=>r.amt),oil=sm(mm("oil"),r=>r.amt),pur=sm(mm("pur"),r=>r.amt),ex=sm(mm("exp"),r=>r.amt),sal=sm(mm("staff").filter(r=>r.type=="Salary"),r=>r.amt);
+ const st=stats(d),msg=`${S.set.name} - ${d}\nSale: ${R(st.sale)} (${Math.round(st.lit)} L)\nCash: ${R(st.cash)}\nUdhaar: ${R(st.ud)}\nBank: ${R(st.bank)}`;
+ $("#r2").innerHTML=`<b>Aaj shift/operator wise</b><table>${Object.keys(ops).map(k=>`<tr><td>${k}</td><td>${ops[k][0]} L</td><td>${R(ops[k][1])}</td></tr>`).join("")||"<tr><td>Koi sale nahi</td></tr>"}</table>
+ <br><b>Tank stock / loss-gain</b><div class="sc"><table><tr><th>Fuel</th><th>Book</th><th>Dip</th><th>Farq</th></tr>${FU().map(f=>{const b=N(S.set.ostk[f])+sm(S.pur.filter(r=>r.fuel==f),r=>r.lit)-sm(S.sale.filter(r=>r.fuel==f),r=>r.lit)-sm(S.inv.filter(r=>r.fuel==f&&0),r=>r.lit),dp=dip(f);return`<tr><td>${f}</td><td>${Math.round(b)}</td><td>${Math.round(dp)}</td><td style="color:${dp-b<0?"#d33":"inherit"}">${Math.round(dp-b)}</td></tr>`}).join("")}</table></div>
+ <br><b>Mahana hisaab (${mo})</b><table><tr><td>Fuel sale</td><td>${R(sale)}</td></tr><tr><td>Lubricant/Shop</td><td>${R(oil)}</td></tr><tr><td>Purchase</td><td>${R(pur)}</td></tr><tr><td>Kharcha</td><td>${R(ex)}</td></tr><tr><td>Tankhwah</td><td>${R(sal)}</td></tr><tr><th>Mota nafa</th><th>${R(sale+oil-pur-ex-sal)}</th></tr></table>
+ <a href="https://wa.me/?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener"><button class="pr">Owner ko WhatsApp summary</button></a><button class="pr" style="background:#64748b" onclick="print()">Print report</button>`}
+function setg(){const s=S.set;A.innerHTML=`<div class="bar"><button onclick="home()">←</button><b>⚙️ Settings</b></div><form id="sf" class="card"><label>Pump ka naam<input name="name" value="${s.name}"></label>${FU().map(f=>`<label>${f} rate<input name="r_${f}" type="number" step="any" value="${s.rate[f]}"></label><label>${f} opening stock (L)<input name="o_${f}" type="number" step="any" value="${s.ostk[f]||0}"></label>`).join("")}<label>Nozzles (id,fuel - har line mein)<textarea name="noz" rows="4">${s.noz}</textarea></label><label>Tanks (id,fuel,capacity)<textarea name="tank" rows="3">${s.tank}</textarea></label><label>Users (naam,PIN,role: owner/manager/operator)<textarea name="users" rows="3">${s.users}</textarea></label><button class="pr">Save settings</button></form>
+ <div class="card"><b>Activity log</b>${S.log.slice().reverse().slice(0,40).map(l=>`<div class="rw"><div>${l.t} - ${l.u}</div><div>${l.a}</div></div>`).join("")}</div><div class="card"><b>Backup / Restore</b><textarea id="bk" rows="4" placeholder="Backup yahan aayega"></textarea><button class="pr" onclick="$('#bk').value=JSON.stringify(S);$('#bk').select()">Backup banayein (copy kar ke save karein)</button><button class="pr" style="background:#64748b" onclick="try{S=JSON.parse($('#bk').value);save();home()}catch(e){alert('Backup theek nahi')}">Restore</button></div>`;
+ $("#sf").onsubmit=e=>{e.preventDefault();const f=Object.fromEntries(new FormData($("#sf")));s.name=f.name;s.noz=f.noz;s.tank=f.tank;s.users=f.users;FU().forEach(k=>{s.rate[k]=N(f["r_"+k]);s.ostk[k]=N(f["o_"+k])});save();home()}}
+document.addEventListener("pointermove",e=>{const t=e.target.closest(".t,.st");if(!t)return;const b=t.getBoundingClientRect();t.style.setProperty("--ry",((e.clientX-b.left)/b.width-.5)*24+"deg");t.style.setProperty("--rx",-((e.clientY-b.top)/b.height-.5)*24+"deg")});
+document.addEventListener("pointerout",e=>{const t=e.target.closest(".t,.st");if(t){t.style.setProperty("--rx","0deg");t.style.setProperty("--ry","0deg")}});
+login();
+</script></body></html>

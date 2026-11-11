@@ -25,7 +25,7 @@ const FOOTER_ANCHOR = '<li><a href="/contact.html" data-i18n="nav.contact">Conta
 const FOOTER_INSERT = '<li><a href="/tools/index.html">Free Tools</a></li>';
 
 function addNav(h){
-  if(h.includes('/tools/index.html')) return {h, changed:false};
+  if(h.includes('href="/tools')) return {h, changed:false};
   if(h.includes(NAV_ANCHOR)){
     const nh = h.replace(NAV_ANCHOR, NAV_INSERT + NAV_ANCHOR);
     return {h:nh, changed:h!==nh};
@@ -40,9 +40,8 @@ function addNav(h){
 }
 
 function addFooter(h){
-  if(h.includes('href="/tools/index.html"') && h.match(/<h4>Company<\/h4>[\s\S]*?href="\/tools\/index\.html"/)) {
-    // check if it's in company section - simple check
-  }
+  /* idempotent: never insert a second Free Tools entry into the Company list */
+  if(/Company<\/h4>[\s\S]{0,900}?href="\/tools(\/index\.html)?"/.test(h)) return {h, changed:false};
   // look for footer company section
   const companyRe = /(<div><h4>Company<\/h4><ul>[\s\S]*?)(<li><a href="\/contact.html" data-i18n="nav.contact">Contact<\/a><\/li>)/;
   if(companyRe.test(h)){
@@ -136,28 +135,29 @@ function patchI18n(){
 }
 
 function patchSitemap(){
-  const f = path.join(ROOT,'dist/sitemap.xml');
+  const f = path.join(ROOT,'dist','sitemap.xml');
   if(!fs.existsSync(f)) return;
   let h = read(f);
   const orig = h;
-  if(h.includes('https://wafasmart.tech/tools"')) { console.log('\nSitemap already has tools entries'); return; }
-  // read tools
   const toolsDir = path.join(ROOT,'dist','tools');
   const slugs = fs.readdirSync(toolsDir).filter(x=>x.endsWith('.html')).map(x=>x.replace('.html','')).sort();
+  const block = loc => `  <url><loc>${loc}</loc><lastmod>2026-10-28</lastmod><xhtml:link rel="alternate" hreflang="en" href="${loc}"/><xhtml:link rel="alternate" hreflang="ur" href="${loc}"/><changefreq>monthly</changefreq><priority>0.8</priority></url>\n`;
   let entries = '';
-  // hub
-  entries += `  <url><loc>https://wafasmart.tech/tools</loc><lastmod>2026-10-28</lastmod><xhtml:link rel="alternate" hreflang="en" href="https://wafasmart.tech/tools"/><xhtml:link rel="alternate" hreflang="ur" href="https://wafasmart.tech/tools"/><changefreq>monthly</changefreq><priority>0.9</priority></url>\n`;
+  const hub = 'https://wafasmart.tech/tools';
+  if(!h.includes('<loc>'+hub+'</loc>')) entries += `  <url><loc>${hub}</loc><lastmod>2026-10-28</lastmod><xhtml:link rel="alternate" hreflang="en" href="${hub}"/><xhtml:link rel="alternate" hreflang="ur" href="${hub}"/><changefreq>monthly</changefreq><priority>0.9</priority></url>\n`;
+  let added = 0;
   for(const s of slugs){
     if(s==='index') continue;
     const loc = `https://wafasmart.tech/tools/${s}`;
-    entries += `  <url><loc>${loc}</loc><lastmod>2026-10-28</lastmod><xhtml:link rel="alternate" hreflang="en" href="${loc}"/><xhtml:link rel="alternate" hreflang="ur" href="${loc}"/><changefreq>monthly</changefreq><priority>0.8</priority></url>\n`;
+    if(h.includes('<loc>'+loc+'</loc>')) continue;
+    entries += block(loc); added++;
   }
-  h = h.replace('</urlset>', entries + '</urlset>');
-  if(h!==orig){
-    console.log('\n=== FILE: dist/sitemap.xml === (adding', slugs.length, 'entries)');
+  if(entries){
+    h = h.replace('</urlset>', entries + '</urlset>');
+    console.log('\n=== FILE: dist/sitemap.xml === (adding '+added+' tool urls + hub)');
     if(APPLY){ backup(f); write(f,h); console.log('APPLIED'); }
     else console.log('DRY-RUN: would modify');
-  }
+  } else console.log('\nSitemap already complete for /tools');
 }
 
 function patchRobots(){

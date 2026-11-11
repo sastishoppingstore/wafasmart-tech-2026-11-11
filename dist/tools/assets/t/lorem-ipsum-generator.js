@@ -33,18 +33,28 @@
     let count = Math.min(500, Math.max(1, parseInt($("#count").value, 10) || 0));
     if (!$("#count").value || parseInt($("#count").value, 10) < 1) { T.setErr("Enter a count between 1 and 500."); return; }
     T.setErr("");
+
+    /* Words mode counts words, not blocks. */
+    if (mode === "words") {
+      let words = pick(count);
+      if (start) words = ["Lorem", "ipsum", ...words.slice(2)];
+      const text = cap(words.join(" ")) + ".";
+      if (text === lastText) return build2Fresh();
+      lastText = text; show(text); return;
+    }
+
     const arr = [];
     for (let i = 0; i < count; i++) {
-      if (mode === "sentences") arr.push(sentence());
-      else if (mode === "words") arr.push(pick(6 + Math.floor(Math.random() * 8)).join(" "));
+      if (mode === "sentences") arr.push(start && i === 0 ? "Lorem ipsum dolor sit amet, consectetur adipiscing elit." : sentence());
+      else if (mode === "list") arr.push(sentence().replace(/\.$/, ""));
       else arr.push(paragraph(start && i === 0));
     }
 
     let text;
     if (mode === "list" && html === "ul") {
-      text = "<ul>\n" + arr.map(a => "  <li>" + a.replace(/\.$/, "") + "</li>").join("\n") + "\n</ul>";
+      text = "<ul>\n" + arr.map(a => "  <li>" + a + "</li>").join("\n") + "\n</ul>";
     } else if ((mode === "paragraphs" || mode === "sentences") && html === "p") {
-      text = arr.map(a => "<p>" + (start && a === arr[0] ? a : a) + "</p>").join("\n");
+      text = arr.map(a => "<p>" + a + "</p>").join("\n");
     } else {
       text = arr.join(mode === "paragraphs" ? "\n\n" : "\n");
     }
@@ -56,7 +66,8 @@
 
   function show(text) {
     const box = document.createElement("div"); box.className = "codebox"; box.textContent = text;
-    const words = (text.match(/[\p{L}\p{N}]+/gu) || []).length;
+    const plain = text.replace(/<[^>]+>/g, " ");
+    const words = (plain.match(/[\p{L}\p{N}]+/gu) || []).length;
     const head = document.createElement("h3"); head.className = "cnt"; head.textContent = "Generated text";
     out.append(head, box);
     const note = document.createElement("p"); note.className = "cnt";

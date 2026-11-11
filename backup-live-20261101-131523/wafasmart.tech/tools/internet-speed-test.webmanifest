@@ -1,0 +1,53 @@
+{
+ "id": "/tools/internet-speed-test",
+ "name": "Internet Speed Test — WAFA Smart Tech",
+ "short_name": "Speed Test",
+ "description": "Free internet speed test: live download and upload Mbps, ping and jitter on a colour meter, plus your IP, provider and city. Auto-starts, works on mobile.",
+ "start_url": "/tools/internet-speed-test",
+ "scope": "/tools/",
+ "display": "standalone",
+ "orientation": "any",
+ "lang": "en",
+ "dir": "ltr",
+ "background_color": "#050d20",
+ "theme_color": "#050d20",
+ "categories": [
+  "utilities",
+  "productivity"
+ ],
+ "prefer_related_applications": false,
+ "icons": [
+  {
+   "src": "/assets/img/icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "/assets/img/icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "/assets/img/icon-maskable-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ],
+ "shortcuts": [
+  {
+   "name": "All free tools",
+   "short_name": "All tools",
+   "url": "/tools/",
+   "icons": [
+    {
+     "src": "/assets/img/icon-192.png",
+     "sizes": "192x192",
+     "type": "image/png"
+    }
+   ]
+  }
+ ]
+}

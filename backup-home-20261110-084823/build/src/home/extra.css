@@ -1,0 +1,230 @@
+/* Wafa Smart Tech homepage — additions on top of the pruned design system.
+   Everything here either (a) provides the parts of the layout the design took
+   from its e-commerce build (hero offset, cube column, new grids) or (b) styles
+   components that never existed in the source stylesheet. */
+
+.wst-cube-root{--gold:#e8cf8e;--green:#9fe0a3;--sora:var(--display);--ease:cubic-bezier(.2,.7,.2,1);
+  position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:.4rem}
+.is-hero{padding-top:calc(var(--announce-h, 0px) + var(--header-h) + clamp(2.2rem,8vw,5.5rem));padding-bottom:clamp(2.6rem,6vw,4.4rem);overflow:clip}
+.is-hero .lh-copy h1{font-family:var(--display);font-weight:400;font-size:clamp(2.2rem,5.4vw,4.1rem);line-height:1.02;letter-spacing:-.02em;color:#fbf4e1;margin:.5rem 0 .9rem}
+.is-hero .lh-copy h1 em{font-style:italic;background:linear-gradient(100deg,#f7ead0,#e2c77f 55%,#b8933f);-webkit-background-clip:text;background-clip:text;color:transparent}
+.is-hero .sig-list li>span{display:block}
+.is-hero .sig-list b{display:block;font-size:.86rem}
+.is-hero .sig-list i{width:34px;height:34px;font-size:.85rem}
+@media (max-width:900px){.wst-cube-root .cube-stage{height:392px}.is-hero .lh-grid{gap:1.2rem}}
+@media (max-width:560px){.wst-cube-root .cube-stage{height:372px}.wst-cube-root .cube{--w:min(84vw,290px);height:346px}}
+
+.mnav-link i.f-i,.mnav-link>i:first-child{width:1.4em;color:#e9cf8c}
+.wa-fab{display:inline-flex;align-items:center;gap:.55rem;padding:.85rem 1.15rem;border-radius:999px;
+  background:linear-gradient(145deg,#2bd96f,#1a9a52);color:#fff;font:700 .82rem/1 var(--sans);letter-spacing:.04em;
+  box-shadow:0 12px 30px rgba(6,24,14,.42),inset 0 1px 0 rgba(255,255,255,.35)}
+.wa-fab>i{font-size:1.25rem}
+.wa-fab:hover{transform:translateY(-2px)}
+@media (max-width:640px){.wa-fab span{display:none}.wa-fab{padding:.9rem}}
+
+.roman{margin:1.3rem 0 0;font-size:.9rem;line-height:1.9;color:#e8dfcb;opacity:.86;max-width:62ch}
+.finale .roman,.eco-light .roman{color:#5d554b;opacity:1;margin-inline:auto}
+.eco-emerald .roman{color:#efe7d7c9}
+.chips-row{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin:2rem 0 0;padding:0}
+.chips-row .chip{background:#d9b96c24;color:#8a6a2c;font-size:.78rem;padding:.42em .8em}
+.eco-dark .chips-row .chip,.eco-emerald .chips-row .chip{color:#f7f0e2}
+.center-cta{justify-content:center}
+
+/* services grid: our cards are icon-free and text-light, so tighten the ratio */
+.p-grid .p-img{aspect-ratio:4/3}
+.recovery-grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,360px),1fr))}
+.p-card .p-price em{font-style:normal;font-size:.72rem;color:#2e7d32;margin-left:.4em}
+.p-card .p-brand{letter-spacing:.16em}
+
+/* packages: chip list inside the bundle body */
+.bc-items{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.2rem}
+.bc-items .chip{background:#d9b96c26;color:#f7f0e2;font-size:.7rem;letter-spacing:.01em}
+.bundle-card.best{outline:2px solid #c9a45a;outline-offset:3px}
+.bundle-card .btn{margin-top:.7rem;align-self:flex-start}
+.bundle-card .bc-img .fit img{object-fit:cover!important}
+.addon-wrap{margin-top:clamp(2rem,5vw,3.4rem)}
+.addon-wrap h3{font-family:var(--display);font-weight:500;font-size:clamp(1.3rem,2.6vw,1.9rem);margin:0 0 1rem;color:var(--ink,#1d211c)}
+.hc-list li b{font-family:var(--display);font-weight:600;color:#8a6a2c;white-space:nowrap}
+
+/* tools band: feature card spans, the rest sit beside it */
+.biz-band-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+.biz-band-grid .bb-card{min-height:0}
+.biz-band-grid .bb-feature{grid-column:1/-1;background:linear-gradient(140deg,#123f31,#0c2a20);color:#efe7d7}
+.biz-band-grid .bb-feature .bb-body small{color:#efe7d7c2}
+.biz-band-grid .bb-feature .bb-body b,.biz-band-grid .bb-feature .bb-body em{color:#f7f0e2}
+@media (min-width:1000px){.biz-band-grid{grid-template-columns:2fr 1fr 1fr 1fr}.biz-band-grid .bb-feature{grid-column:auto}}
+
+/* cities: three country columns of chips */
+.city-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:clamp(1rem,2.4vw,1.8rem);margin-bottom:2rem}
+.cg{padding:1.3rem 1.4rem;border-radius:22px;background:#ffffff0a;border:1px solid rgba(217,185,108,.26)}
+.cg h3{font-family:var(--display);font-weight:500;font-size:1.4rem;color:#f7f0e2;margin:0 0 .3rem;display:flex;align-items:center;gap:.5rem}
+.cg h3 i{font-style:normal;font-size:1.15rem}
+.cg-note{margin:0 0 .9rem;font-size:.8rem;color:#efe7d7a8;line-height:1.5}
+.cg-list{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.4rem}
+.cg-list li{display:contents}
+.cg-list a,.cg-list span{display:inline-flex;align-items:center;gap:.35rem;padding:.34em .7em;border-radius:999px;
+  font-size:.79rem;line-height:1.35;background:#d9b96c1f;color:#f6efe0;border:1px solid rgba(217,185,108,.22)}
+.cg-list a{background:#e8cf8e2e;border-color:#e8cf8e6b;font-weight:600}
+.cg-list a:hover{background:#e8cf8e42;color:#fff}
+.cg-list span{opacity:.72}
+.city-badges{margin:0 0 1.6rem}
+.city-badges .tb>i{grid-row:span 2;width:40px;height:40px;display:grid;place-items:center;border-radius:50%;
+  background:#d9b96c24;color:#e9cf8c;font-size:1rem}
+.city-badges .tb{grid-template-columns:auto 1fr;align-items:center}
+
+/* FAQ: two columns on wide screens */
+@media (min-width:860px){.faq{grid-template-columns:1fr 1fr;align-items:start}.faq .faq-item:nth-child(-n+2){grid-column:auto}}
+.faq-a p{margin:0}
+
+/* reviews marquee needs a doubled track; ours doubles itself */
+.rv-card h4{margin:0}
+.rv-card blockquote{margin:0;font-size:.9rem;line-height:1.6;color:#4b443a}
+.rv-card figcaption{font-size:.76rem;font-weight:700;letter-spacing:.04em;color:#8a6a2c;display:flex;align-items:center;gap:.35rem}
+.rv-card figcaption>i{color:#2e7d32;font-size:.85rem}
+
+.how-steps{grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr))}
+.how-steps li{background:var(--pearl-2,#efe7d7);color:var(--ink,#1d211c)}
+.how-steps b{color:#8a6a2c}
+.how-steps span{opacity:.9}
+
+.trust-row{display:flex;flex-wrap:wrap;gap:.6rem 1.5rem;justify-content:center;margin:1.8rem 0 0;font-size:.8rem;color:#efe7d7b8}
+.trust-row span{display:inline-flex;align-items:center;gap:.4rem}
+.trust-row i{color:#e8cf8e}
+
+.skip-link:focus{position:fixed;top:.6rem;left:.6rem;z-index:2000;width:auto;height:auto;padding:.7rem 1.1rem;
+  margin:0;overflow:visible;clip:auto;white-space:normal;background:#0b2218;color:#f3e3b8;border-radius:12px;font:700 .8rem var(--sans)}
+.ft-bottom{border-top:1px solid rgba(217,185,108,.16);padding:1.4rem 0 2rem;display:grid;gap:.5rem;text-align:center}
+.ft-bottom p{margin:0;font-size:.78rem;color:#efe7d799}
+.ft-legal{opacity:.8}
+.brand-word{white-space:nowrap;font-size:1.24rem;letter-spacing:.14em;padding-left:.14em}
+@media (min-width:1200px){.brand-word{font-size:1.4rem;letter-spacing:.17em}}
+.header-tools{display:flex;align-items:center;gap:.3rem}
+.nav .st{margin-left:.4em;vertical-align:middle}
+@media (max-width:1000px){.nav{display:none}.burger{display:grid}}
+@media (min-width:1001px){.burger{display:none}}
+
+/* the shipped design freezes its marquees, so the rails become real scroll containers
+   instead of rows that hide content off-screen */
+.ribbon{overflow:visible}
+.ribbon .marquee{display:block;width:auto;padding:.2rem 0;animation:none}
+.ribbon .marquee-group{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+  width:auto;gap:.55rem 1.6rem;padding:1rem 1.2rem}
+.ribbon .marquee-group[aria-hidden]{display:none}
+.marquee-item{display:inline-flex;align-items:center;gap:.5rem;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase}
+.marquee-dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.45}
+.rv-loop{overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;padding:18px max(0px,calc((100vw - 1480px)/2)) 26px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+.rv-track{width:auto;animation:none}
+.rv-card{scroll-snap-align:center}
+@media (max-width:700px){.rv-card{width:290px;margin-right:.7rem}}
+.footer-brand .brand-word{font-size:1.5rem;letter-spacing:.2em}
+.rv-loop{padding:18px max(0px,calc((100% - 1480px)/2)) 26px}
+
+/* 32 services need a wider mega menu than the four-column storefront default */
+.header .mega-wrap{position:static}
+.header .mega{left:16px;right:16px;width:auto;max-width:1400px;margin:0 auto;transform:none}
+/* the storefront lays the mega out with CSS columns, so five groups need five columns */
+.header .mega-grid{column-count:5;column-gap:2rem}
+@media (max-width:1200px){.header .mega-grid{column-count:3;column-gap:1.6rem}}
+@media (max-width:900px){.header .mega-grid{column-count:2;column-gap:1.4rem}}
+
+/* long trust labels must wrap instead of running past the phone screen */
+@media (max-width:700px){
+  .ribbon .marquee-group{gap:.5rem 1rem;padding:.9rem .8rem}
+  .ribbon .marquee-item{white-space:normal;flex:0 1 auto;text-align:center;line-height:1.5}
+}
+
+/* two actions in the work rail head, stacked on phones */
+.rail-head .rail-acts{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+@media (max-width:760px){.rail-head .rail-acts{justify-content:flex-start}}
+
+/* ===== reference-matched hero: our brand word mirrors their display-face lockup ===== */
+.hw{font-family:"Cinzel",var(--display);font-weight:500;font-style:normal;font-size:.82em;letter-spacing:.06em}
+@media (min-width:1200px){.hw{font-size:.9em;letter-spacing:.05em}}
+
+/* film wrappers on the reference ship <video> only; we ship <img>, mirror the fill */
+.gs-film img,.pantry-film img{position:absolute;top:0;right:0;bottom:0;left:0;width:100%;height:100%;object-fit:cover;background:center / cover no-repeat}
+.bq-film img{width:100%;height:100%;object-fit:cover;background:center / cover no-repeat;display:block}
+.ugc-frame{position:absolute;top:0;right:0;bottom:0;left:0;display:block}
+.ugc-frame img{width:100%;height:100%;object-fit:cover}
+.ugc-card .ugc-cap{z-index:2}
+
+/* the 3D cube lives in the hero-product stage — drop the product-PNG float/mask treatment */
+.lh-stage .stage-product{mix-blend-mode:normal}
+.lh-stage .stage-product img{animation:none;filter:none;-webkit-mask-image:none;mask-image:none}
+.stage-product .wst-cube-root{margin:0 auto;width:100%;max-width:560px}
+
+/* launching state chip on the rail cards */
+.st-launching{background:#5b3e962e;color:#cbb2ff}
+
+.is-launching{border-color:#8a6ce0b3;box-shadow:0 0 0 1px #8a6ce059,0 24px 60px #00000059}
+.is-launching .ht-img img,.is-launching .portal-arch .fit img{filter:saturate(.82) brightness(.92)}
+
+.form-msg.is-error{color:#d98b6a}
+.news-form .consent{display:flex;gap:.5rem;align-items:flex-start;font-size:.8rem;color:#efe7d7b0;line-height:1.5}
+.news-form .consent input{margin-top:.25rem;flex:0 0 auto;accent-color:#d9b96c}
+
+/* perf: the LCP hero photo must paint at once — kill the 22-26s Ken-Burns scale
+   (the reference's slow zoom repaints the largest element and gates its render) */
+.hall-media img,.hall-media picture img{animation:none!important}
+.hall-media img,.hall-media picture img{transform:none}
+/* the sun overlay looped an 18s soft-light drift across the full-bleed photo, a
+   continuous whole-hero repaint; keep its look but stop the infinite animation. */
+.hall-sun{animation:none!important}
+
+/* legibility: the "3 free demo designs" gift-tile caption sat on a busy photo */
+.gift-tile:after{background:linear-gradient(0deg,rgba(8,6,4,.94) 0%,rgba(8,6,4,.62) 34%,rgba(8,6,4,.12) 62%,transparent 80%)}
+.gt-body b{text-shadow:0 2px 16px rgba(6,4,2,.92)}
+.gt-body small{color:#fbeecb;letter-spacing:.04em;opacity:1;text-shadow:0 1px 10px rgba(6,4,2,.95)}
+.gift-tile.lead .gt-body small{font-size:.82rem}
+
+/* the emerald "Coming next" section only got its dark background from `.house .eco-emerald`;
+   our homepage body is `.has-hero`, so without this the cream card text sat on a light page. */
+section.eco-emerald{background:radial-gradient(900px 500px at 15% 0%,rgba(217,185,108,.12),transparent 60%),linear-gradient(180deg,#123f31,#0d3226);color:#efe7d7}
+section.eco-emerald h2,section.eco-emerald .nd-head h2{color:#f7f0e2}
+section.eco-emerald .lead{color:#efe7d7c2}
+.eco-emerald .lc-body small{color:#e7ddc8;opacity:1}
+
+/* visually hidden heading to keep the footer's h5s sequential after the h2s */
+.wst-sr{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* ===== 3D box panels for long text (>= 2 lines) ===== */
+.bx{display:inline-block;position:relative;padding:0.75em 1.05em 0.9em;
+  border-radius:20px;overflow:hidden;z-index:1}
+/* light / cream backgrounds: dark glass with gold tint */
+:not(.eco-dark):not(.eco-emerald) .bx{
+  background:linear-gradient(135deg,#ffffff 0%,#fdf7e8 50%,#f5ead6 100%);
+  border:1px solid #e3cba6;
+  box-shadow:0 8px 24px rgba(69,54,16,.09),inset 0 1px 0 #fff,
+              inset 0 0 0 1px rgba(160,133,64,.16),
+              0 22px 44px -12px rgba(69,54,16,.22);
+  text-shadow:0 1px 0 #fff}
+/* dark / emerald backgrounds: light glass */
+.eco-dark .bx,.eco-emerald .bx{
+  background:linear-gradient(135deg,rgba(255,255,255,.92) 0%,rgba(240,235,224,.82) 45%,rgba(225,218,198,.68) 100%);
+  border:1px solid rgba(232,207,142,.7);
+  box-shadow:0 8px 24px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.75),
+              inset 0 0 0 1px rgba(255,255,255,.18),
+              0 22px 44px -12px rgba(0,0,0,.55);
+  color:#1d211c}
+.eco-emerald .bx{background:linear-gradient(135deg,rgba(240,238,230,.96) 0%,rgba(225,238,222,.82) 55%,rgba(198,228,198,.62) 100%)}
+/* top light-edge for real 3D feel */
+.bx:after{content:"";position:absolute;top:-1px;left:-1px;right:-1px;bottom:-1px;
+  border-radius:21px;background:radial-gradient(80% 60% at 50% -10%,rgba(255,255,255,.55),transparent 60%);
+  pointer-events:none}
+.bx:active:after,.bx:hover:after{background:radial-gradient(80% 60% at 50% -25%,rgba(255,255,255,.72),transparent 60%)}
+/* preserve typographic spacing inside the panel */
+.bx>p,.bx>ol,.bx>ul,.bx>blockquote,.bx>table{margin:.2em 0 0}
+.bx small,.bx .muted{font-size:.9em;color:inherit;opacity:.92}
+
+/* interactive boxes: subtle lift on hover (for links that carry the class) */
+a.bx{transition:transform .28s ease,box-shadow .28s ease}
+a.bx:hover{transform:translateY(-3px);
+  box-shadow:0 12px 34px rgba(69,54,16,.14),inset 0 1px 0 #fff,
+              inset 0 0 0 1px rgba(160,133,64,.22),
+              0 30px 56px -12px rgba(69,54,16,.28)}
+.eco-dark a.bx:hover,.eco-emerald a.bx:hover{
+  box-shadow:0 12px 34px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.75),
+              inset 0 0 0 1px rgba(255,255,255,.3),
+              0 30px 56px -12px rgba(0,0,0,.7)}
+/* mobile: soften panel so it fits narrow screens */
+@media (max-width:600px){.bx{padding:.65em .9em .75em;border-radius:16px;font-size:.96em}}

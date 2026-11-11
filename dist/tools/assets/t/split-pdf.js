@@ -8,7 +8,11 @@
   let parts = []; /* {name, blob} */
   const urls = [];
 
-  function reset() { file = null; doc = null; count = 0; parts = []; out.replaceChildren(); zipBtn.disabled = true; }
+  function reset() {
+    parts.forEach(p => p.url && T.revoke(p.url));
+    file = null; doc = null; count = 0; parts = [];
+    out.replaceChildren(); zipBtn.disabled = true; clearBtn.disabled = true;
+  }
 
   T.dropzone($("#dz"), $("#file"), fs => {
     const f = fs.find(x => /^application\/pdf$/.test(x.type) || /\.pdf$/i.test(x.name));
@@ -19,7 +23,7 @@
       doc = await PDFLib.PDFDocument.load(await file.arrayBuffer());
       count = doc.getPageCount();
       finfo.textContent = file.name + " — " + T.bytes(file.size) + " · " + count + " pages";
-      goBtn.disabled = false;
+      goBtn.disabled = false; clearBtn.disabled = false;
     }).catch(e => { finfo.textContent = file.name + " — " + T.bytes(file.size); T.setErr(readable(e)); });
   });
 

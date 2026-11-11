@@ -56,6 +56,19 @@
         ]
       },
       {
+        "source": "/tools/**/*.webmanifest",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=604800"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/manifest+json"
+          }
+        ]
+      },
+      {
         "source": "**/*.html",
         "headers": [
           {
@@ -86,6 +99,19 @@
         ]
       },
       {
+        "source": "/fileen/**",
+        "headers": [
+          {
+            "key": "Permissions-Policy",
+            "value": "geolocation=(self), camera=(self), microphone=()"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      },
+      {
         "source": "/tools/assets/**",
         "headers": [
           {
@@ -97,12 +123,120 @@
     ],
     "rewrites": [
       {
+        "source": "/fileen",
+        "destination": "/fileen/company.html"
+      },
+      {
+        "source": "/fileen/company",
+        "destination": "/fileen/company.html"
+      },
+      {
+        "source": "/fileen/driver",
+        "destination": "/fileen/driver.html"
+      },
+      {
+        "source": "/fileen/admin",
+        "destination": "/fileen/admin.html"
+      },
+      {
         "source": "/tools",
         "destination": "/tools/index.html"
       },
       {
         "source": "/tools/:slug",
         "destination": "/tools/:slug.html"
+      },
+      {
+        "source": "/demo1",
+        "destination": "/demo1.html"
+      },
+      {
+        "source": "/demo2",
+        "destination": "/demo2/index.html"
+      },
+      {
+        "source": "/demo3",
+        "destination": "/demo3.html"
+      },
+      {
+        "source": "/demo4",
+        "destination": "/demo4/index.html"
+      },
+      {
+        "source": "/demo5",
+        "destination": "/demo5.html"
+      },
+      {
+        "source": "/demo6",
+        "destination": "/demo6.html"
+      },
+      {
+        "source": "/demo7",
+        "destination": "/demo7.html"
+      },
+      {
+        "source": "/demo8",
+        "destination": "/demo8.html"
+      },
+      {
+        "source": "/demo10",
+        "destination": "/demo10.html"
+      },
+      {
+        "source": "/demo11",
+        "destination": "/demo11.html"
+      },
+      {
+        "source": "/demo20",
+        "destination": "/demo20.html"
+      },
+      {
+        "source": "/demo21",
+        "destination": "/demo21.html"
+      },
+      {
+        "source": "/demo30",
+        "destination": "/demo30.html"
+      },
+      {
+        "source": "/demo31",
+        "destination": "/demo31.html"
+      },
+      {
+        "source": "/demo32",
+        "destination": "/demo32.html"
+      },
+      {
+        "source": "/demo40",
+        "destination": "/demo40.html"
+      },
+      {
+        "source": "/demo41",
+        "destination": "/demo41.html"
+      },
+      {
+        "source": "/demo42",
+        "destination": "/demo42.html"
+      },
+      {
+        "source": "/demo9",
+        "destination": "/demo9.html"
+      },
+      {
+        "source": "/demo12",
+        "destination": "/demo12.html"
+      },
+      {
+        "source": "/demo13",
+        "destination": "/demo13.html"
+      },
+      {
+        "source": "/school1",
+        "destination": "/school1.html"
+      },
+      {
+        "source": "/school2",
+        "destination": "/school2.html"
       }
     ]
   }

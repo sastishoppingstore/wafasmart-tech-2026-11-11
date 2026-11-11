@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img" aria-label="SIM owner details">
+<defs>
+<linearGradient id="bginfosimowner" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#070b1a"/><stop offset=".55" stop-color="#080f24"/><stop offset="1" stop-color="#0a1330"/></linearGradient>
+<radialGradient id="gainfosimowner" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#25d366" stop-opacity=".30"/><stop offset="1" stop-color="#25d366" stop-opacity="0"/></radialGradient>
+<radialGradient id="gbinfosimowner" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#8b3dff" stop-opacity=".26"/><stop offset="1" stop-color="#8b3dff" stop-opacity="0"/></radialGradient>
+<linearGradient id="glinfosimowner" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".10"/><stop offset="1" stop-color="#ffffff" stop-opacity=".02"/></linearGradient>
+<filter id="blinfosimowner" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="26"/></filter>
+</defs>
+<rect width="1200" height="675" fill="url(#bginfosimowner)"/>
+<ellipse cx="900" cy="90" rx="360" ry="260" fill="url(#gainfosimowner)"/>
+<ellipse cx="260" cy="600" rx="380" ry="280" fill="url(#gbinfosimowner)"/>
+<g opacity=".35" stroke="#ffffff" stroke-opacity=".05" stroke-width="1">
+<line x1="110" y1="0" x2="110" y2="675"/><line x1="220" y1="0" x2="220" y2="675"/><line x1="330" y1="0" x2="330" y2="675"/><line x1="440" y1="0" x2="440" y2="675"/><line x1="550" y1="0" x2="550" y2="675"/><line x1="660" y1="0" x2="660" y2="675"/><line x1="770" y1="0" x2="770" y2="675"/><line x1="880" y1="0" x2="880" y2="675"/><line x1="990" y1="0" x2="990" y2="675"/><line x1="1100" y1="0" x2="1100" y2="675"/>
+<line x1="0" y1="96" x2="1200" y2="96"/><line x1="0" y1="192" x2="1200" y2="192"/><line x1="0" y1="288" x2="1200" y2="288"/><line x1="0" y1="384" x2="1200" y2="384"/><line x1="0" y1="480" x2="1200" y2="480"/><line x1="0" y1="576" x2="1200" y2="576"/>
+</g>
+<g transform="translate(600 352)">
+  <rect x="-250" y="-215" width="500" height="430" rx="46" fill="url(#glinfosimowner)" stroke="#ffffff" stroke-opacity=".16" stroke-width="2"/>
+  <rect x="-250" y="-215" width="500" height="430" rx="46" fill="none" stroke="#25d366" stroke-opacity=".28" stroke-width="2"/>
+  <rect x="-240" y="199" width="480" height="16" rx="8" fill="#25d366" opacity=".35" filter="url(#blinfosimowner)"/>
+  <g transform="translate(0 -12) scale(1.32)">
+        <rect x="-150" y="-60" width="210" height="132" rx="18" fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.25)" stroke-width="2"/>
+        <circle cx="-108" cy="-18" r="30" fill="rgba(6,12,28,.72)" /><circle cx="-108" cy="-26" r="11" fill="#25d366" /><circle cx="-108" cy="-4" r="15" fill="rgba(255,255,255,.14)" />
+        <rect x="-60" y="-30" width="96" height="12" rx="6" fill="rgba(255,255,255,.28)" />
+        <rect x="-60" y="0" width="76" height="10" rx="5" fill="rgba(255,255,255,.18)" />
+        <rect x="-60" y="24" width="88" height="10" rx="5" fill="rgba(255,255,255,.18)" />
+        <rect x="40" y="40" width="78" height="92" rx="14" fill="#25d366" opacity=".92"/>
+        <circle cx="58" cy="60" r="7" fill="rgba(6,12,28,.72)" /><rect x="52" y="74" width="54" height="7" rx="3" fill="rgba(6,12,28,.72)" /><rect x="52" y="88" width="40" height="7" rx="3" fill="rgba(6,12,28,.72)" />
+        <circle cx="120" cy="-110" r="30" fill="#25d366" opacity=".2"/>
+        <path d="M122 -128 l20 10 v22 c0 18 -12 28 -20 33 c-8 -5 -20 -15 -20 -33 v-22 z" fill="#25d366" opacity=".9"/></g>
+</g>
+<g transform="translate(54 52)" aria-hidden="true">
+  <rect x="0" y="0" width="86" height="52" rx="26" fill="rgba(255,255,255,.06)" stroke="rgba(255,200,61,.45)"/>
+  <circle cx="30" cy="26" r="12" fill="#ffc83d"/>
+  <rect x="50" y="15" width="22" height="7" rx="3.5" fill="#ffc83d" opacity=".85"/>
+  <rect x="50" y="30" width="14" height="7" rx="3.5" fill="#25d366" opacity=".85"/>
+</g>
+<g transform="translate(1080 596)" aria-hidden="true">
+  <circle cx="12" cy="12" r="12" fill="#ffc83d"/>
+  <rect x="32" y="4" width="34" height="8" rx="4" fill="#6f7fa6"/>
+  <rect x="32" y="16" width="22" height="8" rx="4" fill="#4b5780"/>
+</g>
+</svg>

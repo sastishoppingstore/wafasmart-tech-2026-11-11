@@ -266,7 +266,7 @@ const LANDING = [
     intro1: "Islamabad buyers check credentials before they check prices. We lead with AWS and Google certification, a written rate card and a real delivery schedule — then build a site that looks the part.",
     intro2: "We work with consultancies in Blue Area, clinics in F-8, schools in F-11 and tech teams in DHA Islamabad. Every build is mobile-first, accessible and handover-ready.",
     features: [
-      { icon: "award", t: "Credential-first", d: "AWS & Google certified team, IT Ministry experience, ZATCA-registered KSA work — verifiable, not borrowed badges." },
+      { icon: "award", t: "Credential-first", d: "AWS & Google certified team, ZATCA-registered KSA work — verifiable, not borrowed badges." },
       { icon: "brief", t: "Procurement-friendly", d: "Written scope, fixed quote, invoice and handover documents your admin team can file." },
       { icon: "shield", t: "Security reviewed", d: "Hardened forms, role-based admin, HTTPS, backups and a clean handover checklist." }
     ],

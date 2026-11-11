@@ -200,7 +200,8 @@ module.exports = {
     {
       "slug": "age-calculator",
       "cat": "calc",
-      "name": "Age Calculator",
+      "name": "Age Calculator - Gregorian, Hijri, Desi",
+      "kw": ["age calculator by date of birth", "hijri age calculator", "desi age calculator"],
       "built": false
     },
     {
@@ -230,7 +231,8 @@ module.exports = {
     {
       "slug": "zakat-calculator",
       "cat": "calc",
-      "name": "Zakat Calculator",
+      "name": "Zakat Calculator - Gold/Silver Nisab",
+      "kw": ["zakat calculator", "zakat calculator pakistan", "nisab calculator"],
       "built": false
     },
     {
@@ -309,43 +311,20 @@ module.exports = {
         "custom image resizer"
       ],
       "built": false
-    }
-  ,
-    {
-      "slug": "image-size-adjuster",
-      "cat": "image",
-      "name": "Image Size Adjuster (KB + Pixels)",
-      "libs": ["heic2any", "jszip"],
-      "kw": ["resize image to kb", "compress image to 100kb", "resize image to 800x800", "image size reducer", "custom image resizer"],
-      "built": false
     },
     {
       "slug": "resize-compress-image",
       "cat": "image",
       "name": "Resize & Compress Image",
       "libs": ["heic2any", "jszip"],
-      "kw": ["resize image to kb", "compress image to 100kb", "resize image to 800x800"],
+      "kw": ["resize and compress image", "resize image to kb", "compress image to 100kb", "resize image to 800x800"],
       "built": false
     },
     {
       "slug": "gym-calculator",
       "cat": "calc",
-      "name": "Gym Calculator (BMI, BMR, TDEE, Macros, 1RM)",
+      "name": "Gym Calculator - BMI, BMR, TDEE, Macros, 1RM",
       "kw": ["gym calculator", "bmi calculator", "tdee calculator", "bmr calculator", "1 rep max calculator"],
-      "built": false
-    },
-    {
-      "slug": "age-calculator",
-      "cat": "calc",
-      "name": "Age Calculator - Gregorian, Hijri, Desi",
-      "kw": ["age calculator by date of birth", "hijri age calculator", "desi age calculator"],
-      "built": false
-    },
-    {
-      "slug": "zakat-calculator",
-      "cat": "calc",
-      "name": "Zakat Calculator - Gold/Silver Nisab",
-      "kw": ["zakat calculator", "zakat calculator pakistan", "nisab calculator"],
       "built": false
     },
     {
@@ -355,10 +334,37 @@ module.exports = {
       "kw": ["khums calculator", "khums calculator shia", "sahm e imam"],
       "built": false
     },
+    {
+      "slug": "building-material-calculator",
+      "cat": "calc",
+      "name": "Building Material Calculator - Bricks, Cement, Steel, Sand",
+      "kw": [
+        "building material calculator",
+        "construction material calculator",
+        "bricks calculator",
+        "cement calculator",
+        "steel calculator",
+        "sand calculator",
+        "building material calculator pakistan",
+        "building material calculator lahore",
+        "building material calculator karachi",
+        "building material calculator dubai",
+        "building material calculator sharjah"
+      ],
+      "built": false
+    },
+    {
+      "slug": "internet-speed-test",
+      "cat": "text",
+      "name": "Internet Speed Test - Ping, Download & Upload",
+      "kw": ["internet speed test", "speed test online", "wifi speed test", "broadband speed test"],
+      "built": false
+    }
   ],
 "HUB": {
     "title": "Free Online Tools — Image, PDF, Calculators | Wafa Smart",
-    "desc": "36 free browser tools: compress image to 50KB, image to PDF, QR codes, BMI, zakat, age and more. No uploads — files never leave your device.",
+    "desc": "43 free browser tools: building material calculator, compress image to 50KB, image to PDF, QR codes, BMI, zakat, age and more. No uploads — files never leave your device.",
+    "kw": "free online tools, image tools, pdf tools, online calculators, building material calculator, construction material calculator, compress image, image to pdf, qr code generator, bmi calculator, zakat calculator, age calculator, word counter, json formatter",
     "h1": "Free Online Tools — no uploads, no sign-up",
     "intro": "Every tool on this page runs entirely inside your browser. Your photos, PDFs and text never leave your device: there is no upload, no account, no watermark and nothing to install. The heavy lifting (PDF writing, HEIC decoding, ZIP packing) is pulled from a pinned CDN only at the moment you press a button, which keeps this site fast and keeps your files on your machine. Start with the search box, or browse Image tools, PDF tools, Calculators and Text & utilities below.",
     "ur": "Yahan har tool aapke browser me chalta hai — koi upload nahi, koi account nahi. Photo compress, PDF banana, QR code, BMI aur zakat jaise kaam seconds mein, bilkul free."

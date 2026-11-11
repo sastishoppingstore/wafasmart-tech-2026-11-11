@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img" aria-label="Tax return check">
+<defs>
+<linearGradient id="bginfotaxreturn" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#070b1a"/><stop offset=".55" stop-color="#080f24"/><stop offset="1" stop-color="#0a1330"/></linearGradient>
+<radialGradient id="gainfotaxreturn" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#5aa2ff" stop-opacity=".30"/><stop offset="1" stop-color="#5aa2ff" stop-opacity="0"/></radialGradient>
+<radialGradient id="gbinfotaxreturn" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffc83d" stop-opacity=".26"/><stop offset="1" stop-color="#ffc83d" stop-opacity="0"/></radialGradient>
+<linearGradient id="glinfotaxreturn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".10"/><stop offset="1" stop-color="#ffffff" stop-opacity=".02"/></linearGradient>
+<filter id="blinfotaxreturn" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="26"/></filter>
+</defs>
+<rect width="1200" height="675" fill="url(#bginfotaxreturn)"/>
+<ellipse cx="900" cy="90" rx="360" ry="260" fill="url(#gainfotaxreturn)"/>
+<ellipse cx="260" cy="600" rx="380" ry="280" fill="url(#gbinfotaxreturn)"/>
+<g opacity=".35" stroke="#ffffff" stroke-opacity=".05" stroke-width="1">
+<line x1="110" y1="0" x2="110" y2="675"/><line x1="220" y1="0" x2="220" y2="675"/><line x1="330" y1="0" x2="330" y2="675"/><line x1="440" y1="0" x2="440" y2="675"/><line x1="550" y1="0" x2="550" y2="675"/><line x1="660" y1="0" x2="660" y2="675"/><line x1="770" y1="0" x2="770" y2="675"/><line x1="880" y1="0" x2="880" y2="675"/><line x1="990" y1="0" x2="990" y2="675"/><line x1="1100" y1="0" x2="1100" y2="675"/>
+<line x1="0" y1="96" x2="1200" y2="96"/><line x1="0" y1="192" x2="1200" y2="192"/><line x1="0" y1="288" x2="1200" y2="288"/><line x1="0" y1="384" x2="1200" y2="384"/><line x1="0" y1="480" x2="1200" y2="480"/><line x1="0" y1="576" x2="1200" y2="576"/>
+</g>
+<g transform="translate(600 352)">
+  <rect x="-250" y="-215" width="500" height="430" rx="46" fill="url(#glinfotaxreturn)" stroke="#ffffff" stroke-opacity=".16" stroke-width="2"/>
+  <rect x="-250" y="-215" width="500" height="430" rx="46" fill="none" stroke="#5aa2ff" stroke-opacity=".28" stroke-width="2"/>
+  <rect x="-240" y="199" width="480" height="16" rx="8" fill="#5aa2ff" opacity=".35" filter="url(#blinfotaxreturn)"/>
+  <g transform="translate(0 -12) scale(1.32)">
+        <rect x="-170" y="-70" width="170" height="210" rx="18" fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.22)" stroke-width="2"/>
+        <rect x="-150" y="-48" width="130" height="40" rx="8" fill="rgba(6,12,28,.72)" />
+        <rect x="-150" y="8" width="38" height="34" rx="8" fill="#5aa2ff" /><rect x="-104" y="8" width="38" height="34" rx="8" fill="rgba(255,255,255,.14)" /><rect x="-58" y="8" width="38" height="34" rx="8" fill="rgba(255,255,255,.14)" /><rect x="-150" y="52" width="38" height="34" rx="8" fill="rgba(255,255,255,.14)" /><rect x="-104" y="52" width="38" height="34" rx="8" fill="#5aa2ff" /><rect x="-58" y="52" width="38" height="34" rx="8" fill="rgba(255,255,255,.14)" /><rect x="-150" y="96" width="38" height="34" rx="8" fill="rgba(255,255,255,.14)" /><rect x="-104" y="96" width="38" height="34" rx="8" fill="rgba(255,255,255,.14)" /><rect x="-58" y="96" width="38" height="34" rx="8" fill="#5aa2ff" />
+        <path d="M96 -100 l34 16 v34 c0 28 -18 44 -34 52 c-16 -8 -34 -24 -34 -52 v-34 z" fill="#5aa2ff" opacity=".9"/>
+        <path d="M80 -30 l12 14 l22 -30" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="150" cy="70" r="26" fill="#ffc83d" opacity=".25"/></g>
+</g>
+<g transform="translate(54 52)" aria-hidden="true">
+  <rect x="0" y="0" width="86" height="52" rx="26" fill="rgba(255,255,255,.06)" stroke="rgba(255,200,61,.45)"/>
+  <circle cx="30" cy="26" r="12" fill="#ffc83d"/>
+  <rect x="50" y="15" width="22" height="7" rx="3.5" fill="#ffc83d" opacity=".85"/>
+  <rect x="50" y="30" width="14" height="7" rx="3.5" fill="#5aa2ff" opacity=".85"/>
+</g>
+<g transform="translate(1080 596)" aria-hidden="true">
+  <circle cx="12" cy="12" r="12" fill="#ffc83d"/>
+  <rect x="32" y="4" width="34" height="8" rx="4" fill="#6f7fa6"/>
+  <rect x="32" y="16" width="22" height="8" rx="4" fill="#4b5780"/>
+</g>
+</svg>

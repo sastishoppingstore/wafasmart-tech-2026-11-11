@@ -15,6 +15,8 @@
   /* ---------- format + DOM helpers ---------- */
   const T = {
     $, $$, makeURL, revoke,
+    /* per-page CDN manifest injected in <head> as WST_T.LIBS */
+    LIBS: (W.WST_T && W.WST_T.LIBS) || {},
     bytes(n) {
       if (!isFinite(n)) return "—";
       if (n < 1024) return n + " B";
@@ -174,15 +176,15 @@
       let draw = null, groupUrl = null;
       const nameBase = f => f.name.replace(/\.[^.]+$/, "").slice(0, 40) || "image";
       const clearOut = () => { out.forEach(o => o.url && T.revoke(o.url)); out.length = 0; if (groupUrl) { T.revoke(groupUrl); groupUrl = null; } dl && (dl.hidden = true); zipBtn && (zipBtn.disabled = true, zipBtn.textContent = "Download all as ZIP"); outBox && outBox.replaceChildren(); };
-      draw = T.tileList(files, els => { if ($("#list")) $("#list").replaceChildren(...els); }, () => {});
       const refresh = () => { if (emptyEl) emptyEl.hidden = !!files.length; if (clearBtn) clearBtn.disabled = !files.length; if (goBtn) goBtn.disabled = !files.length; };
+      draw = T.tileList(files, els => { if ($("#list")) $("#list").replaceChildren(...els); }, refresh);
 
       T.dropzone(dz, inp, async fs => {
         T.setErr("");
         const keep = spec.multiple ? fs : fs.slice(-1);
         const bad = [];
+        if (!spec.multiple) files.length = 0; /* a new single file replaces the previous one */
         keep.forEach(f => { const m = T.checkFile(f, spec.typeRe || spec.acceptRe, spec.label); m ? bad.push(m) : files.push(f); });
-        if (!spec.multiple) files.length = files.length ? 1 : 0;
         clearOut(); draw(); refresh();
         if (bad.length) T.setErr(bad.join(" "));
         if (spec.onFiles) spec.onFiles(files);
@@ -276,7 +278,7 @@
           li.querySelector("small").textContent = T.bytes(f.size);
           const thumb = li.querySelector(".tile-thumb");
           if (f.type.startsWith("image") || /\.heic?$/i.test(f.name)) { const im = D.createElement("img"); im.alt = ""; im.loading = "lazy"; im.src = makeURL(f); thumb.appendChild(im); }
-          li.querySelector(".tile-x").addEventListener("click", () => { files.splice(i, 1); draw(); });
+          li.querySelector(".tile-x").addEventListener("click", () => { files.splice(i, 1); draw(); onReorder && onReorder(files); });
           li.addEventListener("dragstart", () => { dragI = i; li.classList.add("drag"); });
           li.addEventListener("dragend", () => { li.classList.remove("drag"); onReorder && onReorder(files); });
           li.addEventListener("dragover", e => { e.preventDefault(); li.classList.add("hit"); });
@@ -290,16 +292,73 @@
 
   W.WST_T = Object.assign(W.WST_T || {}, T);
 
+  /* ---------- link prefetch: the next tool is fetched the moment a finger or cursor reaches it ---------- */
+  (function prefetch() {
+    if (!("requestIdleCallback" in W) && !W.Promise) return;
+    const done = new Set();
+    function warm(e) {
+      const a = e.target && e.target.closest ? e.target.closest("a[href]") : null;
+      if (!a) return;
+      const h = a.getAttribute("href") || "";
+      if (done.has(h) || h.charAt(0) !== "/" || !/^\/(tools\/[\w.-]+|[\w-]+\.html)$/.test(h)) return;
+      if (h === location.pathname) return;
+      done.add(h);
+      const l = D.createElement("link");
+      l.rel = "prefetch"; l.href = h;
+      D.head.appendChild(l);
+    }
+    ["pointerover", "focusin"].forEach(ev => D.addEventListener(ev, warm, { passive: true, capture: true }));
+  })();
+
+  /* ---------- install this tool as its own app ----------
+     Every tool page links a manifest with its own id + start_url, so the browser installs
+     exactly the tool that is open rather than the whole site. The prompt is position:fixed,
+     which is what keeps it from shifting any content when the browser decides to offer it. */
+  (function installApp() {
+    const main = D.querySelector("main[data-slug]");
+    if (!main) return;
+    if (W.matchMedia && W.matchMedia("(display-mode: standalone)").matches) return;
+    const h1 = D.querySelector(".tool-hero h1");
+    const name = ((h1 && h1.textContent) || (document.title || "").split("—")[0] || "this tool").trim();
+    let deferred = null, box = null;
+    function mount() {
+      if (box) return box;
+      box = D.createElement("div");
+      box.id = "ip-box"; box.className = "ip-box"; box.setAttribute("role", "region");
+      box.setAttribute("aria-label", "Install app");
+      box.innerHTML = '<span class="ip-x" role="img" aria-hidden="true">' +
+        '<svg viewBox="0 0 24 24"><path d="M12 3v11m0 0 4-4m-4 4-4-4M4 19h16"/></svg></span>' +
+        '<span class="ip-t"><b>' + name.replace(/&/g, "&amp;").replace(/</g, "&lt;") +
+        '</b><small>Install as an app — opens full screen, works offline.</small></span>' +
+        '<button type="button" class="btn btn-sm btn-pri" id="ip-go">Install</button>' +
+        '<button type="button" class="ip-no" id="ip-no" aria-label="Dismiss the install suggestion">✕</button>';
+      D.body.appendChild(box);
+      box.querySelector("#ip-go").addEventListener("click", ask);
+      box.querySelector("#ip-no").addEventListener("click", close);
+      return box;
+    }
+    function ask(ev) {
+      ev && ev.preventDefault();
+      if (!deferred) return close();
+      deferred.prompt();
+      deferred.userChoice.then(() => { deferred = null; close(); }).catch(() => { });
+    }
+    function close() { if (box) box.remove(); box = null; }
+    W.addEventListener("beforeinstallprompt", ev => { ev.preventDefault(); deferred = ev; mount(); });
+    W.addEventListener("appinstalled", close);
+    W.addEventListener("message", ev => { if (ev.data === "wafa-install") ask(); });
+  })();
+
   /* ---------- hub search filter ---------- */
   D.addEventListener("DOMContentLoaded", () => {
     const q = $("#q");
     if (q) {
-      const cards = $$(".tool-card"), secs = $$("[data-cat]");
+      const cards = $$(".t3d-card[data-search]"), secs = $$("[data-cat]");
       q.addEventListener("input", () => {
         const v = q.value.trim().toLowerCase();
         cards.forEach(c => { c.hidden = !!v && (c.dataset.search || "").indexOf(v) === -1; });
-        secs.forEach(s => { s.hidden = !!v && !$$(".tool-card:not([hidden])", s).length; });
-        const n = $("#no-res"); if (n) n.hidden = !v || !!$$(".tool-card:not([hidden])").length;
+        secs.forEach(s => { s.hidden = !!v && !$$(".t3d-card[data-search]:not([hidden])", s).length; });
+        const n = $("#no-res"); if (n) n.hidden = !v || !!$$(".t3d-card[data-search]:not([hidden])").length;
       });
     }
     /* tools-page EN/UR note toggle (data-ur lines) */

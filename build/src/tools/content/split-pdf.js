@@ -3,6 +3,7 @@ const H = require("./_helpers.js");
 module.exports = {
   name: "Split PDF",
   short: "Break a big PDF into separate files by page ranges — every 1 page, a range you type, or fixed-size chunks.",
+  kw: ["split pdf", "split pdf online", "pdf splitter", "split pdf by range", "separate pdf pages"],
   title: "Split PDF Online — by Page Range or Chunks | Wafa Smart",
   desc: "Split a PDF into separate files by page range, fixed chunks or one file per page. Choose ranges like 1-3,5,9. Free, private, browser-only.",
   h1: "Split PDF — cut one file into exactly the pieces you need",

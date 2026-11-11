@@ -1,0 +1,53 @@
+{
+ "id": "/tools/water-intake-calculator",
+ "name": "Water Intake Calculator — WAFA Smart Tech",
+ "short_name": "Water Intake",
+ "description": "Free water intake calculator: 35 ml per kg plus exercise, climate and pregnancy adjustments. Get your daily litres and 250 ml cups. Private, in-browser.",
+ "start_url": "/tools/water-intake-calculator",
+ "scope": "/tools/",
+ "display": "standalone",
+ "orientation": "any",
+ "lang": "en",
+ "dir": "ltr",
+ "background_color": "#050d20",
+ "theme_color": "#050d20",
+ "categories": [
+  "utilities",
+  "productivity"
+ ],
+ "prefer_related_applications": false,
+ "icons": [
+  {
+   "src": "/assets/img/icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "/assets/img/icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "/assets/img/icon-maskable-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ],
+ "shortcuts": [
+  {
+   "name": "All free tools",
+   "short_name": "All tools",
+   "url": "/tools/",
+   "icons": [
+    {
+     "src": "/assets/img/icon-192.png",
+     "sizes": "192x192",
+     "type": "image/png"
+    }
+   ]
+  }
+ ]
+}

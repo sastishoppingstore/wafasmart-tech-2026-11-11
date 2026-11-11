@@ -7,6 +7,8 @@ module.exports = {
   desc: "Free Pakistan salary tax calculator for FY 2025-26 (Finance Act 2024 slabs). Monthly and annual tax, take-home and a highlighted slab table. PKR.",
   h1: "Pakistan Salary Tax Calculator — FY 2025-26 salaried",
   kw: ["pakistan salary tax calculator", "income tax pakistan 2025-2026", "fbr slabs salaried individual", "monthly tax on salary pk", "finance act 2024 tax", "take home salary pakistan"],
+  guide: "/blog/pakistan-salary-tax-calculator-guide.html",
+  guideTitle: "Pakistan salary tax calculator guide",
   intro: [
     "Salaried employees in Pakistan have tax withheld every month, but the slab structure in the Finance Act is written on annual income — so a quick mental estimate rarely matches the payslip. This calculator closes that gap: you enter a salary (either as the monthly figure you are paid or the annual total), and it applies the piecewise slab table for the 2025-26 tax year, then reports both the annual tax and the monthly deduction, plus your effective rate and take-home pay.",
     "The slabs are not a single flat percentage. Income up to the first threshold is untaxed, and each band above it takes a rising slice — 5%, then 15%, 25% and so on — only on the amount that exceeds that band's lower limit, added to the fixed tax accumulated from the bands below. Reading a marginal rate wrongly is the usual mistake, which is why the page prints the whole slab table and highlights the exact bracket your income lands in, so you can see the maths rather than just a headline figure.",

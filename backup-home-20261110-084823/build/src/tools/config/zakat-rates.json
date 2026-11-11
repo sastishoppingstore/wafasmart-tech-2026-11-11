@@ -1,0 +1,10 @@
+{
+  "lastUpdated": "2026-10-28",
+  "currency": ["PKR","AED","SAR","USD","INR","GBP"],
+  "goldPricePerTola": 250000,
+  "silverPricePerTola": 3000,
+  "goldNisabTola": 7.5,
+  "silverNisabTola": 52.5,
+  "nisabNote": "Default to silver nisab; explain why",
+  "rate": 0.025
+}

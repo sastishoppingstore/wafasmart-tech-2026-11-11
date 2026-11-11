@@ -784,3 +784,13 @@ footer .foot-grid > div:last-child li{
   .company3d p{font-size:.8rem}
   main p{padding:12px 13px;border-radius:13px}
 }
+.btn, a.btn, .f-order, .f-quote{min-height:44px;min-width:44px}
+.rev-track li{min-height:44px}
+
+/* PERFORMANCE MODE (2026-10-29): keep layout, remove continuous motion. */
+*,*::before,*::after{animation:none!important;transition:none!important}
+html{scroll-behavior:auto!important}
+*{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.w3d-orb,.w3d-floor,.w3d-shape,.w3d-hero-copy,.w3d-visual,.w3d-cube *{animation:none!important;will-change:auto!important}
+.w3d-orb{display:none!important}
+.rv3d,.reveal,.w3d-hero-copy,.w3d-visual{opacity:1!important;transform:none!important}

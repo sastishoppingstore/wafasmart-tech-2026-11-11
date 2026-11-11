@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SP Group</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;800&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f3ee;--ink:#14213d;--card:#fff;--navy:#14213d;--brick:#b5452a;--gold:#d4a24c;--mut:#5b6478;--r:18px}
+@media(prefers-color-scheme:dark){:root{--bg:#0e1526;--ink:#eef0f6;--card:#17213a;--mut:#a3adc4}}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:Manrope,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;line-height:1.15}
+img{max-width:100%;display:block}a{color:inherit;text-decoration:none}
+section{padding:80px 6%}
+.h2{font-size:clamp(28px,4vw,44px);margin-bottom:10px}.sub{color:var(--mut);max-width:640px;margin-bottom:38px}
+.btn{display:inline-block;background:var(--brick);color:#fff;padding:14px 28px;border-radius:50px;font-weight:800;border:0;cursor:pointer;font-size:15px;transition:transform .2s}
+.btn:hover{transform:translateY(-3px)}.btn.o{background:transparent;border:2px solid #fff}
+.grid{display:grid;gap:24px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.card{background:var(--card);border-radius:var(--r);box-shadow:0 14px 40px rgba(20,33,61,.12);overflow:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:14px 6%;background:rgba(20,33,61,.88);backdrop-filter:blur(10px);color:#fff}
+nav b{font-family:Fraunces,serif;font-size:24px}nav b span{color:var(--gold)}
+nav .l{display:flex;gap:22px;font-size:14px;font-weight:600}
+@media(max-width:900px){nav .l{display:none}}
+/* HERO 3D */
+#home{min-height:100vh;display:flex;align-items:center;gap:40px;flex-wrap:wrap;color:#fff;padding-top:110px;
+background:linear-gradient(105deg,rgba(14,21,38,.92),rgba(14,21,38,.55)),url('/assets/demo-media/197811b06bc75a.jpg') center/cover;perspective:1200px}
+#home .t{flex:1 1 380px}#home h1{font-size:clamp(38px,6vw,76px)}#home h1 em{color:var(--gold);font-style:normal}
+#home p{max-width:520px;margin:18px 0 28px;opacity:.9}
+.stage{flex:1 1 340px;height:420px;position:relative;transform-style:preserve-3d;transition:transform .15s}
+.stage .f{position:absolute;border-radius:var(--r);object-fit:cover;box-shadow:0 30px 60px rgba(0,0,0,.5);border:4px solid #fff}
+.f1{width:68%;height:62%;top:0;left:0;transform:translateZ(60px)}
+.f2{width:55%;height:50%;right:0;top:25%;transform:translateZ(130px)}
+.f3{width:48%;height:40%;left:12%;bottom:0;transform:translateZ(200px)}
+.badge{position:absolute;right:6%;bottom:4%;background:var(--gold);color:var(--navy);padding:12px 18px;border-radius:14px;font-weight:800;transform:translateZ(250px)}
+/* stats */
+.stats{background:var(--navy);color:#fff;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:20px;text-align:center;padding:50px 6%}
+.stats h3{font-size:44px;color:var(--gold)}
+/* about */
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;align-items:center}
+.two img{border-radius:var(--r);box-shadow:0 20px 50px rgba(0,0,0,.25);aspect-ratio:4/3;object-fit:cover;width:100%}
+.ticks li{list-style:none;margin:8px 0}.ticks li:before{content:"✔ ";color:var(--brick);font-weight:800}
+/* slider */
+.slider{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;padding:20px 4px 30px;scrollbar-width:thin}
+.sv{flex:0 0 min(320px,80%);scroll-snap-align:start;transition:transform .2s;transform-style:preserve-3d}
+.sv img{height:210px;width:100%;object-fit:cover}.sv div{padding:20px}.sv p{color:var(--mut);font-size:14px;margin:6px 0 10px}
+.ctl{display:flex;gap:10px;margin-bottom:10px}.ctl button{width:44px;height:44px;border-radius:50%;border:0;background:var(--navy);color:#fff;font-size:18px;cursor:pointer}
+/* property */
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+.tabs button{padding:9px 20px;border-radius:30px;border:2px solid var(--navy);background:none;color:var(--ink);font-weight:700;cursor:pointer}
+.tabs button.on{background:var(--navy);color:#fff}
+.pr{perspective:900px}.pc{transition:transform .15s;transform-style:preserve-3d;position:relative}
+.pc .im{position:relative}.pc img{height:230px;width:100%;object-fit:cover}
+.tag{position:absolute;top:14px;left:14px;background:var(--brick);color:#fff;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:800}
+.pc .in{padding:20px}.price{font-family:Fraunces,serif;font-size:26px;color:var(--brick)}
+.meta{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--mut);margin:10px 0 14px;padding:10px 0;border-block:1px solid rgba(128,128,128,.25)}
+.pc .ag{display:flex;align-items:center;gap:10px;font-size:13px;margin-bottom:14px}.pc .ag img{width:34px;height:34px;border-radius:50%;object-fit:cover}
+/* why */
+.why .card{padding:28px}.ic{font-size:34px;margin-bottom:10px}
+/* process */
+.steps{counter-reset:s}.steps .card{padding:26px;position:relative}
+.steps .card:before{counter-increment:s;content:counter(s);position:absolute;top:-14px;right:20px;width:38px;height:38px;border-radius:50%;background:var(--gold);color:var(--navy);display:grid;place-items:center;font-weight:800}
+/* projects */
+.gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.gal div{position:relative;border-radius:var(--r);overflow:hidden;height:260px}
+.gal img{width:100%;height:100%;object-fit:cover;transition:transform .5s}.gal div:hover img{transform:scale(1.1)}
+.gal span{position:absolute;left:0;right:0;bottom:0;padding:30px 16px 14px;background:linear-gradient(transparent,rgba(0,0,0,.8));color:#fff;font-weight:700}
+/* team */
+.tm{text-align:center;padding-bottom:20px}.tm img{height:280px;width:100%;object-fit:cover;margin-bottom:14px}.tm p{color:var(--mut);font-size:14px}
+/* reviews */
+#reviews{background:var(--navy);color:#fff}#reviews .sub{color:#c3cbe0}
+.rv{background:rgba(255,255,255,.08);padding:26px;border-radius:var(--r)}
+.rv .u{display:flex;gap:12px;align-items:center;margin-top:16px}.rv img{width:52px;height:52px;border-radius:50%;object-fit:cover}.st{color:var(--gold);letter-spacing:3px}
+.rf{margin-top:40px;display:grid;gap:12px;max-width:560px}
+/* faq */
+details{background:var(--card);border-radius:14px;padding:18px 22px;margin-bottom:12px;box-shadow:0 6px 20px rgba(0,0,0,.08)}
+summary{font-weight:800;cursor:pointer}details p{color:var(--mut);margin-top:10px}
+/* cta */
+.cta{text-align:center;color:#fff;background:linear-gradient(rgba(181,69,42,.9),rgba(20,33,61,.92)),url('/assets/demo-media/ac8fc2140e843b.jpg') center/cover}
+.cta h2{font-size:clamp(28px,4.5vw,52px);margin-bottom:18px}
+/* contact */
+input,textarea,select{width:100%;padding:14px 16px;border-radius:12px;border:1px solid rgba(128,128,128,.35);background:var(--card);color:var(--ink);font:inherit}
+.ci{padding:30px}.ci p{margin:10px 0}
+footer{background:#0b1222;color:#c3cbe0;padding:60px 6% 24px}
+footer .grid{margin-bottom:30px}footer h4{color:#fff;margin-bottom:12px;font-family:Fraunces,serif}footer li{list-style:none;margin:6px 0;font-size:14px}
+footer .cp{text-align:center;border-top:1px solid rgba(255,255,255,.12);padding-top:20px;font-size:13px}
+.wa{position:fixed;right:18px;bottom:18px;width:56px;height:56px;border-radius:50%;background:#25d366;display:grid;place-items:center;font-size:28px;z-index:60;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+/* ===== SP Group premium look ===== */
+:root{--brick:#c9532f;--gold:#e3b04b;--navy:#0f1b3a}
+body{background:radial-gradient(1200px 600px at 90% -10%,rgba(227,176,75,.12),transparent),var(--bg)}
+nav{background:rgba(15,27,58,.82);border-bottom:1px solid rgba(227,176,75,.35)}
+nav b{letter-spacing:.5px;font-size:26px}
+nav .l a{position:relative;padding:4px 0}nav .l a:after{content:"";position:absolute;left:0;bottom:-2px;height:2px;width:0;background:var(--gold);transition:width .3s}nav .l a:hover:after{width:100%}
+.btn{background:linear-gradient(135deg,#e0643a,#b13d1c);box-shadow:0 10px 26px rgba(201,83,47,.45)}
+.btn.o{background:rgba(255,255,255,.08);backdrop-filter:blur(6px);box-shadow:none;border-color:rgba(255,255,255,.7)}
+#home{background:linear-gradient(105deg,rgba(10,18,40,.95) 10%,rgba(10,18,40,.5)),url('/assets/demo-media/197811b06bc75a.jpg') center/cover;position:relative;overflow:hidden}
+#home:before{content:"";position:absolute;width:520px;height:520px;right:-120px;top:10%;background:radial-gradient(circle,rgba(227,176,75,.35),transparent 65%);filter:blur(30px)}
+#home h1{text-shadow:0 8px 40px rgba(0,0,0,.5)}
+#home h1 em{background:linear-gradient(90deg,#f6d27a,#e3b04b,#ffefb8);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stage .f{border:0;box-shadow:0 40px 80px rgba(0,0,0,.6),0 0 0 6px rgba(255,255,255,.9)}
+.badge{background:linear-gradient(135deg,#f6d27a,#e3b04b);box-shadow:0 14px 30px rgba(0,0,0,.4)}
+.h2{position:relative;padding-bottom:16px}.h2:after{content:"";position:absolute;left:0;bottom:0;width:70px;height:4px;border-radius:4px;background:linear-gradient(90deg,var(--brick),var(--gold))}
+.cta .h2:after,.cta h2:after{display:none}
+.stats{background:linear-gradient(120deg,#0f1b3a,#1b2d5c);border-block:3px solid var(--gold)}
+.card{border:1px solid rgba(128,128,128,.12);box-shadow:0 18px 50px rgba(15,27,58,.14)}
+.card:hover{box-shadow:0 30px 70px rgba(15,27,58,.28)}
+.sv h3,.pc h3{font-size:21px}
+.tag{background:linear-gradient(135deg,#e0643a,#b13d1c);box-shadow:0 6px 16px rgba(0,0,0,.35)}
+.pc .im:after{content:"";position:absolute;inset:auto 0 0 0;height:50%;background:linear-gradient(transparent,rgba(0,0,0,.45));pointer-events:none}
+.why .card{border-top:4px solid var(--gold)}
+.ic{width:62px;height:62px;display:grid;place-items:center;border-radius:18px;background:linear-gradient(135deg,rgba(227,176,75,.25),rgba(201,83,47,.2))}
+#reviews{background:linear-gradient(135deg,#0b1430,#1b2d5c)}
+.rv{border:1px solid rgba(227,176,75,.3);backdrop-filter:blur(8px)}.rv img{border:3px solid var(--gold)}
+.tm img{filter:saturate(1.05)}.tm h3{margin-top:6px}
+.cta{padding:110px 6%}
+footer{background:linear-gradient(180deg,#0b1222,#060a15);border-top:4px solid var(--gold)}
+.wa{right:18px;bottom:88px;background:#25d366}
+.call{position:fixed;right:18px;bottom:18px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#e0643a,#b13d1c);display:grid;place-items:center;font-size:26px;z-index:60;box-shadow:0 8px 24px rgba(0,0,0,.35);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(224,100,58,.6)}100%{box-shadow:0 0 0 22px rgba(224,100,58,0)}}
+</style>
+</head>
+<body>
+
+<nav><b>SP <span>Marketing</span></b>
+<div class="l"><a href="#home">Home</a><a href="#about">About</a><a href="#services">Services</a><a href="#properties">Properties</a><a href="#why">Why Us</a><a href="#reviews">Reviews</a><a href="#contact">Contact</a></div>
+<a class="btn" href="tel:03246627054" style="padding:9px 20px">📞 0324 6627054</a></nav>
+
+<!-- 1 HERO -->
+<section id="home">
+<div class="t"><h1>SP Group: apka khwab ka ghar, <em>hum banate hain.</em></h1>
+<p>Construction, development, marketing aur property sales — sab kuch ek chhat ke neeche. 15 saal ka tajurba, 1,200+ khush families.</p>
+<a class="btn" href="#properties">Properties Dekhein</a> <a class="btn o" href="tel:03246627054">📞 Call: 0324 6627054</a></div>
+<div class="stage" id="stage">
+<img class="f f1" src="/assets/demo-media/d33265f04c4a6c.jpg" alt="Modern villa">
+<img class="f f2" src="/assets/demo-media/60ae862ad1645f.jpg" alt="Engineers on site">
+<img class="f f3" src="/assets/demo-media/00106547cb7225.jpg" alt="Key handover">
+<div class="badge">⭐ 4.9 / 5 Rating</div></div>
+</section>
+
+<!-- 2 STATS -->
+<div class="stats"><div><h3 data-n="1200">0</h3>Homes Delivered</div><div><h3 data-n="15">0</h3>Saal Tajurba</div><div><h3 data-n="85">0</h3>Projects Chal Rahe</div><div><h3 data-n="98">0</h3>% Happy Clients</div></div>
+
+<!-- 3 ABOUT -->
+<section id="about"><div class="two">
+<img src="/assets/demo-media/ee9b67bce0172a.jpg" alt="Our team">
+<div><h2 class="h2">Hum kaun hain</h2><p class="sub" style="margin-bottom:16px">SP Group ek full-service real estate company hai. Hum zameen khareedne se le kar ghar ki chaabi dene tak har qadam par apke sath hain.</p>
+<ul class="ticks"><li>In-house architects aur engineers</li><li>Waqt par delivery, tay shuda budget</li><li>Legal paperwork aur registry mein madad</li><li>Construction ke baad 2 saal warranty</li></ul><br><a class="btn" href="#contact">Hamari Team Se Milein</a></div></div></section>
+
+<!-- 4 SERVICES SLIDER -->
+<section id="services" style="background:rgba(128,128,128,.07)">
+<h2 class="h2">Hamari Services</h2><p class="sub">Slide karein aur dekhein hum apke liye kya kya kar sakte hain.</p>
+<div class="ctl"><button onclick="sl(-1)" aria-label="Pichla">←</button><button onclick="sl(1)" aria-label="Agla">→</button></div>
+<div class="slider" id="sl">
+<div class="card sv"><img src="/assets/demo-media/b9e2cd8de6507f.jpg" alt=""><div><h3>Construction</h3><p>Ghar, plaza aur factory — grey structure se finishing tak.</p><a href="#contact" style="color:var(--brick);font-weight:800">Quote Lein →</a></div></div>
+<div class="card sv"><img src="/assets/demo-media/5da9887ae6cd66.jpg" alt=""><div><h3>Real Estate Development</h3><p>Housing schemes aur commercial towers ki planning aur development.</p><a href="#contact" style="color:var(--brick);font-weight:800">Jaanein →</a></div></div>
+<div class="card sv"><img src="/assets/demo-media/d89d1bcdd7760e.jpg" alt=""><div><h3>Property Marketing</h3><p>Digital ads, 3D tours aur drone shoots jo property jaldi bechen.</p><a href="#contact" style="color:var(--brick);font-weight:800">Jaanein →</a></div></div>
+<div class="card sv"><img src="/assets/demo-media/7f612a391f1107.jpg" alt=""><div><h3>Buy / Sell / Rent</h3><p>Verified listings aur sahi qeemat par sauda, bina jhanjhat.</p><a href="#properties" style="color:var(--brick);font-weight:800">Listings →</a></div></div>
+<div class="card sv"><img src="/assets/demo-media/472de104efc402.jpg" alt=""><div><h3>Interior Design</h3><p>Modern, luxury aur budget interiors apke zauq ke mutabiq.</p><a href="#contact" style="color:var(--brick);font-weight:800">Design Dekhein →</a></div></div>
+<div class="card sv"><img src="/assets/demo-media/09de48f3c382f6.jpg" alt=""><div><h3>Property Management</h3><p>Kiraya, maintenance aur tenant handling — hum sambhalte hain.</p><a href="#contact" style="color:var(--brick);font-weight:800">Jaanein →</a></div></div>
+</div></section>
+
+<!-- 5 PROPERTIES -->
+<section id="properties"><h2 class="h2">Khaas Properties</h2><p class="sub">Kisi bhi card par mouse ghumayein ya touch karein — 3D effect dekhein.</p>
+<div class="tabs" id="tabs"><button class="on" data-f="all">Sab</button><button data-f="sale">Sale</button><button data-f="rent">Rent</button><button data-f="comm">Commercial</button></div>
+<div class="grid pr" id="pg"></div></section>
+
+<!-- 6 WHY -->
+<section id="why" class="why" style="background:rgba(128,128,128,.07)"><h2 class="h2">Hamein Kyun Chunein?</h2><p class="sub">Ye wo wajuhaat hain jin ki wajah se clients dobara hamare paas aate hain.</p>
+<div class="grid">
+<div class="card"><div class="ic">🏗️</div><h3>Quality Material</h3><p class="sub" style="margin:6px 0 0">Sirf certified brands — cement, steel aur tiles sab ka record.</p></div>
+<div class="card"><div class="ic">⏱️</div><h3>On-time Delivery</h3><p class="sub" style="margin:6px 0 0">Har project ka timeline likha hota hai, late hone par penalty hamari.</p></div>
+<div class="card"><div class="ic">💰</div><h3>Fixed Pricing</h3><p class="sub" style="margin:6px 0 0">Koi hidden charges nahi. Agreement mein har cheez wazeh.</p></div>
+<div class="card"><div class="ic">📜</div><h3>Clear Documents</h3><p class="sub" style="margin:6px 0 0">Har property ki verification aur legal check pehle se.</p></div>
+<div class="card"><div class="ic">🛡️</div><h3>2 Saal Warranty</h3><p class="sub" style="margin:6px 0 0">Handover ke baad structure aur finishing par guarantee.</p></div>
+<div class="card"><div class="ic">📞</div><h3>24/7 Support</h3><p class="sub" style="margin:6px 0 0">Kisi bhi masle par humari team ek call door hai.</p></div></div></section>
+
+<!-- 7 PROCESS -->
+<section><h2 class="h2">Kaam Kaise Hota Hai</h2><p class="sub">Pehli call se chaabi tak 4 asaan qadam.</p>
+<div class="grid steps"><div class="card"><h3>Mashwara</h3><p class="sub" style="margin:6px 0 0">Budget aur zaroorat par free meeting.</p></div><div class="card"><h3>Design & Quote</h3><p class="sub" style="margin:6px 0 0">Naqsha, 3D view aur poori lagat.</p></div><div class="card"><h3>Construction</h3><p class="sub" style="margin:6px 0 0">Haftawar updates aur site photos.</p></div><div class="card"><h3>Handover</h3><p class="sub" style="margin:6px 0 0">Inspection ke baad chaabi apke hath mein.</p></div></div></section>
+
+<!-- 8 PROJECTS -->
+<section style="background:rgba(128,128,128,.07)"><h2 class="h2">Mukammal Projects</h2><p class="sub">Hamari haal hi mein tayyar ki hui imaratein.</p>
+<div class="gal">
+<div><img src="/assets/demo-media/bd7ebd0914a36b.jpg" alt=""><span>Royal Villas</span></div>
+<div><img src="/assets/demo-media/a414223c225061.jpg" alt=""><span>Skyline Towers</span></div>
+<div><img src="/assets/demo-media/9a428acd11d30d.jpg" alt=""><span>Green Valley</span></div>
+<div><img src="/assets/demo-media/c10bd709c81845.jpg" alt=""><span>Trade Center</span></div></div></section>
+
+<!-- 9 MARKETING -->
+<section><div class="two"><div><h2 class="h2">Property Marketing Jo Bechti Hai</h2><p class="sub" style="margin-bottom:16px">Developer hon ya malik — hum apki property ko sahi logon tak pohanchate hain.</p>
+<ul class="ticks"><li>Drone aur 4K video shoots</li><li>Facebook, Instagram aur Google ads</li><li>360° virtual tour</li><li>Lead tracking aur weekly report</li></ul><br><a class="btn" href="#contact">Marketing Plan Lein</a></div>
+<img src="/assets/demo-media/36b971b0dea846.jpg" alt="Marketing team"></div></section>
+
+<!-- 10 TEAM -->
+<section style="background:rgba(128,128,128,.07)"><h2 class="h2">Hamari Team</h2><p class="sub">Wo log jo apke khwab ko haqeeqat banate hain.</p>
+<div class="grid">
+<div class="card tm"><img src="/assets/demo-media/d706f45686a113.jpg" alt=""><h3>Ahmed Raza</h3><p>CEO & Founder</p></div>
+<div class="card tm"><img src="/assets/demo-media/54529c89c4eeaf.jpg" alt=""><h3>Sana Malik</h3><p>Chief Architect</p></div>
+<div class="card tm"><img src="/assets/demo-media/4bf4b04afb3955.jpg" alt=""><h3>Bilal Hussain</h3><p>Head of Sales</p></div>
+<div class="card tm"><img src="/assets/demo-media/17f7be3da54d50.jpg" alt=""><h3>Hina Qureshi</h3><p>Marketing Lead</p></div></div></section>
+
+<!-- 11 REVIEWS -->
+<section id="reviews"><h2 class="h2">Clients Ke Reviews</h2><p class="sub">Asli logon ki asli raaye.</p>
+<div class="grid" id="rvs">
+<div class="rv"><div class="st">★★★★★</div><p>"Waqt par ghar mil gaya aur quality umeed se behtar thi. Team har hafte photos bhejti rahi."</p><div class="u"><img src="/assets/demo-media/1bbc163633b49c.jpg" alt=""><div><b>Usman Tariq</b><br><small>Villa Owner</small></div></div></div>
+<div class="rv"><div class="st">★★★★★</div><p>"Meri dukaan ki marketing ke baad 3 hafton mein sauda ho gaya. Shukriya SP Group."</p><div class="u"><img src="/assets/demo-media/0b849475f06f97.jpg" alt=""><div><b>Ayesha Khan</b><br><small>Investor</small></div></div></div>
+<div class="rv"><div class="st">★★★★☆</div><p>"Pricing shuru se saaf thi, koi extra kharcha nahi aaya. Highly recommended."</p><div class="u"><img src="/assets/demo-media/1d963c367b40b6.jpg" alt=""><div><b>Faisal Mehmood</b><br><small>Business Owner</small></div></div></div></div>
+<form class="rf" onsubmit="return rev(event)"><h3>Apna review likhein</h3><input id="rn" placeholder="Apka naam" required><select id="rs"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select><textarea id="rt" rows="3" placeholder="Apka tajurba..." required></textarea><button class="btn">Review Submit Karein</button></form></section>
+
+<!-- 12 PRICING -->
+<section><h2 class="h2">Construction Packages</h2><p class="sub">Per sq.ft. rates — final lagat site visit ke baad.</p>
+<div class="grid">
+<div class="card" style="padding:28px"><h3>Basic</h3><div class="price">Rs 2,800 / sq.ft</div><ul class="ticks" style="margin:14px 0"><li>Standard material</li><li>Basic finishing</li><li>1 saal warranty</li></ul><a class="btn" href="#contact">Chunein</a></div>
+<div class="card" style="padding:28px;outline:3px solid var(--gold)"><h3>Standard ⭐</h3><div class="price">Rs 3,600 / sq.ft</div><ul class="ticks" style="margin:14px 0"><li>Premium material</li><li>Modern finishing</li><li>2 saal warranty</li></ul><a class="btn" href="#contact">Chunein</a></div>
+<div class="card" style="padding:28px"><h3>Luxury</h3><div class="price">Rs 4,800 / sq.ft</div><ul class="ticks" style="margin:14px 0"><li>Imported fittings</li><li>Custom interior</li><li>5 saal warranty</li></ul><a class="btn" href="#contact">Chunein</a></div></div></section>
+
+<!-- 13 FAQ -->
+<section style="background:rgba(128,128,128,.07)"><h2 class="h2">Aksar Poochay Gaye Sawal</h2><br>
+<details><summary>Ghar banane mein kitna waqt lagta hai?</summary><p>Aam taur par 8–12 maheene, size aur design par depend karta hai.</p></details>
+<details><summary>Kya installments par property mil sakti hai?</summary><p>Ji haan, kai projects par 12 se 36 maheene ki aasan qiston ka option hai.</p></details>
+<details><summary>Kya documents verify hote hain?</summary><p>Har property ki registry, NOC aur ownership hum khud verify karte hain.</p></details>
+<details><summary>Site visit free hai?</summary><p>Ji, pehli site visit aur mashwara bilkul muft hai.</p></details></section>
+
+<!-- 14 CTA -->
+<section class="cta"><h2>Aaj hi apne ghar ka pehla qadam uthayein</h2><a class="btn" style="background:var(--gold);color:var(--navy)" href="#contact">Free Site Visit Book Karein</a></section>
+
+<!-- 15 CONTACT -->
+<section id="contact"><h2 class="h2">Humse Rabta Karein</h2><p class="sub">Form bharein, hum 24 ghante mein call karenge.</p>
+<div class="grid"><form class="card ci" onsubmit="return cf(event)" style="display:grid;gap:12px"><input placeholder="Poora naam" required><input type="tel" placeholder="Phone number" required><select><option>Construction</option><option>Property Khareedna</option><option>Property Bechna</option><option>Marketing</option></select><textarea rows="4" placeholder="Apka paigham"></textarea><button class="btn">Paigham Bhejein</button><small id="cm" style="color:var(--brick);font-weight:800"></small></form>
+<div class="card ci"><h3>Office</h3><p>📍 Plot 12, Main Boulevard, Lahore</p><p>📞 <a href="tel:03246627054" style="font-weight:800">0324 6627054</a></p><p>💬 <a href="https://wa.me/923246627054" style="font-weight:800">WhatsApp Karein</a></p><p>✉️ info@spmarketing.pk</p><p>🕘 Mon–Sat: 9am – 7pm</p>
+<div style="border-radius:14px;overflow:hidden;margin-top:14px"><iframe title="Map" src="https://www.google.com/maps?q=Lahore&output=embed" style="border:0;width:100%;height:210px" loading="lazy"></iframe></div></div></div></section>
+
+<!-- 16 FOOTER -->
+<footer><div class="grid"><div><h4>SP Group</h4><p style="font-size:14px">SP Group — construction, development, marketing aur property ka bharose mand naam. Call: 0324 6627054</p></div>
+<div><h4>Services</h4><ul><li>Construction</li><li>Development</li><li>Marketing</li><li>Property Sales</li></ul></div>
+<div><h4>Links</h4><ul><li><a href="#about">About</a></li><li><a href="#properties">Properties</a></li><li><a href="#reviews">Reviews</a></li><li><a href="#contact">Contact</a></li></ul></div>
+<div><h4>Follow</h4><ul><li>Facebook</li><li>Instagram</li><li>YouTube</li><li>LinkedIn</li></ul></div></div>
+<div class="cp">© 2026 SP Group. Tamam huqooq mehfooz hain.</div></footer>
+<a class="call" href="tel:03246627054" aria-label="Call">📞</a>
+<a class="wa" href="https://wa.me/923246627054" aria-label="WhatsApp">💬</a>
+
+<script>
+const P=[
+["sale","Modern Villa, DHA","Rs 4.8 Cr","5 Bed","5 Bath","1 Kanal","photo-1564013799919-ab600027ffc6","Sale","photo-1560250097-0b93528c311a","Bilal H."],
+["sale","Luxury Home, Bahria","Rs 3.2 Cr","4 Bed","4 Bath","10 Marla","photo-1600596542815-ffad4c1539a9","Sale","photo-1573497019940-1c28c88b4f3e","Hina Q."],
+["rent","Apartment, Gulberg","Rs 85,000/mo","2 Bed","2 Bath","1,200 sqft","photo-1545324418-cc1a3fa10c00","Rent","photo-1573496359142-b8d87734a5a2","Sana M."],
+["comm","Office Floor, Main Blvd","Rs 6.5 Cr","12 Rooms","4 Bath","6,000 sqft","photo-1497366216548-37526070297c","Commercial","photo-1472099645785-5658abf4ff4e","Ahmed R."],
+["sale","Family House, Johar Town","Rs 2.1 Cr","3 Bed","3 Bath","7 Marla","photo-1600585154340-be6161a56a0c","Sale","photo-1560250097-0b93528c311a","Bilal H."],
+["rent","Penthouse, Clifton","Rs 2,10,000/mo","3 Bed","3 Bath","2,400 sqft","photo-1512917774080-9991f1c4c750","Rent","photo-1573496359142-b8d87734a5a2","Sana M."]];
+const pg=document.getElementById('pg');
+pg.innerHTML=P.map(p=>`<div class="card pc" data-c="${p[0]}"><div class="im"><img loading="lazy" src="/assets/demo-media/demo42-${p[6]}.jpg" alt="${p[1]}"><span class="tag">${p[7]}</span></div><div class="in"><h3>${p[1]}</h3><div class="price">${p[2]}</div><div class="meta"><span>🛏 ${p[3]}</span><span>🛁 ${p[4]}</span><span>📐 ${p[5]}</span></div><div class="ag"><img src="/assets/demo-media/demo42-${p[8]}.jpg" alt=""><span>Agent: ${p[9]}</span></div><a class="btn" style="padding:10px 22px" href="#contact">Visit Book Karein</a></div></div>`).join('');
+document.getElementById('tabs').onclick=e=>{const f=e.target.dataset.f;if(!f)return;document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b===e.target));document.querySelectorAll('.pc').forEach(c=>c.style.display=(f=='all'||c.dataset.c==f)?'':'none')};
+// 3D tilt
+function tilt(el,m){el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;el.style.transform=`perspective(900px) rotateY(${x*m}deg) rotateX(${-y*m}deg) scale3d(1.03,1.03,1.03)`});el.addEventListener('pointerleave',()=>el.style.transform='')}
+document.querySelectorAll('.pc,.sv,.why .card').forEach(c=>tilt(c,14));
+const st=document.getElementById('stage'),hero=document.getElementById('home');
+hero.addEventListener('pointermove',e=>{const x=e.clientX/innerWidth-.5,y=e.clientY/innerHeight-.5;st.style.transform=`rotateY(${x*22}deg) rotateX(${-y*16}deg)`});
+st.style.transform='rotateY(-14deg) rotateX(6deg)';
+// slider
+function sl(d){document.getElementById('sl').scrollBy({left:d*340,behavior:'smooth'})}
+setInterval(()=>{const s=document.getElementById('sl');s.scrollLeft+s.clientWidth>=s.scrollWidth-4?s.scrollTo({left:0,behavior:'smooth'}):sl(1)},4500);
+// counters
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const n=e.target,t=+n.dataset.n;let i=0;const k=setInterval(()=>{i+=Math.ceil(t/50);if(i>=t){i=t;clearInterval(k)}n.textContent=i.toLocaleString()+(t>=1000?'+':'')},30);io.unobserve(n)}));
+document.querySelectorAll('[data-n]').forEach(n=>io.observe(n));
+// image fallback
+document.querySelectorAll('img').forEach(i=>i.onerror=()=>{i.style.background='linear-gradient(135deg,#14213d,#b5452a)';i.removeAttribute('src')});
+// forms
+function rev(e){e.preventDefault();const n=rn.value,s=+rs.value,t=rt.value;rvs.insertAdjacentHTML('afterbegin',`<div class="rv"><div class="st">${'★'.repeat(s)}${'☆'.repeat(5-s)}</div><p></p><div class="u"><div><b></b><br><small>Naya Review</small></div></div></div>`);const c=rvs.firstElementChild;c.querySelector('p').textContent='"'+t+'"';c.querySelector('b').textContent=n;e.target.reset();return false}
+function cf(e){e.preventDefault();cm.textContent='✔ Shukriya! Hum jald rabta karenge.';e.target.reset();return false}
+</script>
+</body>
+</html>

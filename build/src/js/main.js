@@ -9,7 +9,8 @@
   const D = document, W = window;
   const $ = (s, c) => (c || D).querySelector(s);
   const $$ = (s, c) => Array.from((c || D).querySelectorAll(s));
-  const reduced = W.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  /* Performance mode: no ambient canvas, tilt or count-up animation. */
+  const reduced = true;
   const touch = W.matchMedia("(hover: none)").matches;
   const CFG = W.WST_CFG || {};                 // injected by build.js (whatsapp, currency…)
   window.WST = { CFG, toast, saveLead };
@@ -179,11 +180,8 @@
   const trk = $(".t-track");
   if (trk) {
     const slides = $$(".t-slide", trk), dots = $$(".t-nav button");
-    let i = 0, timer = setInterval(next, 6500);
-    D.addEventListener("visibilitychange", () => {
-      clearInterval(timer);
-      if (!D.hidden) timer = setInterval(next, 6500);
-    });
+    let i = 0, timer = 0; /* auto-play disabled: only manual dots/swipe change slides */
+    D.addEventListener("visibilitychange", () => { });
     function go(n) {
       i = (n + slides.length) % slides.length;
       const dir = getComputedStyle(D.body).direction === "rtl" ? 1 : -1;
@@ -191,10 +189,10 @@
       dots.forEach((d, k) => d.classList.toggle("on", k === i));
     }
     function next() { go(i + 1); }
-    dots.forEach((d, k) => d.addEventListener("click", () => { clearInterval(timer); timer = setInterval(next, 6500); go(k); }));
+    dots.forEach((d, k) => d.addEventListener("click", () => go(k)));
     let sx = 0;
     trk.addEventListener("touchstart", e => sx = e.touches[0].clientX, { passive: true });
-    trk.addEventListener("touchend", e => { const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 44) { clearInterval(timer); go(i + (dx < 0 ? 1 : -1)); timer = setInterval(next, 6500); } }, { passive: true });
+    trk.addEventListener("touchend", e => { const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 44) go(i + (dx < 0 ? 1 : -1)); }, { passive: true });
     go(0);
   }
 

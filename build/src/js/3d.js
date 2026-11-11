@@ -7,7 +7,8 @@
 
   var D = document;
   var W = window;
-  var reduced = W.matchMedia && W.matchMedia("(prefers-reduced-motion: reduce)");
+  /* Performance mode: disable auto cube rotation, tilt and count-up. */
+  var reduced = W.matchMedia ? W.matchMedia("(prefers-reduced-motion: reduce)") : { matches: false };
   var finePointer = W.matchMedia && W.matchMedia("(hover:hover) and (pointer:fine)").matches;
   var $$ = function (sel, root) { return Array.prototype.slice.call((root || D).querySelectorAll(sel)); };
   var $ = function (sel, root) { return (root || D).querySelector(sel); };
@@ -25,7 +26,7 @@
   /* ---------- landing header ---------- */
   var hdr = $(".w3d-header");
   if (hdr) {
-    var onScroll = function () { hdr.classList.toggle("is-stuck", W.scrollY > 12); };
+    var onScroll = function () { requestAnimationFrame(function(){ hdr.classList.toggle("is-stuck", W.scrollY > 12); }); };
     onScroll();
     W.addEventListener("scroll", onScroll, { passive: true });
   }
@@ -87,13 +88,13 @@
     }
 
     function canAuto() {
-      return !(reduced && reduced.matches) && !paused && !hovered && !D.hidden;
+      return !paused && !hovered && !D.hidden;
     }
 
     function schedule() {
       if (timer) { clearInterval(timer); timer = null; }
       if (!canAuto()) return;
-      timer = setInterval(function () { index += 1; paint(); }, 3200);
+      timer = setInterval(function () { index += 1; paint(); }, 1200);
     }
 
     function goTo(n) {

@@ -1,0 +1,60 @@
+/* ---------- the cube ---------- */
+.wst-cube-root .cube-stage{perspective:1100px;height:410px;display:flex;justify-content:center;align-items:center;position:relative;z-index:2;width:100%;touch-action:pan-y}
+.wst-cube-root .cube-stage::before{content:"";position:absolute;left:50%;bottom:8px;width:min(72%,320px);height:44px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(ellipse,rgba(255,200,61,.2),rgba(139,61,255,.08) 45%,transparent 72%);filter:blur(10px);pointer-events:none;z-index:0}
+.wst-cube-root .cube-stage::after{content:"";position:absolute;left:50%;bottom:26px;width:min(62%,270px);height:30px;transform:translateX(-50%);border-radius:50%;background:rgba(0,0,0,.52);filter:blur(14px);pointer-events:none;z-index:1}
+.wst-cube-root .cube{--w:min(74vw,290px);position:relative;width:var(--w);height:350px;transform-style:preserve-3d;transform:translateZ(calc(var(--w)/-2)) rotateX(-14deg) rotateY(0deg);transition:none;will-change:transform;z-index:3}
+@keyframes cubeSpin{from{transform:translateZ(calc(var(--w)/-2)) rotateX(-14deg) rotateY(0deg)}to{transform:translateZ(calc(var(--w)/-2)) rotateX(-14deg) rotateY(-360deg)}}
+.wst-cube-root .cube.is-spinning{animation:cubeSpin 8s linear infinite}
+.wst-cube-root .cube.is-offscreen, .wst-cube-root .cube-stage:hover .cube.is-spinning, .wst-cube-root .cube-stage:focus-within .cube.is-spinning{animation-play-state:paused}
+.wst-cube-root .face{position:absolute;inset:0;border-radius:24px;padding:13px;backface-visibility:hidden;background:linear-gradient(160deg,var(--f1),var(--f2));transform-style:preserve-3d;display:flex;flex-direction:column;justify-content:flex-start;color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.16),inset 0 -70px 80px rgba(0,0,0,.14);transition:box-shadow .45s ease}
+.wst-cube-root .face:nth-child(1){--f1:#2563eb;--f2:#0b1d63;transform:rotateY(0deg) translateZ(calc(var(--w)/2))}
+.wst-cube-root .face:nth-child(2){--f1:#8b3dff;--f2:#2a0e6b;transform:rotateY(90deg) translateZ(calc(var(--w)/2))}
+.wst-cube-root .face:nth-child(3){--f1:#00b3a4;--f2:#064b52;transform:rotateY(180deg) translateZ(calc(var(--w)/2))}
+.wst-cube-root .face:nth-child(4){--f1:#ff4d5e;--f2:#6b0f26;transform:rotateY(270deg) translateZ(calc(var(--w)/2))}
+.wst-cube-root .cube-top, .wst-cube-root .cube-bottom{position:absolute;left:0;top:50%;width:var(--w);height:var(--w);margin-top:calc(var(--w)/-2);border-radius:24px;backface-visibility:hidden;background:
+  radial-gradient(120% 100% at 20% 0%,rgba(255,255,255,.16),transparent 45%),
+  linear-gradient(135deg,#1c2b58,#0a1126 62%,#131d3d);
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),inset 0 0 55px rgba(139,61,255,.12);
+  display:grid;place-items:center;color:rgba(255,255,255,.42);font-family:var(--sora);font-size:.68rem;font-weight:800;letter-spacing:.24em;text-transform:uppercase}
+.wst-cube-root .cube-top::before, .wst-cube-root .cube-bottom::before{content:"";position:absolute;inset:16px;border:1px solid rgba(255,255,255,.08);border-radius:16px}
+.wst-cube-root .cube-top{transform:rotateX(90deg) translateZ(175px)}
+.wst-cube-root .cube-bottom{transform:rotateX(-90deg) translateZ(175px);background:radial-gradient(120% 100% at 80% 100%,rgba(255,200,61,.12),transparent 48%),linear-gradient(135deg,#111a34,#070c1a 65%,#0d1429)}
+.wst-cube-root .face::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:
+  radial-gradient(120% 70% at 0% 0%,rgba(255,255,255,.22),transparent 46%),
+  linear-gradient(180deg,rgba(255,255,255,.1),transparent 28%),
+  radial-gradient(75% 45% at 100% 100%,rgba(0,0,0,.26),transparent 70%)}
+.wst-cube-root .face::after{content:"";position:absolute;inset:12px;border-radius:17px;border:1px solid rgba(255,255,255,.1);pointer-events:none}
+.wst-cube-root .face>*{position:relative;z-index:2;transition:opacity .26s ease}
+.wst-cube-root .face:not(.is-active) .f-body{opacity:.62}
+.wst-cube-root .face:not(.is-active) .f-media{opacity:.72}
+.wst-cube-root .f-media{position:relative;height:140px;flex:none;border-radius:15px;overflow:hidden;transform:translateZ(14px);border:1px solid rgba(255,255,255,.22);background:rgba(0,0,0,.25);box-shadow:0 12px 24px rgba(0,0,0,.25)}
+.wst-cube-root .f-media img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.03);transition:transform .6s var(--ease)}
+.wst-cube-root .face.is-active .f-media img{transform:scale(1.08)}
+.wst-cube-root .f-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 38%,rgba(0,0,0,.5));pointer-events:none}
+.wst-cube-root .f-media.red img{opacity:.9}
+.wst-cube-root .f-media .f-media-ic{position:absolute;left:9px;bottom:9px;z-index:2;width:36px;height:36px;border-radius:11px;display:grid;place-items:center;background:rgba(8,13,28,.72);border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(6px);box-shadow:0 8px 18px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.28);transform:translateZ(10px)}
+.wst-cube-root .f-media .f-media-ic .ic{width:19px;height:19px}
+.wst-cube-root .f-body{display:flex;flex-direction:column;flex:1;min-height:0;padding-top:8px;transition:opacity .26s ease}
+.wst-cube-root .face.is-active{box-shadow:inset 0 0 0 1px rgba(255,255,255,.24),inset 0 0 46px rgba(255,255,255,.05)}
+.wst-cube-root .f-icon{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;flex:none;margin-bottom:12px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);box-shadow:0 10px 20px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.3);transform:translateZ(16px)}
+.wst-cube-root .f-icon .ic{width:23px;height:23px}
+.wst-cube-root .f-price{align-self:flex-start;display:inline-flex;align-items:center;gap:5px;margin-bottom:9px;padding:5px 9px;border-radius:8px;background:rgba(0,0,0,.24);border:1px solid rgba(255,255,255,.25);color:#fff;
+  font-size:.66rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;line-height:1;transform:translateZ(16px);backdrop-filter:blur(4px)}
+.wst-cube-root .f-price::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px rgba(255,200,61,.65)}
+.wst-cube-root .f-title{font-family:var(--sora);font-size:clamp(1.2rem,4.9vw,1.42rem);line-height:1.12;letter-spacing:-.03em;margin:0 0 6px;transform:translateZ(18px);overflow-wrap:break-word}
+.wst-cube-root .f-desc{font-size:.76rem;line-height:1.5;color:rgba(255,255,255,.82);margin:0 0 15px;transform:translateZ(12px);max-width:23ch}
+.wst-cube-root .f-actions{display:flex;align-items:center;gap:8px;margin-top:auto;transform:translateZ(18px)}
+.wst-cube-root .f-actions .btn{flex:1 1 0;min-width:0;height:38px;padding:0 10px;font-size:13px;border-radius:10px;gap:4px}
+.wst-cube-root .f-order{color:#251700;background:linear-gradient(180deg,#fff3be,#ffc83d 54%,#f0a800);box-shadow:0 3px 0 #7a4d00,0 8px 14px rgba(0,0,0,.26),inset 0 1px 0 #fffbe2}
+.wst-cube-root .f-order:hover{transform:translateY(-1px);box-shadow:0 4px 0 #7a4d00,0 10px 18px rgba(0,0,0,.3),inset 0 1px 0 #fffef0}
+.wst-cube-root .f-order:active{transform:translateY(2px);box-shadow:0 1px 0 #7a4d00,inset 0 1px 0 #fff3b4}
+.wst-cube-root .f-quote{color:#fff;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);box-shadow:0 3px 0 rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.25)}
+.wst-cube-root .f-quote:hover{transform:translateY(-1px);background:rgba(255,255,255,.22);box-shadow:0 4px 0 rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.3)}
+.wst-cube-root .f-quote:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.2)}
+.wst-cube-root .cube-dots{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:2px;position:relative;z-index:3}
+.wst-cube-root .cube-dot{position:relative;display:grid;place-items:center;width:28px;height:28px;padding:0;border:0;background:none;cursor:pointer}
+.wst-cube-root .cube-dot i{display:block;width:8px;height:8px;border-radius:999px;background:rgba(255,255,255,.26);transition:width .35s var(--ease),background .35s,box-shadow .35s}
+.wst-cube-root .cube-dot:hover i{background:rgba(255,255,255,.5)}
+.wst-cube-root .cube-dot[aria-pressed="true"] i{width:26px;background:linear-gradient(90deg,#ffe08a,#ffc83d);box-shadow:0 0 12px rgba(255,200,61,.45)}
+.wst-cube-root .cube-hint{margin:2px 0 0;color:#6d7b98;font-size:.65rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;text-align:center;position:relative;z-index:3}

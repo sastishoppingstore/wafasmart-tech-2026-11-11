@@ -9,6 +9,8 @@ module.exports = {
   h1: "Compress Image to 50KB, 20KB or any target size",
   libs: ["heic2any", "jszip"],
   kw: ["compress image to 50kb", "reduce image size to 20kb", "compress image online", "jpg compressor", "reduce photo size for cnic form", "image compressor to target kb"],
+  guide: "/blog/compress-image-to-50kb-pakistan.html",
+  guideTitle: "How to compress an image to 50KB",
   intro: [
     "Forms in Pakistan, the UAE and most visa portals ask for a photograph under a stated size — 20 KB for a CNIC upload, 50 KB for a passport application, 100 KB for a job portal, 200 KB for a university admission system. Guessing a quality setting to land inside that limit is tedious, so this tool searches for you: it re-encodes your picture repeatedly, adjusting JPEG quality and, if needed, the pixel dimensions, until the output actually fits the target you picked.",
     "The search is a binary one, not a random one. Between quality 0.05 and 0.98 the browser's canvas encoder is asked for a middle value, the resulting blob is measured, and the range is narrowed — usually four or five attempts, all inside your device, all finished in under a second for a normal phone photo. You see each attempt tick past in the status line, then get the smallest file that is still no bigger than your target.",

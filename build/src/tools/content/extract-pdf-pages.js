@@ -3,6 +3,7 @@ const H = require("./_helpers.js");
 module.exports = {
   name: "Extract PDF Pages",
   short: "Save only the pages you click as a brand-new PDF — perfect for pulling chapters, slides or receipts out of a big file.",
+  kw: ["extract pdf pages", "extract pages from pdf", "save pages from pdf", "pdf page extractor", "split selected pdf pages"],
   title: "Extract PDF Pages — Save Selected Pages as PDF | Wafa Smart",
   desc: "Extract chosen pages from a PDF into a new file by clicking page numbers or typing a range like 3-7,12. Free, private, runs in your browser.",
   h1: "Extract PDF Pages — pull out only the sheets you need",
@@ -57,7 +58,7 @@ module.exports = {
   <p id="selinfo" class="hint">Selected: none yet.</p>
 </section>
 <section class="t-card opts" aria-label="Actions">
-  <div class="fld"><label for="name">File name</label><input type="text" id="name" value="extract" maxlength="40" autocomplete="off" spellcheck="false"></div>
+  <div class="fld"><label for="name">File name</label><input type="text" id="name" value="" placeholder="sample-extract" maxlength="40" autocomplete="off" spellcheck="false"></div>
   <div class="acts"><button id="go" class="btn" type="button" disabled>Create PDF</button><button id="all" class="btn btn-ghost" type="button" disabled>All pages</button><button id="none" class="btn btn-ghost" type="button" disabled>Clear selection</button></div>
   <div class="prog" hidden><div id="bar" class="prog-i"></div></div>
   <p id="status" role="status" aria-live="polite" class="hint"></p>

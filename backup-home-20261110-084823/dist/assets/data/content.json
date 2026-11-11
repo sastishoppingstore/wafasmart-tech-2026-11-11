@@ -1,0 +1,275 @@
+{
+  "exportedAt": "2026-11-02T12:20:24.097Z",
+  "price": 14000,
+  "tiers": {
+    "website": 14000,
+    "management": 20000,
+    "ai": 23500,
+    "android": 30000,
+    "ios": 35000,
+    "windows": 30000,
+    "design": 14000
+  },
+  "site": {
+    "hero": {
+      "title": "Websites, AI agents & apps. Fixed rates. No 300K quotes.",
+      "sub": "Custom websites, AI agents and apps for serious businesses. Fixed prices from PKR 14,000, 3 free demo designs, a free domain and 100% source-code ownership. 160+ projects delivered in Lahore & Saudi Arabia. Hacked? Recovery from PKR 5,000."
+    },
+    "contact": {
+      "whatsapp": "923246627054",
+      "whatsappDisplay": "0324 6627054",
+      "phoneRaw": "+92 324 6627054",
+      "email": "info@wafasmart.tech",
+      "address": "Lahore-Sharqpur Road, near 20 km, Lahore, Punjab, Pakistan",
+      "addressUr": "لاہور شہر پور روڈ، تقریباً 20 کلومیٹر، لاہور، پنجاب، پاکستان",
+      "hours": "Mon – Sat · 10:00 AM – 8:00 PM (PKT)",
+      "hoursUr": "پیر – ہفتہ · صبح ۱۰ تا شام ۸ (پاکستانی وقت)",
+      "mapQuery": "Lahore-Sharqpur Road near 20 km Lahore Pakistan"
+    },
+    "packages": [
+      {
+        "n": "Website",
+        "price": 14000
+      },
+      {
+        "n": "Website + Management",
+        "price": 20000
+      },
+      {
+        "n": "AI Agent / Voice",
+        "price": 23500
+      },
+      {
+        "n": "Android / Windows App",
+        "price": 30000
+      },
+      {
+        "n": "iOS App",
+        "price": 35000
+      }
+    ],
+    "services": [
+      {
+        "slug": "ai-agents",
+        "name": "AI Agents & Automation",
+        "price": 23500,
+        "priceNote": "AI / voice"
+      },
+      {
+        "slug": "voice-agents",
+        "name": "Voice AI Agents",
+        "price": 23500,
+        "priceNote": "AI / voice"
+      },
+      {
+        "slug": "ai-receptionist",
+        "name": "AI Receptionist",
+        "price": 23500,
+        "priceNote": "AI / voice"
+      },
+      {
+        "slug": "website-design",
+        "name": "Business Website (3D · SEO)",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "travel-agency",
+        "name": "Travel Agency Website & Booking",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "hotel-website",
+        "name": "Hotel & Resort Website (Booking)",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "school-website",
+        "name": "School Website & Admission Portal",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "hospital-website",
+        "name": "Hospital & Clinic Website + OPD",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "property-portal",
+        "name": "Property Dealer Portal",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "management-system",
+        "name": "Management System (ERP · Web/App)",
+        "price": 20000,
+        "priceNote": "Website + management"
+      },
+      {
+        "slug": "job-portal",
+        "name": "Job & Earning Portals",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "website-management",
+        "name": "Website Management System",
+        "price": 20000,
+        "priceNote": "Website + management"
+      },
+      {
+        "slug": "android-app",
+        "name": "Android App Development",
+        "price": 30000,
+        "priceNote": "Android / Windows app"
+      },
+      {
+        "slug": "ios-app",
+        "name": "iOS App Development",
+        "price": 35000,
+        "priceNote": "iOS app"
+      },
+      {
+        "slug": "windows-app",
+        "name": "Windows Desktop Software",
+        "price": 30000,
+        "priceNote": "Android / Windows app"
+      },
+      {
+        "slug": "whatsapp-bot",
+        "name": "WhatsApp Chatbot & Auto-Reply",
+        "price": 23500,
+        "priceNote": "AI / voice"
+      },
+      {
+        "slug": "design-studio",
+        "name": "CV, Logo & Brand Design",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "food-restaurant",
+        "name": "Restaurant & Food Delivery Site",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "ecommerce-store",
+        "name": "E-commerce Online Store",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "lms-platform",
+        "name": "Online Courses Platform (LMS)",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "donation-platform",
+        "name": "Donation & Zakat Platform",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "salon-booking",
+        "name": "Salon, Spa & Clinic Booking",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "gym-fitness",
+        "name": "Gym & Fitness Studio Site",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "car-dealer",
+        "name": "Car Dealer & Rental Website",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "event-wedding",
+        "name": "Event & Wedding Website",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "courier-logistics",
+        "name": "Courier & Logistics Tracking",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "pharmacy-store",
+        "name": "Pharmacy & Medical Store Site",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "mosque-website",
+        "name": "Masjid & Islamic Centre Site",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "import-export",
+        "name": "Import–Export & Trading Site",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "pos-billing",
+        "name": "POS & Billing Software",
+        "price": 20000,
+        "priceNote": "Website + management"
+      },
+      {
+        "slug": "law-firm",
+        "name": "Law Firm & Consulting Profile",
+        "price": 14000,
+        "priceNote": "Website"
+      },
+      {
+        "slug": "banquet-hall",
+        "name": "Shaadi Hall & Banquet Booking",
+        "price": 14000,
+        "priceNote": "Website"
+      }
+    ],
+    "recovery": [
+      {
+        "slug": "hacked-website-recovery",
+        "name": "Hacked Website & PHP Recovery",
+        "price": 7000,
+        "priceNote": "Emergency recovery",
+        "features": [
+          "Malware, spam redirect & PHP backdoor cleanup",
+          "Google Safe Browsing / blacklist removal help",
+          "cPanel, admin & hosting access recovery",
+          "Patch entry point + firewall & 2FA hardening",
+          "Clean backup + 14-day re-infection check"
+        ]
+      },
+      {
+        "slug": "whatsapp-recovery",
+        "name": "Hacked WhatsApp Recovery",
+        "price": 5000,
+        "priceNote": "WhatsApp recovery",
+        "features": [
+          "Official WhatsApp recovery assistance",
+          "2FA, PIN & linked-device cleanup",
+          "SIM / OTP and number verification guidance",
+          "WhatsApp Business profile restore help",
+          "Scam-protection checklist for your staff",
+          "We never ask for your OTP or password"
+        ]
+      }
+    ]
+  }
+}

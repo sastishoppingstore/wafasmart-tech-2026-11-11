@@ -1,0 +1,410 @@
+/* internet-speed-test — real measurement engine.
+   Ping/jitter: serial tiny GETs to Cloudflare's CORS endpoint, timed with performance.now().
+   Download: N parallel streams, bytes counted from the ReadableStream, sampled 4x/second.
+   Upload: XHR POST of an in-memory random payload, rate taken from upload-progress events.
+   If Cloudflare is unreachable the download stage falls back to known-size jsDelivr files and
+   says so; upload cannot be measured by a fallback (no CORS POST collector) and reports "—".
+   Connection panel: the IP is read from the test server's own reply header; city/area/provider
+   come from one public IP-geolocation lookup (ipwho.is, then geojs.io), never from the browser's
+   location permission. Any failure leaves the panel on "—" and cannot affect the numbers. */
+(function () {
+  "use strict";
+  const T = window.WST_T; if (!T) return;
+  const $ = T.$;
+  const D = document;
+
+  const CF_DOWN = b => "https://speed.cloudflare.com/__down?bytes=" + b + "&r=" + Math.random().toString(36).slice(2);
+  const CF_UP = "https://speed.cloudflare.com/__up";
+  const JD = [
+    "https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js",
+    "https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js",
+    "https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js",
+    "https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"
+  ];
+  const PROF = {
+    quick: { streams: 3, chunk: 2e6, dlMs: 4000, dlCap: 12e6, upBuf: 1e6, upStreams: 2, upMs: 4000, pings: 8 },
+    standard: { streams: 4, chunk: 3e6, dlMs: 7000, dlCap: 35e6, upBuf: 2e6, upStreams: 3, upMs: 6000, pings: 10 },
+    precise: { streams: 6, chunk: 4e6, dlMs: 11000, dlCap: 8e7, upBuf: 3e6, upStreams: 4, upMs: 8000, pings: 12 }
+  };
+
+  /* ---------- meter geometry: semicircular arc, log scale that re-ranges itself ---------- */
+  const CX = 140, CY = 140, R = 100;
+  const SCALE_MIN = 0.5;
+  const SCALE_STEPS = [50, 100, 200, 500];
+  const SCALE_TICKS = {
+    50: [0.5, 1, 5, 10, 20, 50], 100: [1, 5, 10, 25, 50, 100],
+    200: [1, 10, 25, 50, 100, 200], 500: [1, 10, 50, 100, 250, 500]
+  };
+  let dialMax = 50;
+
+  const el = {
+    panel: $(".st-meter"), arc: $("#g-arc"), needle: $("#needle"), ticks: $("#g-ticks"),
+    mbps: $("#mbps"), phase: $("#phase"),
+    go: $("#go"), stop: $("#stop"), profile: $("#profile"),
+    ping: $("#ping"), min: $("#min"), jitter: $("#jitter"), down: $("#down"), up: $("#up"),
+    rating: $("#rating"), engine: $("#engine"),
+    ip: $("#ip"), isp: $("#isp"), city: $("#city"), region: $("#region"), country: $("#country"),
+    asn: $("#asn"), coords: $("#coords"), mark: $("#g-mark"), grat: $("#g-grat")
+  };
+  if (!el.arc || !el.go) return;
+
+  const arcLen = el.arc.getTotalLength ? el.arc.getTotalLength() : Math.PI * R;
+  el.arc.style.strokeDasharray = arcLen;
+
+  const fmt = (n, d) => isFinite(n) ? n.toFixed(d) : "—";
+  const phase = m => { if (el.phase) el.phase.textContent = m; };
+  const frac = v => !(v > 0) ? 0 : Math.max(0, Math.min(1,
+    (Math.log(v) - Math.log(SCALE_MIN)) / (Math.log(dialMax) - Math.log(SCALE_MIN))));
+
+  const NS = "http://www.w3.org/2000/svg";
+  function mk(host, name, attrs, text) {
+    if (!D.createElementNS || !host) return null;
+    const n = D.createElementNS(NS, name);
+    for (const k in attrs) n.setAttribute(k, attrs[k]);
+    if (text != null) n.textContent = text;
+    host.appendChild(n);
+    return n;
+  }
+
+  function drawTicks() {
+    if (!el.ticks) return;
+    el.ticks.textContent = "";
+    const lab = v => v < 1 ? v.toFixed(1) : String(Math.round(v));
+    (SCALE_TICKS[dialMax] || SCALE_TICKS[50]).forEach(v => {
+      const a = (-90 + 180 * frac(v)) * Math.PI / 180, sin = Math.sin(a), cos = Math.cos(a);
+      const x1 = CX + sin * (R + 11), y1 = CY - cos * (R + 11);
+      const x2 = CX + sin * (R + 25), y2 = CY - cos * (R + 25);
+      mk(el.ticks, "line", { x1: x1.toFixed(1), y1: y1.toFixed(1), x2: x2.toFixed(1), y2: y2.toFixed(1) });
+      mk(el.ticks, "text", { x: x2.toFixed(1), y: (y2 + 4).toFixed(1) }, lab(v));
+    });
+  }
+  drawTicks();
+
+  function dial(v) {
+    if (v > dialMax * 0.9 && dialMax < 500) {
+      const nx = SCALE_STEPS.filter(s => s > dialMax)[0];
+      if (nx) { dialMax = nx; drawTicks(); }
+    }
+    const f = frac(v);
+    el.arc.style.strokeDashoffset = arcLen * (1 - f);
+    el.needle.setAttribute("transform", "rotate(" + (-90 + 180 * f).toFixed(2) + " " + CX + " " + CY + ")");
+    el.mbps.textContent = fmt(v, v >= 100 ? 0 : v >= 10 ? 1 : 2);
+    if (el.panel) el.panel.setAttribute("data-tone", !(v > 0) ? 0 : v < 10 ? 1 : v < 30 ? 2 : v < 100 ? 3 : 4);
+  }
+  dial(0);
+  el.mbps.textContent = "—";
+
+  let running = false, stop = false, abort = null, totalBytes = 0, xhrs = [];
+
+  const reset = () => {
+    dialMax = 50; drawTicks(); dial(0); totalBytes = 0;
+    [el.ping, el.min, el.jitter, el.down, el.up, el.mbps].forEach(e => { if (e) e.textContent = "—"; });
+    if (el.rating) { el.rating.hidden = true; el.rating.textContent = ""; }
+    T.setErr("");
+  };
+
+  /* ---------- connection panel ---------- */
+  const IPv4 = /^[\d.]{7,15}$/, IPv6 = /^[0-9a-fA-F:]{3,45}$/;
+  const setCell = (k, v) => { const e = el[k]; if (e && v) e.textContent = String(v).replace(/\s+/g, " ").slice(0, 64); };
+  const timeout = (p, ms) => Promise.race([p, new Promise(r => setTimeout(() => r(null), ms))]);
+
+  function graticule() {
+    if (!el.grat) return;
+    el.grat.textContent = "";
+    mk(el.grat, "rect", { x: 2, y: 2, width: 356, height: 176, rx: 10, class: "g-frame" });
+    for (let lon = -150; lon <= 150; lon += 30) mk(el.grat, "line", { x1: lon + 180, y1: 6, x2: lon + 180, y2: 174 });
+    for (let lat = -60; lat <= 60; lat += 30) mk(el.grat, "line", { x1: 6, y1: 90 - lat, x2: 354, y2: 90 - lat });
+    mk(el.grat, "line", { x1: 6, y1: 90, x2: 354, y2: 90, class: "g-eq" });
+  }
+  graticule();
+
+  function mark(lat, lon) {
+    if (!el.mark || !isFinite(lat) || !isFinite(lon)) return;
+    el.mark.setAttribute("transform", "translate(" + ((lon + 180) / 2).toFixed(1) + " " + ((90 - lat) / 2).toFixed(1) + ")");
+    el.mark.style.display = "block";
+  }
+
+  async function readIp() {
+    try {
+      const res = await timeout(fetch(CF_DOWN(0), { cache: "no-store" }), 6000);
+      const ip = res && res.headers && res.headers.get ? res.headers.get("cf-meta-ip") : null;
+      if (ip && (IPv4.test(ip) || IPv6.test(ip))) { setCell("ip", ip); return ip; }
+    } catch (e) { }
+    return null;
+  }
+
+  async function lookupGeo(ip) {
+    const path = ip ? "/" + encodeURIComponent(ip) : "";
+    try {
+      const r = await timeout(fetch("https://ipwho.is" + path, { cache: "no-store" }), 7000);
+      const j = r && r.json ? await r.json() : null;
+      if (j && j.success !== false) return {
+        ip: j.ip, city: j.city, region: j.region,
+        country: (j.country || "") + (j.flag && j.flag.emoji ? " " + j.flag.emoji : ""),
+        isp: (j.connection && (j.connection.isp || j.connection.org)) || "",
+        asn: j.connection && j.connection.asn ? "AS" + j.connection.asn : "",
+        lat: Number(j.latitude), lon: Number(j.longitude)
+      };
+    } catch (e) { }
+    try {
+      const r = await timeout(fetch("https://get.geojs.io/v1/ip/geo.json", { cache: "no-store" }), 7000);
+      const j = r && r.json ? await r.json() : null;
+      if (j && j.ip) return {
+        ip: j.ip, city: j.city, region: j.region,
+        country: (j.country || "") + (j.country_code ? " (" + j.country_code + ")" : ""),
+        isp: j.organization || "", asn: j.asn ? "AS" + j.asn : "",
+        lat: Number(j.latitude), lon: Number(j.longitude)
+      };
+    } catch (e) { }
+    return null;
+  }
+
+  let locating = null;
+  function locate() {
+    if (locating) return locating;
+    locating = (async () => {
+      /* Ask the geo service for "me" first: it answers the caller's own IP, so the connection panel
+         is filled with one request and the test CDN is never touched before the visitor presses Start. */
+      let g = await lookupGeo(null);
+      if (!g || !IPv4.test(g.ip || "") && !IPv6.test(g.ip || "")) {
+        const ip = await readIp();
+        g = (ip ? await lookupGeo(ip) : null) || g;
+      }
+      if (!g) {
+        if (el.coords) el.coords.textContent = "City and provider could not be resolved — this network blocks the geolocation lookup. The speed figures above are unaffected.";
+        return;
+      }
+      ["isp", "city", "region", "country", "asn"].forEach(k => setCell(k, g[k]));
+      if (!el.ip.textContent || el.ip.textContent === "—") setCell("ip", g.ip);
+      mark(g.lat, g.lon);
+      if (el.coords) {
+        el.coords.textContent = isFinite(g.lat) && isFinite(g.lon)
+          ? Math.abs(g.lat).toFixed(2) + "° " + (g.lat >= 0 ? "N" : "S") + " · " + Math.abs(g.lon).toFixed(2) + "° " + (g.lon >= 0 ? "E" : "W") +
+            " · dot sits on the city the lookup resolved, which is your traffic's exit city — not an address."
+          : "Location resolved from the IP the test answered.";
+      }
+    })().catch(() => { });
+    return locating;
+  }
+
+  /* ---------- ping + jitter ---------- */
+  async function measurePing(p) {
+    const rts = [];
+    for (let i = 0; i < p.pings && !stop; i++) {
+      const t0 = performance.now();
+      try {
+        await fetch(CF_DOWN(1), { cache: "no-store", signal: abort.signal });
+        rts.push(performance.now() - t0);
+      } catch (e) { if (e.name === "AbortError") return null; rts.push(NaN); }
+    }
+    const good = rts.filter(v => isFinite(v)).slice(1);            /* drop warm-up handshake */
+    if (!good.length) return null;
+    const min = Math.min.apply(null, good);
+    const avg = good.reduce((a, b) => a + b, 0) / good.length;
+    let j = 0;
+    for (let i = 1; i < good.length; i++) j += Math.abs(good[i] - good[i - 1]);
+    return { min: min, avg: avg, jitter: j / Math.max(1, good.length - 1) };
+  }
+
+  /* ---------- download ---------- */
+  async function pull(state, url) {
+    try {
+      const res = await fetch(url, { cache: "no-store", signal: abort.signal });
+      if (!res.ok) return false;
+      if (res.body && res.body.getReader) {
+        const rd = res.body.getReader();
+        for (;;) {
+          if (state.stop) { rd.cancel().catch(() => { }); return true; }
+          const c = await rd.read();
+          if (c.done) break;
+          state.bytes += c.value.length;
+        }
+      } else { state.bytes += (await res.arrayBuffer()).byteLength; }
+      return true;
+    } catch (e) { if (e.name === "AbortError") { state.aborted = true; return true; } return false; }
+  }
+
+  async function downWindow(p) {
+    const state = { bytes: 0, aborted: false, cdn: false };
+    const t0 = performance.now();
+    const workers = [];
+    const urlFor = i => state.cdn ? JD[i % JD.length] : CF_DOWN(p.chunk);
+    for (let i = 0; i < p.streams; i++) workers.push((async () => {
+      let n = i;
+      while (!state.aborted && performance.now() - t0 < p.dlMs && state.bytes < p.dlCap) {
+        const wasCdn = state.cdn;
+        const ok = await pull(state, urlFor(n++));
+        if (!ok && !wasCdn) state.cdn = true;                        /* Cloudflare blocked → jsDelivr */
+        else if (!ok) break;
+      }
+    })());
+    const samples = [];
+    let lastT = t0, lastB = 0;
+    await new Promise(res => {
+      const iv = setInterval(() => {
+        const now = performance.now(), dt = now - lastT;
+        if (dt >= 200) {
+          const mbps = (state.bytes - lastB) * 8 / (dt / 1000) / 1e6;
+          if (state.bytes - lastB > 0) samples.push({ t: now - t0, mbps: mbps });
+          lastT = now; lastB = state.bytes;
+          dial(mbps);
+          T.progress(Math.min(100, (now - t0) / p.dlMs * 100));
+        }
+        if (state.aborted || performance.now() - t0 >= p.dlMs || state.bytes >= p.dlCap) {
+          clearInterval(iv); res();
+        }
+      }, 250);
+    });
+    abort.abort();                                   /* release any stream still reading */
+    totalBytes += state.bytes;
+    return { mbps: average(samples, Math.min(800, p.dlMs * 0.25)), bytes: state.bytes, cdn: state.cdn };
+  }
+
+  function average(samples, warmupMs) {
+    const live = samples.filter(s => s.t >= warmupMs);
+    const use = (live.length ? live : samples);
+    if (!use.length) return NaN;
+    return use.reduce((a, s) => a + s.mbps, 0) / use.length;
+  }
+
+  /* ---------- upload ---------- */
+  function payload(bytes) {
+    const blk = new Uint8Array(65536);
+    crypto.getRandomValues(blk);                       /* random so nothing can compress it away */
+    const u = new Uint8Array(bytes);
+    for (let i = 0; i < bytes; i += blk.length) u.set(blk.subarray(0, Math.min(blk.length, bytes - i)), i);
+    return u;
+  }
+
+  function uploadOne(buf, ms, state) {
+    return new Promise(done => {
+      const x = new XMLHttpRequest();
+      let lastB = 0, fin = false;
+      const end = () => {
+        if (fin) return; fin = true;
+        clearTimeout(kick);
+        const k = xhrs.indexOf(x); if (k > -1) xhrs.splice(k, 1);
+        try { x.abort(); } catch (e) { }
+        done();
+      };
+      const kick = setTimeout(end, ms);
+      xhrs.push(x);
+      x.upload.onprogress = e => {
+        if (state.stop || stop) return end();
+        if (e.lengthComputable && e.loaded > lastB) { state.bytes += e.loaded - lastB; lastB = e.loaded; }
+      };
+      x.onerror = x.ontimeout = end;
+      x.onload = end;
+      try { x.open("POST", CF_UP, true); x.setRequestHeader("Content-Type", "application/octet-stream"); x.send(buf); }
+      catch (e) { end(); }
+    });
+  }
+
+  async function measureUpload(p) {
+    const state = { bytes: 0, stop: false, t0: performance.now() };
+    const buf = payload(p.upBuf);
+    for (let i = 0; i < p.upStreams; i++) (async () => {
+      while (!state.stop && !stop && performance.now() - state.t0 < p.upMs) await uploadOne(buf, p.upMs, state);
+    })();
+    const samples = [];
+    let lastT = state.t0, lastB = 0;
+    await new Promise(res => {
+      const iv = setInterval(() => {
+        const now = performance.now(), dt = now - lastT;
+        if (dt >= 200) {
+          const mbps = (state.bytes - lastB) * 8 / (dt / 1000) / 1e6;
+          if (state.bytes - lastB > 0) samples.push({ t: now - state.t0, mbps: mbps });
+          lastT = now; lastB = state.bytes;
+          if (samples.length) dial(samples.slice(-3).reduce((a, s) => a + s.mbps, 0) / Math.min(3, samples.length));
+          T.progress(Math.min(100, (now - state.t0) / p.upMs * 100));
+        }
+        const dead = state.bytes === 0 && now - state.t0 > 2500;      /* POSTs blocked */
+        if (state.stop || dead || now - state.t0 >= p.upMs) { clearInterval(iv); res(); }
+      }, 250);
+    });
+    state.stop = true;
+    totalBytes += state.bytes;
+    return average(samples, Math.min(700, p.upMs * 0.2));
+  }
+
+  /* ---------- verdict ---------- */
+  function verdict(down, up) {
+    if (!isFinite(down)) return "Download could not be measured — this network is blocking the test endpoints.";
+    if (down >= 200) return "Excellent — 4K streaming on several screens, large uploads and low-latency gaming at the same time.";
+    if (down >= 100) return "Fast — 4K streaming, video calls and quick uploads with headroom to spare.";
+    if (down >= 40) return "Good — two or three 4K/FHD streams, smooth calls, HD video uploads in a minute or two.";
+    if (down >= 15) return "Usable — FHD streaming on one or two screens; large file uploads will feel slow.";
+    if (down >= 5) return "Basic — HD streaming works, 4K and big uploads do not.";
+    return "Slow — one SD/FHD stream at a time; uploads and video calls will struggle.";
+  }
+
+  /* ---------- orchestration ---------- */
+  async function run() {
+    if (running) return;
+    running = true; stop = false;
+    abort = new AbortController();
+    reset();
+    locate();
+    el.go.disabled = true; el.go.textContent = "Testing…";
+    if (el.stop) el.stop.hidden = false;
+    const p = PROF[(el.profile && el.profile.value) || "quick"];
+    let engine = "speed.cloudflare.com";
+    try {
+      phase("Stage 1 of 4 — measuring latency");
+      const ping = await measurePing(p);
+      if (ping) {
+        el.ping.textContent = fmt(ping.avg, 0);
+        el.min.textContent = fmt(ping.min, 0);
+        el.jitter.textContent = fmt(ping.jitter, 1);
+      } else throw new Error("ping");
+
+      phase("Stage 2 of 4 — downloading (" + p.streams + " parallel streams)");
+      const dl = await downWindow(p);
+      if (!isFinite(dl.mbps)) throw new Error("download");
+      el.down.textContent = fmt(dl.mbps, dl.mbps >= 100 ? 1 : 2);
+      if (dl.cdn) engine = "cdn.jsdelivr.net (Cloudflare blocked)";
+
+      phase("Stage 3 of 4 — uploading (" + p.upStreams + " streams)");
+      let up = NaN;
+      if (dl.cdn) phase("Stage 3 of 4 — upload not measurable on this network");
+      else up = await measureUpload(p);
+      if (isFinite(up)) el.up.textContent = fmt(up, up >= 100 ? 1 : 2);
+
+      phase("Stage 4 of 4 — done");
+      dial(dl.mbps);
+      if (el.rating) { el.rating.textContent = verdict(dl.mbps, up); el.rating.hidden = false; }
+      T.setErr(isFinite(up) ? "" : "Upload could not be measured — this network blocks outbound POSTs to the test endpoint. Ping, jitter and download are still accurate.");
+    } catch (e) {
+      if (e && e.name === "AbortError") phase("Stopped");
+      else {
+        phase("Test failed");
+        T.setErr("Your browser could not reach the public test servers. Corporate or school proxies often block them — try mobile data or another network.");
+      }
+      dial(0);
+    } finally {
+      running = false;
+      T.progress(100);
+      el.go.disabled = false;
+      el.go.textContent = "Test again";
+      if (el.stop) el.stop.hidden = true;
+      if (el.engine) el.engine.textContent = "Measured against " + engine + " · " + p.streams +
+        " download streams · about " + T.bytes(totalBytes) + " moved · results stay in this browser.";
+      abort = null;
+    }
+  }
+
+  T.on(el.go, "click", () => { if (!running) run(); });
+  T.on(el.stop, "click", () => { stop = true; if (abort) abort.abort(); xhrs.forEach(x => { try { x.abort(); } catch (e) { } }); });
+  D.addEventListener("visibilitychange", () => {
+    if (D.hidden && running) { stop = true; if (abort) abort.abort(); xhrs.forEach(x => { try { x.abort(); } catch (e) { } }); }
+  });
+
+  /* Do not touch the network on page load. Auto-running burned bandwidth and
+     triggered Cloudflare 429s before the visitor even asked for a test. */
+  const saver = !!(navigator.connection && navigator.connection.saveData);
+  phase(saver
+    ? "Data-saver is on — press Start when you are ready."
+    : "Press Start to measure ping, download and upload. Nothing runs until you tap.");
+  /* The connection panel fills when the visitor presses Start. Keeping the page silent on
+     arrival avoids third-party lookups (and Cloudflare 429s) before the visitor asks for a test. */
+})();

@@ -37,6 +37,6 @@ module.exports = {
 <div class="fld"><label>Debts</label><input id="ke2" type="number" value="0"></div>
 </div>
 <div class="acts"><button id="gok" class="t3d-btn">Calculate Khums</button></div>
-<div id="rk" class="t3d-res" style="display:none"><div class="res-line"><span>Surplus</span><b id="ksur">0</b></div><div class="res-line"><span>Khums (20%)</span><b id="kk">0</b></div><div class="res-line"><span>Sahm-e-Imam (50%)</span><b id="ksi">0</b></div><div class="res-line"><span>Sahm-e-Sadat (50%)</span><b id="kss">0</b></div><p class="disc">Rulings differ between Maraji'. Follow your own Marja's rulings - this is an estimate, not a fatwa.</p></div>
+<div id="rk" class="t3d-res" style="display:none"><div class="res-line"><span>Surplus</span><b id="ksur">0</b></div><div class="res-line"><span>Khums (20%)</span><b id="kk">0</b></div><div class="res-line"><span>Sahm-e-Imam (50%)</span><b id="ksi">0</b></div><div class="res-line"><span>Sahm-e-Sadat (50%)</span><b id="kss">0</b></div><p id="kperiod" class="disc"></p><p class="disc">Rulings differ between Maraji'. Follow your own Marja's rulings - this is an estimate, not a fatwa.</p></div>
 </div></section>`
 };

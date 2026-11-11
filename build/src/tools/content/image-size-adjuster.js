@@ -9,6 +9,8 @@ module.exports = {
   h1: "Image Size Adjuster - Set Exact KB or Pixel Size",
   libs: ["heic2any", "jszip"],
   kw: ["resize image to kb", "compress image to 100kb", "resize image to 800x800", "custom image resizer online", "image size in kb"],
+  guide: "/blog/compress-image-to-50kb-pakistan.html",
+  guideTitle: "Image compression guide for online forms",
   intro: [
     "Set exact pixel dimensions like 800 × 800, 1024 × 768, or custom width/height with aspect ratio lock. Or choose a target file size like 100 KB, 250 KB, 500 KB, 1 MB and the tool will compress to fit.",
     "Everything runs locally in your browser. Images never leave your device. Works on JPG, PNG, WebP, HEIC.",

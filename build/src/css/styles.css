@@ -220,7 +220,7 @@ body[dir="rtl"] .btn:hover .arr{transform:translateX(-5px) scaleX(-1)}
 
 /* ---------- Marquee ---------- */
 .marq{overflow:hidden;border-block:1px solid var(--line);background:rgba(255,255,255,.02);padding:16px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
-.marq-track{display:flex;gap:56px;width:max-content;animation:marq 30s linear infinite}
+.marq-track{display:flex;gap:56px;width:max-content;animation:marq 14s linear infinite}
 .marq:hover .marq-track{animation-play-state:paused}
 .marq-track span{display:flex;gap:12px;align-items:center;color:var(--txt-2);font-weight:700;font-size:.95rem;white-space:nowrap}
 .marq-track em{color:var(--cy);font-style:normal}
@@ -823,3 +823,51 @@ footer .btn-wa{color:#03130a}
   .cube-face span{font-size:.71rem}
   .cube-face em{display:none}
 }
+
+/* ============================================================
+   PERFORMANCE MODE (2026-10-29)
+   The site was spending GPU/CPU on ambient orbs, marquees, floating
+   cards, shine sweeps and backdrop blurs even when idle. These
+   overrides keep the layout and all controls, but remove continuous
+   animation and expensive compositing. Reveal elements are forced
+   visible so nothing disappears when its animation is disabled.
+   ============================================================ */
+*,*::before,*::after{animation:none!important;transition:none!important}
+html{scroll-behavior:auto!important}
+*{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.orb,.w3d-orb{display:none!important}
+.orb,.w3d-orb,.w3d-floor,.w3d-shape,.marq-track,.hero-vis img,.hero-card,.pre .pw,.df-hero,.hero-panel,.cube,.w3d-cube,.t3d-card .t3d-ic,.g-mark .g-halo,.wa-btn::after{animation:none!important;will-change:auto!important}
+.rv,.rv3d,.reveal,.w3d-hero-copy,.w3d-visual,.tool-hero,.t-card,.tool-card,.t3d-card,.t-hero-img{opacity:1!important;transform:none!important}
+.t3d-card,.t-card,.tool-card,.dz,.hero-card,.t-hero-img,.howto,.rel-card{box-shadow:0 8px 24px rgba(0,0,0,.28)!important}
+.logo-mark,.hero-vis img,.t-hero-img img,.pre .pw{filter:none!important}
+
+/* Admin dashboard mobile containment (2026-10-29) */
+.adm-body{grid-template-columns:minmax(0,220px) minmax(0,1fr)}
+.adm-body>*{min-width:0}
+.adm-card,.adm-kpi,.adm-main,.tbl-wrap{min-width:0}
+.tbl-wrap{max-width:100%;overflow-x:auto}
+@media(max-width:900px){
+  .adm-body{grid-template-columns:minmax(0,1fr)}
+  .adm-side{grid-auto-flow:column;overflow-x:auto;overflow-y:hidden;max-width:100%;padding-bottom:4px}
+  .adm-side button{white-space:nowrap}
+  .adm-kpi{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .adm-grid2{grid-template-columns:minmax(0,1fr)}
+  .adm-top{flex-wrap:wrap;gap:10px}
+  .adm-top .row{margin-left:auto}
+}
+@media(max-width:520px){
+  .adm-top{padding:12px 16px}
+  .adm-top .row{width:100%;justify-content:flex-end}
+  .adm-card{padding:16px}
+}
+/* live-demo gallery (/demos.html): clickable HD banner over a solid, legible panel */
+.pf-card.demo-live{aspect-ratio:auto;display:flex;flex-direction:column}
+.pf-card.demo-live .pf-shot{position:relative;display:block;aspect-ratio:16/10;background:#081020;flex:0 0 auto}
+.pf-card.demo-live .pf-shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pf-card.demo-live .pf-shot::after{content:"";position:absolute;left:0;right:0;bottom:0;height:40px;background:linear-gradient(transparent,rgba(4,9,22,.45));pointer-events:none}
+.demo-live .pf-in{position:static;inset:auto;transform:none;opacity:1;padding:16px 18px 18px;background:linear-gradient(180deg,#0b1526,#08101e)}
+.demo-live .pf-in h3{text-shadow:none}
+.demo-live .pf-in .muted{color:#cfe0f7!important;text-shadow:none}
+.demo-open{display:inline-flex;align-items:center;gap:5px;font-size:.64rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;padding:4px 9px;border-radius:99px;background:rgba(244,196,48,.16);border:1px solid rgba(244,196,48,.42);color:var(--cy);margin-bottom:8px}
+.demo-try{display:flex;gap:6px;align-items:flex-start;font-size:.76rem;line-height:1.45;margin:10px 0 12px;color:#bcd7f5}
+.demo-try svg{flex:0 0 auto;margin-top:2px}

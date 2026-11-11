@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sterlix Surgical – Complex Surgical Instruments</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;800&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a1418;--bg2:#101f25;--steel:#cfe3e8;--mute:#8fa9b0;--teal:#2fd3c0;--blue:#3b8dff;--line:rgba(207,227,232,.14)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Manrope,system-ui,sans-serif;background:var(--bg);color:var(--steel);line-height:1.6;overflow-x:hidden}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;line-height:1.15}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1200px;margin:auto;padding:0 22px}
+section{padding:90px 0}
+nav{position:fixed;inset:0 0 auto;z-index:50;backdrop-filter:blur(14px);background:rgba(10,20,24,.75);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{font-family:Fraunces,serif;font-weight:800;font-size:1.35rem}
+.logo b{color:var(--teal)}
+nav ul{display:flex;gap:26px;list-style:none;font-weight:600;font-size:.95rem}
+nav ul a:hover{color:var(--teal)}
+.btn{display:inline-block;padding:11px 22px;border-radius:10px;font-weight:800;font-size:.9rem;border:1px solid transparent;cursor:pointer;font-family:inherit;transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-3px)}
+.btn.p{background:linear-gradient(135deg,var(--teal),var(--blue));color:#04141a;box-shadow:0 8px 24px rgba(47,211,192,.25)}
+.btn.o{border-color:var(--teal);color:var(--teal);background:transparent}
+.btn.o:hover{background:rgba(47,211,192,.1)}
+/* hero */
+.hero{min-height:100vh;display:flex;align-items:center;padding-top:100px;background:linear-gradient(100deg,rgba(10,20,24,.96) 30%,rgba(10,20,24,.55)),radial-gradient(ellipse at 75% 40%,rgba(18,64,74,.8) 0,transparent 55%),url('/assets/demo-media/268660af740129.jpg') center/cover,var(--bg)}
+.hero .wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:30px;align-items:center}
+.hero h1{font-size:clamp(2.4rem,5.5vw,4.4rem);font-weight:800;margin-bottom:18px}
+.hero p{color:var(--mute);max-width:520px;margin-bottom:28px;font-size:1.08rem}
+.hero .acts{display:flex;gap:14px;flex-wrap:wrap}
+.scene{height:420px;display:flex;align-items:center;justify-content:center;perspective:1100px}
+.cube{width:200px;height:200px;position:relative;transform-style:preserve-3d;animation:spin 16s linear infinite}
+.face{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border:1px solid rgba(47,211,192,.6);background:linear-gradient(145deg,rgba(207,227,232,.22),rgba(47,211,192,.08));backdrop-filter:blur(3px);box-shadow:inset 0 0 40px rgba(47,211,192,.2);font-family:Fraunces,serif;font-weight:800;font-size:1.05rem;text-align:center}
+.face img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.face span{position:relative;align-self:flex-end;width:100%;padding:8px;background:linear-gradient(transparent,rgba(0,0,0,.8));font-size:.95rem}.face{justify-content:flex-end;overflow:hidden;padding:0}
+.f1{transform:translateZ(100px)}.f2{transform:rotateY(180deg) translateZ(100px)}
+.f3{transform:rotateY(90deg) translateZ(100px)}.f4{transform:rotateY(-90deg) translateZ(100px)}
+.f5{transform:rotateX(90deg) translateZ(100px)}.f6{transform:rotateX(-90deg) translateZ(100px)}
+.core{position:absolute;width:90px;height:90px;border-radius:50%;background:var(--teal);filter:blur(40px);opacity:.55;transform:translateZ(0)}
+.shadow{position:absolute;bottom:20px;width:240px;height:30px;border-radius:50%;background:radial-gradient(rgba(47,211,192,.3),transparent 70%)}
+@keyframes spin{from{transform:rotateX(-22deg) rotateY(0)}to{transform:rotateX(-22deg) rotateY(360deg)}}
+/* headings */
+.head{text-align:center;max-width:640px;margin:0 auto 50px}
+.head h2{font-size:clamp(1.9rem,4vw,2.9rem);margin-bottom:12px}
+.head p{color:var(--mute)}
+/* products */
+#products{background:var(--bg2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:28px;perspective:1200px}
+.card{background:linear-gradient(160deg,#162a31,#0e1c21);border:1px solid var(--line);border-radius:18px;overflow:hidden;transform-style:preserve-3d;transition:transform .15s ease-out,box-shadow .3s;will-change:transform}
+.card:hover{box-shadow:0 24px 50px rgba(0,0,0,.5),0 0 0 1px rgba(47,211,192,.5)}
+.card .im{height:200px;background:radial-gradient(circle at 50% 40%,#244a54,#0e1c21);display:flex;align-items:center;justify-content:center;transform:translateZ(30px);overflow:hidden}
+.card img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.card:hover img{transform:scale(1.08)}
+.card .im .ph{padding:20px;text-align:center;font-family:Fraunces,serif;font-size:1.1rem}
+.card .bd{padding:18px;transform:translateZ(40px)}
+.card h3{font-size:1.15rem;margin-bottom:4px}
+.card small{color:var(--mute);display:block;margin-bottom:14px;font-size:.85rem}
+.card .bt{display:flex;gap:10px}
+.card .btn{flex:1;padding:10px 6px;text-align:center;font-size:.82rem}
+/* why */
+.why{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px}
+.wy{padding:30px;border:1px solid var(--line);border-radius:16px;background:var(--bg2);transition:transform .3s,border-color .3s}
+.wy:hover{transform:translateY(-8px) rotateX(4deg);border-color:var(--teal)}
+.wy .ic{width:54px;height:54px;border-radius:14px;background:linear-gradient(135deg,var(--teal),var(--blue));display:grid;place-items:center;margin-bottom:16px;font-size:1.5rem}
+.wy h3{margin-bottom:8px;font-size:1.2rem}
+.wy p{color:var(--mute);font-size:.95rem}
+/* about */
+#about{background:var(--bg2)}
+#about .wrap{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+#about h2{font-size:clamp(1.9rem,4vw,2.7rem);margin-bottom:16px}
+#about p{color:var(--mute);margin-bottom:14px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.st{padding:26px;border-radius:16px;border:1px solid var(--line);text-align:center;background:var(--bg)}
+.st b{font-family:Fraunces,serif;font-size:2.4rem;color:var(--teal);display:block}
+/* footer */
+footer{background:#060d10;padding:60px 0 24px;border-top:1px solid var(--line)}
+.fg{display:grid;grid-template-columns:2fr 1fr 1.3fr;gap:36px;margin-bottom:36px}
+footer h4{margin-bottom:12px;font-family:Fraunces,serif}
+footer li{list-style:none;margin-bottom:8px;color:var(--mute);font-size:.95rem}
+footer li a:hover{color:var(--teal)}
+footer p{color:var(--mute);font-size:.95rem;max-width:340px}
+.copy{border-top:1px solid var(--line);padding-top:18px;text-align:center;color:var(--mute);font-size:.85rem}
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;place-items:center;z-index:100;padding:20px}
+.modal.on{display:grid}
+.box{background:var(--bg2);border:1px solid var(--teal);border-radius:18px;padding:30px;width:100%;max-width:440px;animation:pop .3s}
+@keyframes pop{from{transform:scale(.85) rotateX(20deg);opacity:0}}
+.box h3{margin-bottom:4px}
+.box p{color:var(--mute);margin-bottom:16px;font-size:.9rem}
+.box input,.box textarea{width:100%;padding:12px;margin-bottom:12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--steel);font:inherit}
+.box input:focus,.box textarea:focus,.btn:focus-visible,a:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.box .row{display:flex;gap:10px}
+.box .row .btn{flex:1}
+@media(max-width:860px){nav ul{display:none}.hero .wrap,#about .wrap,.fg{grid-template-columns:1fr}.scene{height:340px}.cube{transform:scale(.8)}}
+@media(prefers-reduced-motion:reduce){.cube{animation:none}.card,.wy{transition:none}}
+</style>
+</head>
+<body>
+<nav><div class="wrap"><a class="logo" href="#top">Sterlix<b>Surgical</b></a>
+<ul><li><a href="#products">Products</a></li><li><a href="#why">Why Choose Us</a></li><li><a href="#about">About</a></li><li><a href="#contact">Contact</a></li></ul>
+<button class="btn p" data-q="General Inquiry" data-m="quote">Get Quote</button></div></nav>
+
+<header class="hero" id="top"><div class="wrap">
+<div><h1>Precision instruments for every incision.</h1>
+<p>Complex surgical instruments in medical-grade stainless steel, made for hospitals, clinics and distributors worldwide. ISO 13485 certified, CE marked.</p>
+<div class="acts"><a class="btn p" href="#products">View Products</a><button class="btn o" data-q="Bulk Order" data-m="quote">Get Quote</button></div></div>
+<div class="scene"><div class="core"></div>
+<div class="cube">
+<div class="face f1"><img src="/assets/demo-media/268660af740129.jpg" alt="Scalpel" style="object-position:center"><span>Scalpel</span></div>
+<div class="face f2"><img src="/assets/demo-media/268660af740129.jpg" alt="Scissors" style="object-position:left"><span>Scissors</span></div>
+<div class="face f3"><img src="/assets/demo-media/268660af740129.jpg" alt="Forceps" style="object-position:right"><span>Forceps</span></div>
+<div class="face f4"><img src="/assets/demo-media/268660af740129.jpg" alt="Retractors" style="object-position:top"><span>Retractors</span></div>
+<div class="face f5"><img src="/assets/demo-media/268660af740129.jpg" alt="Sterile" style="object-position:bottom"><span>Sterile</span></div>
+<div class="face f6"><img src="/assets/demo-media/268660af740129.jpg" alt="ISO Certified" style="object-position:center"><span>ISO Certified</span></div>
+</div><div class="shadow"></div></div>
+</div></header>
+
+<section id="products"><div class="wrap">
+<div class="head"><h2>Our Surgical Instruments</h2><p>18 best-selling instruments. Order directly or ask for a bulk quote.</p></div>
+<div class="grid" id="grid"></div></div></section>
+
+<section id="why"><div class="wrap">
+<div class="head"><h2>Why Choose Us</h2><p>Surgeons and procurement teams trust us for consistency, not claims.</p></div>
+<div class="why">
+<div class="wy"><div class="ic">🛡️</div><h3>Medical-grade steel</h3><p>AISI 304 and 420 stainless steel, hand-finished and corrosion tested.</p></div>
+<div class="wy"><div class="ic">✅</div><h3>ISO 13485 and CE</h3><p>Every batch is inspected and traceable from raw material to packing.</p></div>
+<div class="wy"><div class="ic">🚚</div><h3>Fast worldwide delivery</h3><p>Orders ship in 3 to 7 days with tracking to over 60 countries.</p></div>
+<div class="wy"><div class="ic">⚙️</div><h3>Custom and OEM</h3><p>Private labeling, laser marking and made-to-drawing instruments.</p></div>
+<div class="wy"><div class="ic">💰</div><h3>Direct factory price</h3><p>No middlemen. Clear bulk pricing with a quote in 24 hours.</p></div>
+<div class="wy"><div class="ic">🔁</div><h3>Replacement guarantee</h3><p>Any manufacturing defect is replaced free of charge.</p></div>
+</div></div></section>
+
+<section id="about"><div class="wrap">
+<div><h2>About Sterlix Surgical</h2>
+<p>For over 20 years we have crafted surgical instruments for general surgery, orthopedics, ENT and gynecology. Our skilled craftsmen combine traditional hand finishing with precision CNC and laser inspection.</p>
+<p>Our goal is simple: instruments that feel balanced in the hand, hold an edge, and survive thousands of sterilization cycles.</p>
+<a class="btn p" href="#contact">Contact Us</a></div>
+<div class="stats"><div class="st"><b>20+</b>Years experience</div><div class="st"><b>1200+</b>Instruments</div><div class="st"><b>60+</b>Countries</div><div class="st"><b>5000+</b>Happy clients</div></div>
+</div></section>
+
+<footer id="contact"><div class="wrap">
+<div class="fg">
+<div><a class="logo" href="#top">Sterlix<b>Surgical</b></a><p style="margin-top:12px">Manufacturer and exporter of complex surgical instruments.</p></div>
+<div><h4>Quick links</h4><ul><li><a href="#products">Products</a></li><li><a href="#why">Why Choose Us</a></li><li><a href="#about">About</a></li></ul></div>
+<div><h4>Contact</h4><ul><li>📍 Industrial Estate, Sialkot, Pakistan</li><li>📞 +92 300 0000000</li><li>✉️ sales@sterlixsurgical.com</li></ul></div>
+</div><div class="copy">© 2026 Sterlix Surgical. All rights reserved.</div></div></footer>
+
+<div class="modal" id="modal"><div class="box">
+<h3 id="mt"></h3><p id="mp"></p>
+<input id="n" placeholder="Your name"><input id="e" placeholder="Email or phone"><input id="q" type="number" min="1" placeholder="Quantity"><textarea id="m" rows="3" placeholder="Message (optional)"></textarea>
+<div class="row"><button class="btn p" id="send">Send on WhatsApp</button><button class="btn o" id="close">Cancel</button></div>
+</div></div>
+
+<script>
+const P=[["Scalpel Handle No.3","General Surgery"],["Mayo Scissors","Cutting"],["Metzenbaum Scissors","Dissecting"],["Kelly Forceps","Hemostatic"],["Mosquito Forceps","Hemostatic"],["Allis Tissue Forceps","Grasping"],["Adson Forceps","Tissue"],["Mayo-Hegar Needle Holder","Suturing"],["Backhaus Towel Clamp","Clamps"],["Army-Navy Retractor","Retractors"],["Bone Rongeur","Orthopedic"],["Volkmann Bone Curette","Orthopedic"],["Weitlaner Retractor","Self-Retaining"],["Yankauer Suction Tube","Suction"],["Surgical Tray Set","Kits"],["Dissecting Forceps","Tissue"],["Rochester Pean Clamp","Hemostatic"],["Orthopedic Bone Cutter","Orthopedic"]];
+const IMG=["https://unsplash.com/photos/Z6sbbTdPJTY/download?w=700", "https://unsplash.com/photos/hA2FnzDLkVE/download?w=700", "https://unsplash.com/photos/NbuxA5NhGb8/download?w=700", "https://unsplash.com/photos/-NJvNctChC8/download?w=700"];
+const POS=['center','20% 30%','80% 70%','50% 0%','0% 60%','100% 20%','60% 100%'];
+const g=document.getElementById('grid');
+P.forEach((p,i)=>{
+ const c=document.createElement('article');c.className='card';
+ c.innerHTML=`<div class="im"><img src="${IMG[i%4]}" alt="${p[0]}" loading="lazy" style="object-position:${POS[i%POS.length]};transform-origin:${POS[i%POS.length]}"></div><div class="bd"><h3>${p[0]}</h3><small>${p[1]}</small><div class="bt"><button class="btn p" data-q="${p[0]}" data-m="order">Order Now</button><button class="btn o" data-q="${p[0]}" data-m="quote">Get Quote</button></div></div>`;
+ c.querySelector('img').onerror=function(){this.parentNode.innerHTML='<div class="ph">'+p[0]+'</div>'};
+ c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform=`rotateY(${x*16}deg) rotateX(${-y*16}deg) translateZ(10px)`});
+ c.addEventListener('mouseleave',()=>c.style.transform='');
+ g.appendChild(c);
+});
+const M=document.getElementById('modal');let cur={};
+document.addEventListener('click',e=>{const b=e.target.closest('[data-q]');if(!b)return;cur={q:b.dataset.q,m:b.dataset.m};
+ document.getElementById('mt').textContent=(cur.m==='order'?'Order: ':'Quote: ')+cur.q;
+ document.getElementById('mp').textContent=cur.m==='order'?'Fill your details and we will confirm your order.':'Tell us the quantity and we will reply within 24 hours.';
+ M.classList.add('on')});
+document.getElementById('close').onclick=()=>M.classList.remove('on');
+M.onclick=e=>{if(e.target===M)M.classList.remove('on')};
+document.getElementById('send').onclick=()=>{
+ const t=`${cur.m==='order'?'ORDER':'QUOTE REQUEST'}%0AProduct: ${cur.q}%0AName: ${n.value}%0AContact: ${e.value}%0AQty: ${q.value}%0A${encodeURIComponent(m.value)}`;
+ window.open('https://wa.me/923000000000?text='+t,'_blank');M.classList.remove('on')};
+</script>
+</body>
+</html>

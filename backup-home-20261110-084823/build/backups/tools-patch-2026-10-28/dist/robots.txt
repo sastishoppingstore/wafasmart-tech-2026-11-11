@@ -1,0 +1,6 @@
+# wafasmart.tech
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /offline.html
+Sitemap: https://wafasmart.tech/sitemap.xml

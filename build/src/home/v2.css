@@ -1,0 +1,122 @@
+/* home-v2: home page only (injected by build/scripts/home-v2.js) */
+
+/* 3D box for any text block that wraps to more than 2 lines (class added by v2.js).
+   Dark panels are the default (dark photo / eco-dark / eco-emerald sections);
+   light sections below switch to a bright panel with dark text. */
+.tb3d{position:relative;margin-block:.85em;padding:18px 20px 20px;border-radius:18px;
+  background:linear-gradient(160deg,rgba(255,255,255,.10),rgba(255,255,255,.02) 60%),#0c1a36;
+  border:1px solid rgba(244,196,48,.30);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 -2px 0 rgba(0,0,0,.32),
+    0 3px 0 #071026,0 6px 0 #050c1c,0 9px 0 #040a18,0 30px 44px -18px rgba(0,0,0,.72);
+  transition:box-shadow .35s ease,translate .35s ease}
+.tb3d:hover{translate:0 -2px;box-shadow:inset 0 1px 0 rgba(255,255,255,.26),inset 0 -2px 0 rgba(0,0,0,.32),
+    0 4px 0 #071026,0 8px 0 #050c1c,0 12px 0 #040a18,0 38px 52px -18px rgba(0,0,0,.78)}
+/* subtle gold wash inside the panel for the 3D "lit face" feel */
+.tb3d::before{content:"";position:absolute;inset:1px;border-radius:17px;pointer-events:none;
+  background:linear-gradient(180deg,rgba(244,196,48,.12),transparent 36%)}
+
+/* light / cream sections: bright panel, dark text */
+.eco-light .tb3d,.eco-stone .tb3d,.sd53 .tb3d,.qc-sec .tb3d{
+  background:linear-gradient(160deg,#ffffff,#eef3fb 88%);border-color:rgba(5,13,32,.10);color:#12182a;
+  box-shadow:inset 0 1px 0 #fff,0 3px 0 #dde5f0,0 6px 0 #d3ddec,0 9px 0 #c8d4e6,0 30px 44px -20px rgba(5,13,32,.42)}
+.eco-light .tb3d:hover,.eco-stone .tb3d:hover,.sd53 .tb3d:hover,.qc-sec .tb3d:hover{
+  box-shadow:inset 0 1px 0 #fff,0 4px 0 #dde5f0,0 8px 0 #d3ddec,0 12px 0 #c8d4e6,0 38px 52px -20px rgba(5,13,32,.5)}
+.eco-light .tb3d::before,.eco-stone .tb3d::before,.sd53 .tb3d::before,.qc-sec .tb3d::before{
+  background:linear-gradient(180deg,rgba(244,196,48,.18),transparent 42%)}
+
+/* framed demo / preview images: sharp, lifted, thin browser-like rim (large previews only) */
+.gs-film img,.pantry-film img,.ugc-card img,.sb-img img,.lc-img img,.bq-film img,.p-card .p-img img{
+  border-radius:16px;background:#0b1530;
+  box-shadow:0 0 0 1px rgba(255,255,255,.16),0 0 0 6px rgba(255,255,255,.035),0 30px 50px -20px rgba(0,0,0,.8)}
+
+@media (prefers-reduced-motion:reduce){.tb3d,.tb3d:hover{translate:none;transition:none}}
+
+/* ---------------------------------------------------------------------------
+   HERO: the blurry "man with a laptop" photo is removed and replaced by a
+   pure-CSS animated backdrop (warm aurora, faint code grid, rotating light
+   sweep and rising dust motes). Dark hero text stays readable on the cream base.
+   --------------------------------------------------------------------------- */
+.hall-media{display:none!important}
+.hero-art{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;
+  background:radial-gradient(135% 105% at 50% -22%,#fffdf8 0%,#f7eeda 42%,#efe6d6 100%)}
+.hero-art .ha-blob{position:absolute;border-radius:50%;opacity:.6;will-change:transform}
+.hero-art .ha-1{width:62vmax;height:62vmax;left:-20vmax;top:-26vmax;
+  background:radial-gradient(circle,rgba(244,214,150,.95),rgba(244,214,150,0) 67%);
+  animation:haDrift1 24s ease-in-out infinite alternate}
+.hero-art .ha-2{width:54vmax;height:54vmax;right:-18vmax;top:-16vmax;
+  background:radial-gradient(circle,rgba(233,194,122,.85),rgba(233,194,122,0) 67%);
+  animation:haDrift2 29s ease-in-out infinite alternate}
+.hero-art .ha-3{width:68vmax;height:68vmax;left:14%;bottom:-46vmax;
+  background:radial-gradient(circle,rgba(214,176,106,.80),rgba(214,176,106,0) 66%);
+  animation:haDrift3 34s ease-in-out infinite alternate}
+.hero-art .ha-grid{position:absolute;inset:-2px;
+  background-image:linear-gradient(rgba(138,106,44,.13) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(138,106,44,.13) 1px,transparent 1px);
+  background-size:58px 58px;
+  -webkit-mask-image:radial-gradient(118% 96% at 50% 34%,#000 0,rgba(0,0,0,.35) 52%,transparent 76%);
+  mask-image:radial-gradient(118% 96% at 50% 34%,#000 0,rgba(0,0,0,.35) 52%,transparent 76%);
+  animation:haGrid 34s linear infinite}
+.hero-art .ha-sweep{position:absolute;left:50%;top:42%;translate:-50% -50%;will-change:transform;
+  width:min(165vh,1180px);height:min(165vh,1180px);border-radius:50%;opacity:.85;
+  background:conic-gradient(from 0deg,transparent 0 74%,rgba(233,197,128,.30) 88%,transparent 100%);
+  -webkit-mask-image:radial-gradient(circle,transparent 58%,#000 60%,#000 100%);
+  mask-image:radial-gradient(circle,transparent 58%,#000 60%,#000 100%);
+  animation:haSpin 30s linear infinite}
+.hero-art .ha-dot{position:absolute;bottom:3%;left:var(--x);width:var(--s,5px);height:var(--s,5px);
+  border-radius:50%;background:radial-gradient(circle,#e0ba6c,rgba(224,186,108,0));opacity:0;
+  animation:haRise var(--t,18s) linear var(--d,0s) infinite}
+@keyframes haDrift1{to{transform:translate(6%,5%) scale(1.12)}}
+@keyframes haDrift2{to{transform:translate(-7%,6%) scale(1.10)}}
+@keyframes haDrift3{to{transform:translate(3%,-6%) scale(1.08)}}
+@keyframes haGrid{to{background-position:58px 58px,58px 58px}}
+@keyframes haSpin{to{transform:rotate(360deg)}}
+@keyframes haRise{0%{opacity:0;transform:translateY(0) scale(.7)}10%{opacity:.9}85%{opacity:.45}100%{opacity:0;transform:translateY(-92vh) scale(1.05)}}
+
+/* soften the legacy hero overlays so they complement the animation instead of washing it out */
+.hall .hall-glow{background:radial-gradient(58% 44% at 50% 30%,rgba(255,252,246,.60),rgba(255,252,246,.16) 55%,transparent 78%),
+  linear-gradient(180deg,rgba(255,252,246,.12),transparent 44%,transparent 66%,rgba(29,23,18,.18) 100%)}
+.hall .hall-sun{opacity:.55}
+
+/* hero doors: the plain doors were cream-on-photo; on the new light backdrop they
+   need a readable surface (the gold 1st and dark 2nd doors are left as designed) */
+.hall .lh-door:not(:first-child):not(:nth-child(2)){
+  background:#fffdf8f2;color:#2a2019;border-color:rgba(138,106,44,.35)}
+.hall .lh-door:not(:first-child):not(:nth-child(2)) b{color:#221a14}
+.hall .lh-door:not(:first-child):not(:nth-child(2)) small,
+.hall .lh-door:not(:first-child):not(:nth-child(2)) em{color:#6d5f50;opacity:.9}
+
+/* ---------------------------------------------------------------------------
+   MOBILE: the rotating cube is lifted to the very top of the page (v2.js moves
+   the node into .cube-top-slot), right under the fixed header, with the whole
+   hero below it. The slot is reserved in the markup from the start, so the move
+   causes no layout shift; a deep "stage" band keeps the cube's dark cards and the
+   light header text readable. Desktop hides the slot and is untouched.
+   --------------------------------------------------------------------------- */
+.cube-top-slot{display:none}
+
+@media (max-width:760px){
+  html.js .cube-top-slot{
+    display:block;position:relative;z-index:5;width:100%;height:606px;box-sizing:border-box;
+    padding:calc(var(--header-h,64px) + 14px) 0 24px;
+    background:
+      radial-gradient(120% 62% at 50% -10%,rgba(255,200,61,.18),transparent 62%),
+      linear-gradient(180deg,#0f1d36 0%,#0a1426 58%,#080f1e 100%);
+    box-shadow:0 22px 56px -26px rgba(0,0,0,.8)}
+  .wst-cube-root.cube-top{margin:0;padding:0}
+  /* bigger tap targets for the cube dots (>=44px) */
+  .wst-cube-root.cube-top .cube-dots{gap:0;margin-top:4px}
+  .wst-cube-root.cube-top .cube-dot{width:44px;height:44px}
+  .wst-cube-root.cube-top .cube-dot i{background:rgba(255,255,255,.34)}
+  .wst-cube-root.cube-top .cube-dot:hover i{background:rgba(255,255,255,.6)}
+  .wst-cube-root.cube-top .cube-hint{color:#a9bad2;margin-top:6px}
+  /* the hero no longer starts under the fixed header, so trim its top clearance */
+  html.js .hall{padding-top:clamp(1.6rem,6vw,3rem)}
+}
+@media (min-width:561px) and (max-width:760px){
+  html.js .cube-top-slot{height:626px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .hero-art .ha-blob,.hero-art .ha-grid,.hero-art .ha-sweep,.hero-art .ha-dot{animation:none}
+  .hero-art .ha-dot{opacity:.35}
+}

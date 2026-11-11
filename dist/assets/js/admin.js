@@ -12,8 +12,39 @@
   const K = { ov: "wst.overrides", leads: "wst.leads", auth: "wst.admin.session", pw: "wst.admin.pw" };
   const DEFAULT_PW = "wafa@2026";
   const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-  const store = (k, v) => localStorage.setItem(k, JSON.stringify(v));
-  const load = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (e) { return d; } };
+
+  /* Storage can be blocked (private mode, embedded browser, quota). Never let a
+     storage exception stop the login screen or the dashboard from opening. */
+  let storageWarned = false;
+  const mem = Object.create(null);
+  function safeGet(area, k) {
+    try { return W[area].getItem(k); } catch (e) { mem[area + ":" + k] ??= null; return mem[area + ":" + k]; }
+  }
+  function safeSet(area, k, v) {
+    try { W[area].setItem(k, v); return true; }
+    catch (e) { mem[area + ":" + k] = v; if (!storageWarned) { storageWarned = true; setTimeout(() => toast("Browser storage blocked — data sirf is tab tak rahega. Private mode off karein.", true), 60); } return false; }
+  }
+  function safeDel(area, k) {
+    try { W[area].removeItem(k); } catch (e) { }
+    delete mem[area + ":" + k];
+  }
+  const store = (k, v) => safeSet("localStorage", k, JSON.stringify(v));
+  const load = (k, d) => {
+    const raw = safeGet("localStorage", k);
+    if (raw == null) return d;
+    try { return JSON.parse(raw) ?? d; } catch (e) { return d; }
+  };
+  function setPath(root, path, val) {
+    const parts = String(path).split(".");
+    let o = root;
+    for (let i = 0; i < parts.length - 1; i++) {
+      const key = parts[i];
+      if (!o[key] || typeof o[key] !== "object") o[key] = {};
+      o = o[key];
+    }
+    o[parts[parts.length - 1]] = val;
+    return root;
+  }
   const fmt = n => "PKR " + Number(n).toLocaleString("en-US");
   const now = () => new Date().toLocaleString("en-PK", { dateStyle: "medium", timeStyle: "short" });
 
@@ -26,23 +57,45 @@
     let h = 0x811c9dc5; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; }
     return h.toString(36);
   }
+  function authToken() {
+    return safeGet("localStorage", K.auth) || safeGet("sessionStorage", K.auth) || W.__wstAuth || "";
+  }
+  function setAuth(token) {
+    W.__wstAuth = token;
+    const a = safeSet("localStorage", K.auth, token);
+    const b = safeSet("sessionStorage", K.auth, token);
+    if (!a && !b) toast("Storage blocked — login is tab tak chalega, reload par dobara password lagayega.", true);
+  }
+  function clearAuth() {
+    W.__wstAuth = "";
+    safeDel("localStorage", K.auth);
+    safeDel("sessionStorage", K.auth);
+  }
   function gate() {
     const cur = load(K.pw, null) || hash(DEFAULT_PW);
-    if (sessionStorage.getItem(K.auth) === cur) return dash();
+    if (authToken() === cur) return dash();
     app.innerHTML = `<div class="login-card glass">
       <img src="/assets/img/logo.webp" width="72" height="72" alt="Wafa Smart Tech" style="margin:0 auto 14px;border-radius:18px">
       <h2>Admin — ${esc((W.WST_CFG || {}).brand || "Wafa Smart Tech")}</h2>
       <p class="tiny muted" style="margin:8px 0 18px">Password default: <span class="kb">${DEFAULT_PW}</span> (badal lein pehle login ke baad)</p>
       <form id="lf"><div class="field"><label for="lp">Password</label><input class="input" id="lp" type="password" autocomplete="current-password" required></div>
       <button class="btn btn-block" type="submit">Unlock dashboard</button>
-      <p class="hint" style="margin-top:12px">Is panel ka data sirf is browser me rehta hai — koi server nahi. Live deploy se pehle content JSON export kar ke source me daalein.</p></form></div>`;
+      <p class="hint" style="margin-top:12px">Is panel ka data sirf is browser me rehta hai — koi server nahi. Live deploy se pehle content JSON export kar ke source me daalein.</p>
+      <button class="btn btn-sm btn-ghost" id="reset-admin" type="button" style="margin-top:10px">Password bhool gaye? Local admin reset</button></form></div>`;
     $("#lf").addEventListener("submit", e => {
       e.preventDefault();
       const v = hash($("#lp").value + "");
       const want = load(K.pw, null) || hash(DEFAULT_PW);
-      if (v === want) { sessionStorage.setItem(K.auth, want); dash(); }
+      if (v === want) { setAuth(want); dash(); }
       else toast("Ghalat password 🚫", true);
     });
+    $("#reset-admin").onclick = () => {
+      if (!confirm("Local admin password reset kar dein? Overrides aur leads safe rahenge.")) return;
+      safeDel("localStorage", K.pw);
+      clearAuth();
+      toast("Password reset — default password ab wafa@2026 hai");
+      gate();
+    };
   }
   function toast(m, bad) {
     let t = $(".toast"); if (!t) { t = D.createElement("div"); t.className = "toast"; D.body.appendChild(t); }
@@ -60,12 +113,12 @@
         <a class="btn btn-sm btn-ghost" href="/index.html">👁 View site</a>
         <button class="btn btn-sm btn-ghost" id="logout" type="button">Logout</button></div></div>
     <div class="adm-body">
-      <aside class="adm-side" role="tablist">
+      <aside class="adm-side" role="group" aria-label="Admin sections">
         ${[["dash", "📊 Dashboard"], ["leads", "📥 Leads"], ["content", "✏️ Content"], ["pricing", "💰 Pricing"], ["io", "💾 Export/Import"], ["help", "❓ Guide"]].map(([k, l]) => `<button type="button" data-tab="${k}" class="${tab === k ? "on" : ""}">${l}</button>`).join("")}
       </aside>
       <main id="adm-main"></main>
     </div>`;
-    $("#logout").onclick = () => { sessionStorage.removeItem(K.auth); gate(); };
+    $("#logout").onclick = () => { clearAuth(); gate(); };
     $$(".adm-side button").forEach(b => b.onclick = () => { tab = b.dataset.tab; dash(); });
     ({ dash: viewDash, leads: viewLeads, content: viewContent, pricing: viewPricing, io: viewIO, help: viewHelp })[tab]();
   }
@@ -153,16 +206,15 @@
       const next = load(K.ov, {});
       $$("main [data-path]").forEach(i => {
         if (!i.value.trim()) return;
-        const p = i.dataset.path.split("."); let o = next;
-        while (p.length > 1) o = o[p.shift()] = o[p.shift()] || {};
-        o[p[0]] = i.value.trim();
+        setPath(next, i.dataset.path, i.value.trim());
       });
       next._savedAt = now(); store(K.ov, next); toast("Saved — site refresh karein 👍");
     };
     $("#setpw").onclick = () => {
       const a = $("#npw").value, b = $("#npw2").value;
       if (a.length < 6 || a !== b) return toast("Password 6+ chars ho aur match kare", true);
-      store(K.pw, hash(a)); sessionStorage.setItem(K.auth, hash(a)); toast("Password updated ✅");
+      const h = hash(a);
+      store(K.pw, h); setAuth(h); toast("Password updated ✅");
     };
   }
 
@@ -186,9 +238,7 @@
       $$("main [data-pk]").forEach(i => {
         let v = Math.max(1000, Math.min(40000, +i.value || 0));
         if (!v) return;
-        const p = i.dataset.pk.split("."); let o = next;
-        while (p.length > 1) o = o[p.shift()] = o[p.shift()] || {};
-        o[p[0]] = v;
+        setPath(next, i.dataset.pk, v);
       });
       next._savedAt = now(); store(K.ov, next); toast("Pricing saved ✅ refresh site");
     };

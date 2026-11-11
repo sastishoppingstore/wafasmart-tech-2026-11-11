@@ -19,6 +19,7 @@ const BAR = `<div class="acts"><button id="go" class="btn" type="button" disable
 module.exports = {
   name: "Delete PDF Pages",
   short: "Click the page numbers you want gone and rebuild the PDF without them — no re-upload, no page-range maths.",
+  kw: ["delete pdf pages", "remove pages from pdf", "delete page from pdf online", "pdf page remover", "remove blank pages from pdf"],
   title: "Delete PDF Pages — Remove Pages from a PDF | Wafa Smart",
   desc: "Remove unwanted pages from a PDF by clicking their numbers, then download a clean file. Keeps text searchable. Free, private, in-browser.",
   h1: "Delete PDF Pages — take out the pages you do not want",

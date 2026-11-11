@@ -9,6 +9,8 @@ module.exports = {
   h1: "Zakat Calculator - Nisab, Assets & Liabilities",
   libs: [],
   kw: ["zakat calculator","zakat calculator pakistan","nisab calculator","zakat on gold silver cash"],
+  guide: "/blog/pakistan-zakat-calculator-guide.html",
+  guideTitle: "Zakat calculator Pakistan guide",
   intro: ["Calculate Zakat at 2.5% if net zakatable wealth >= nisab for one lunar year (hawl).","Default to silver nisab with explanation.","Informational estimate - consult qualified scholar."],
   steps: ["Select currency & rates", "Enter assets", "Enter debts/liabilities", "Choose nisab", "Calculate"],
   ur: "Zakat ka hisab lagain - sona, chandi, cash, qarz waghera se. 2.5% hisab se.",
@@ -30,13 +32,13 @@ module.exports = {
 <h3>Assets</h3>
 <div class="gym-grid">
 <div class="fld"><label>Cash in hand/bank</label><input id="za1" type="number" value="0"></div>
-<div class="fld"><label>Gold (grams)</label><input id="za2" type="number" value="0"></div>
-<div class="fld"><label>Silver (grams)</label><input id="za3" type="number" value="0"></div>
+<div class="fld"><label>Gold (grams, bars/coins)</label><input id="za2" type="number" value="0"></div>
+<div class="fld"><label>Silver (grams, bars/coins)</label><input id="za3" type="number" value="0"></div>
 <div class="fld"><label>Business inventory</label><input id="za4" type="number" value="0"></div>
 <div class="fld"><label>Receivables (money owed to me)</label><input id="za5" type="number" value="0"></div>
 <div class="fld"><label>Investments/Shares</label><input id="za6" type="number" value="0"></div>
 <div class="fld"><label>Other</label><input id="za7" type="number" value="0"></div>
-<div class="fld"><label><input type="checkbox" id="zj" style="width:auto"> Include personal-use jewellery (scholars differ)</label></div>
+<div class="fld"><label><input type="checkbox" id="zj" style="width:auto"> Include personal-use jewellery (scholars differ)</label><small class="tiny muted">Unchecked: gold/silver grams above are treated as personal jewellery and excluded.</small></div>
 </div>
 <h3>Deductions</h3>
 <div class="gym-grid">
